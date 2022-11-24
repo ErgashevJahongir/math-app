@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import { AxiosInterceptor } from "./Api/Axios";
+import { AuthProvider } from "./Context/AuthContext";
+import { DataProvider } from "./Context/DataContext";
+import RoutesPage from "./Router";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <AuthProvider>
+            <DataProvider>
+                <AxiosInterceptor>
+                    <RoutesPage />
+                </AxiosInterceptor>
+            </DataProvider>
+        </AuthProvider>
+    );
 }
 
 export default App;
