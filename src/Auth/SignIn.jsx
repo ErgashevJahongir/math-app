@@ -1,15 +1,19 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import instance from "../Api/Axios";
 import Loading from "../Components/Loading";
+import { useAuth } from "../Hook/UseAuth";
 import useToken from "../Hook/UseToken";
 import "./signin.css";
 
 export const SignIn = () => {
     const [loading, setLoading] = useState(true);
     const { token, setToken } = useToken();
+    const location = useLocation();
+    // const { siginIn } = useAuth();
     let navigate = useNavigate();
+    const fromPage = location.state?.from?.pathname || "/";
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -23,8 +27,18 @@ export const SignIn = () => {
                 password: password.value,
             })
             .then((data) => {
-                setToken(data.data.data, false);
+                console.log(data);
+                setToken(data.data, true);
                 window.location.href = "/";
+                // data.data &&
+                //     instance
+                //         .post("/api/auth?token=" + data.data)
+                //         .then((data) => {
+                // siginIn(data.data, () => navigate(fromPage, { replace: true }));
+                // })
+                // .catch((err) => {
+                //     console.error(err);
+                // });
             })
             .catch((err) => {
                 setLoading(false);

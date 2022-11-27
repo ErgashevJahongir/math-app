@@ -5,31 +5,31 @@ import { message } from "antd";
 import CustomTable from "../../Module/Table/Table";
 import { useData } from "../../Hook/UseData";
 
-const Districts = () => {
+const Subjects = () => {
     const [pageData, setPageData] = useState({
-        districts: [],
+        subjects: [],
         loading: true,
         current: 1,
         pageSize: 10,
     });
-    const { getDistrictsData } = useData();
+    const { getSubjectsData } = useData();
     const navigate = useNavigate();
 
-    const getDistricts = () => {
+    const getSubjects = () => {
         setPageData((prev) => ({ ...prev, loading: true }));
         instance
-            .get("/api/district/list")
+            .get("/api/subject/list")
             .then((data) => {
                 setPageData((prev) => ({
                     ...prev,
-                    districts: data.data?.data,
+                    subjects: data.data?.data,
                 }));
-                getDistrictsData();
+                getSubjectsData();
             })
             .catch((error) => {
                 console.error(error);
                 if (error.response?.status === 500) navigate("/server-error");
-                message.error("Tumanlarni yuklashda muammo bo'ldi");
+                message.error("Fanlarni yuklashda muammo bo'ldi");
             })
             .finally(() =>
                 setPageData((prev) => ({ ...prev, loading: false }))
@@ -39,15 +39,15 @@ const Districts = () => {
     const onCreate = (values) => {
         setPageData((prev) => ({ ...prev, loading: true }));
         instance
-            .post("/api/district/createOrUpdate", { ...values })
+            .post("/api/subject/createOrUpdate", { ...values })
             .then(function (response) {
-                message.success("Tuman muvaffaqiyatli qo'shildi");
-                getDistricts(pageData.current - 1, pageData.pageSize);
+                message.success("Fan muvaffaqiyatli qo'shildi");
+                getSubjects(pageData.current - 1, pageData.pageSize);
             })
             .catch(function (error) {
                 console.error(error);
                 if (error.response?.status === 500) navigate("/server-error");
-                message.error("Tumanni qo'shishda muammo bo'ldi");
+                message.error("Fanni qo'shishda muammo bo'ldi");
             })
             .finally(() => {
                 setPageData((prev) => ({ ...prev, loading: false }));
@@ -57,18 +57,18 @@ const Districts = () => {
     const onEdit = (values, initial) => {
         setPageData((prev) => ({ ...prev, loading: true }));
         instance
-            .post(`/api/district/createOrUpdate`, {
+            .post("/api/subject/createOrUpdate", {
                 ...values,
                 id: initial.id,
             })
             .then((res) => {
-                message.success("Tuman muvaffaqiyatli taxrirlandi");
-                getDistricts(pageData.current - 1, pageData.pageSize);
+                message.success("Fan muvaffaqiyatli taxrirlandi");
+                getSubjects(pageData.current - 1, pageData.pageSize);
             })
             .catch(function (error) {
                 console.error("Error in edit: ", error);
                 if (error.response?.status === 500) navigate("/server-error");
-                message.error("Tumanni taxrirlashda muammo bo'ldi");
+                message.error("Fanni taxrirlashda muammo bo'ldi");
             })
             .finally(() => {
                 setPageData((prev) => ({ ...prev, loading: false }));
@@ -79,16 +79,16 @@ const Districts = () => {
         setPageData((prev) => ({ ...prev, loading: true }));
         arr.map((item) => {
             instance
-                .delete(`/api/district/delete/${item}`)
+                .delete(`/api/subject/${item}`)
                 .then((data) => {
-                    getDistricts(pageData.current - 1, pageData.pageSize);
-                    message.success("Tuman muvaffaqiyatli o'chirildi");
+                    getSubjects(pageData.current - 1, pageData.pageSize);
+                    message.success("Fan muvaffaqiyatli o'chirildi");
                 })
                 .catch((error) => {
                     console.error(error);
                     if (error.response?.status === 500)
                         navigate("/server-error");
-                    message.error("Tumanni o'chirishda muammo bo'ldi");
+                    message.error("Fanni o'chirishda muammo bo'ldi");
                 })
                 .finally(() =>
                     setPageData((prev) => ({ ...prev, loading: false }))
@@ -99,10 +99,10 @@ const Districts = () => {
 
     const columns = [
         {
-            title: "Tuman nomi",
+            title: "Fan nomi",
             dataIndex: "name",
             key: "name",
-            width: "99%",
+            width: "100%",
             search: true,
             sorter: (a, b) => {
                 if (a.name < b.name) {
@@ -118,11 +118,11 @@ const Districts = () => {
 
     return (
         <div>
-            <h3>Navoiy viloyati tumanlari</h3>
+            <h3>Fanlari</h3>
             <CustomTable
                 columns={columns}
                 pageSizeOptions={[10, 20]}
-                getData={getDistricts}
+                getData={getSubjects}
                 onDelete={handleDelete}
                 onCreate={onCreate}
                 onEdit={onEdit}
@@ -134,7 +134,7 @@ const Districts = () => {
                 setPageSize={(newProp) =>
                     setPageData((prev) => ({ ...prev, pageSize: newProp }))
                 }
-                tableData={pageData.districts}
+                tableData={pageData.subjects}
                 loading={pageData.loading}
                 setLoading={(newProp) =>
                     setPageData((prev) => ({ ...prev, loading: newProp }))
@@ -144,4 +144,4 @@ const Districts = () => {
     );
 };
 
-export default Districts;
+export default Subjects;

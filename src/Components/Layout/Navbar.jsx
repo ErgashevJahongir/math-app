@@ -7,7 +7,7 @@ import {
     LogoutOutlined,
 } from "@ant-design/icons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-// import useToken from "../../Hook/UseToken";
+import useToken from "../../Hook/UseToken";
 import DrapdownMenu from "./DrapdownMenu";
 import { useAuth } from "../../Hook/UseAuth";
 
@@ -16,15 +16,15 @@ const { Header } = Layout;
 function Navbar() {
     const [isVisible, setIsVisible] = useState(false);
     const { user } = useAuth();
-    // const { token } = useToken();
+    const { token } = useToken();
     const navigate = useNavigate();
     const location = useLocation();
 
-    // const handleLogOut = (e) => {
-    //     e.preventDefault();
-    //     sessionStorage.removeItem("token", token);
-    //     navigate("/login");
-    // };
+    const handleLogOut = (e) => {
+        e.preventDefault();
+        localStorage.removeItem("math-test-app", token);
+        navigate("/auth/signin");
+    };
 
     const showDrawer = () => {
         setIsVisible(true);
@@ -55,7 +55,7 @@ function Navbar() {
                     icon: <LogoutOutlined />,
                     label: (
                         <div
-                            // onClick={(e) => handleLogOut(e)}
+                            onClick={(e) => handleLogOut(e)}
                             style={{ width: "100px" }}
                         >
                             Chiqish
@@ -130,6 +130,50 @@ function Navbar() {
                                 </Link>
                             ),
                         },
+                        {
+                            label: "Fanlar",
+                            key: "/others/subject",
+                            icon: (
+                                <Link to="/others/subject">
+                                    <DashboardOutlined
+                                        style={{ fontSize: "18px" }}
+                                    />
+                                </Link>
+                            ),
+                        },
+                        {
+                            label: "Imtixonlar",
+                            key: "/others/exam",
+                            icon: (
+                                <Link to="/others/exam">
+                                    <DashboardOutlined
+                                        style={{ fontSize: "18px" }}
+                                    />
+                                </Link>
+                            ),
+                        },
+                        {
+                            label: "Qatnashchilar",
+                            key: "/others/condidates",
+                            icon: (
+                                <DashboardOutlined
+                                    style={{ fontSize: "18px" }}
+                                />
+                            ),
+                            children: [
+                                {
+                                    label: "Imtixonlar",
+                                    key: "/others/condidates/1",
+                                    icon: (
+                                        <Link to="/others/condidates/1">
+                                            <DashboardOutlined
+                                                style={{ fontSize: "18px" }}
+                                            />
+                                        </Link>
+                                    ),
+                                },
+                            ],
+                        },
                     ]}
                 />
                 {user ? (
@@ -151,8 +195,7 @@ function Navbar() {
                                     backgroundColor: "#fde3cf",
                                 }}
                             >
-                                {/* {user.username?.charAt(0)} */}
-                                Ali
+                                {user?.firstName?.charAt(0)}
                             </Avatar>
                         </Dropdown>
                     </span>

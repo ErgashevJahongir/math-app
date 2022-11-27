@@ -149,4 +149,29 @@ li {
     .burger-menu {
         display: block;
     }
+
+    .inline-navber {
+        display: none !important;
+    }
+
+    .buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .new-buttons {
+        gap: 10px !important;
+    }
+
+    .tazalash {
+        gap: 16px !important;
+    }
+
+    .add-button {
+        margin-bottom: 8px;
+    }
+
+    .select-add {
+        margin-bottom: 8px;
+    }
 }

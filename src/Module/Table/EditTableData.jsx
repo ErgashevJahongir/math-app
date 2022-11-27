@@ -55,7 +55,7 @@ const EditData = ({
                 O'zgartirish
             </Button>
             <Modal
-                visible={visible}
+                open={visible}
                 title={editModalTitle}
                 okText="O'zgartirish"
                 cancelText="Bekor qilish"

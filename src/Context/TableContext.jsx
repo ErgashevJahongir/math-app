@@ -1,82 +1,179 @@
-import { Input } from "antd";
-import { createContext, useEffect, useState } from "react";
+import { DatePicker, Input, InputNumber, Radio } from "antd";
+import moment from "moment";
+import { createContext } from "react";
 import { useLocation } from "react-router-dom";
-import instance from "../Api/Axios";
-import useToken from "../Hook/UseToken";
+import { useData } from "../Hook/UseData";
+import CustomSelect from "../Module/Select/Select";
+
+const disabledDate = (current) => {
+    // Can not select days before today and today
+    return current && current < moment().endOf("day");
+};
 
 export const TableContext = createContext();
 
 export const TableProvider = ({ children }) => {
-    // const [user, setUser] = useState({});
-    const [userLoading, setUserLoading] = useState(true);
-    const [measurementData, setMeasurementData] = useState([]);
-    const [categoryData, setCategoryData] = useState([]);
-    const { token } = useToken();
+    const { subjectsData } = useData();
     let location = useLocation();
 
-    const othersData = [
+    const othersFormData = [
         {
             name: "name",
-            label: "Nomi",
-            input: <Input />,
+            label: "Tuman nomi",
+            input: <Input placeholder="Tuman nomini kiriting" />,
         },
     ];
 
-    // const getUserData = (token) => {
-    //     instance
-    //         .post("/api/auth", {
-    //             token: token,
-    //         })
-    //         .then((data) => {
-    //             console.log(data);
-    //             setUserLoading(false);
-    //             setUser(data.data.data);
-    //         })
-    //         .catch((err) => {
-    //             setUserLoading(false);
-    //             console.error(err);
-    //         });
-    // };
+    const subjectsFormData = [
+        {
+            name: "name",
+            label: "Fan nomi",
+            input: <Input placeholder="Fan nomini kiriting" />,
+        },
+    ];
 
-    // const getMeasurementData = () => {
-    //     instance
-    //         .get("api/socks/factory/measurement/getAll")
-    //         .then((data) => {
-    //             setMeasurementData(data.data.data);
-    //         })
-    //         .catch((err) => console.error(err));
-    // };
+    const examsFormData = [
+        {
+            name: "subjectId",
+            label: "Fan nomi",
+            input: (
+                <CustomSelect
+                    selectData={subjectsData}
+                    placeholder="Fanni tanlang"
+                />
+            ),
+        },
+        {
+            name: "title",
+            label: "Ma'lumot",
+            input: <Input placeholder="Imtihon haqida ma'lumot" />,
+        },
+        {
+            name: "startedDate",
+            label: "Bo'lish vaqti",
+            input: (
+                <DatePicker
+                    disabledDate={disabledDate}
+                    format="YYYY-MM-DD HH:mm"
+                    placeholder="Bo'lish vaqtini kiriting"
+                    style={{ width: "100%" }}
+                    showTime={{
+                        defaultValue: moment("00:00:00", "HH:mm"),
+                    }}
+                />
+            ),
+        },
+        {
+            name: "price",
+            label: "Narxi",
+            input: (
+                <InputNumber
+                    placeholder="Imtixon narxi"
+                    style={{ width: "100%" }}
+                />
+            ),
+        },
+        {
+            name: "active",
+            label: "Imtixon faolmi",
+            input: (
+                <Radio.Group>
+                    <Radio value="false"> Yo'q </Radio>
+                    <Radio value="true"> Ha </Radio>
+                </Radio.Group>
+            ),
+        },
+    ];
 
-    // const getCategoryData = () => {
-    //     instance
-    //         .get("api/socks/factory/category/getAll")
-    //         .then((data) => {
-    //             setCategoryData(data.data.data);
-    //         })
-    //         .catch((err) => console.error(err));
-    // };
-
-    useEffect(() => {
-        // getUserData(token);
-        // getMeasurementData();
-        // getCategoryData();
-    }, []);
+    const editExamsFormData = [
+        {
+            name: "subjectId",
+            label: "Fan nomi",
+            inputSelect: (initial) => (
+                <CustomSelect
+                    selectData={subjectsData}
+                    placeholder="Fanni tanlang"
+                    DValue={initial}
+                />
+            ),
+        },
+        {
+            name: "title",
+            label: "Ma'lumot",
+            input: <Input placeholder="Imtihon haqida ma'lumot" />,
+        },
+        {
+            name: "startedDate",
+            label: "Bo'lish vaqti",
+            input: <Input placeholder="Bo'lish vaqtini kiriting" />,
+        },
+        {
+            name: "price",
+            label: "Narxi",
+            input: (
+                <InputNumber
+                    placeholder="Imtixon narxi"
+                    style={{ width: "100%" }}
+                />
+            ),
+        },
+        {
+            name: "active",
+            label: "Imtixon faolmi",
+            inputSelect: (initial) => (
+                <Radio.Group defaultValue={initial}>
+                    <Radio value="false"> Yo'q </Radio>
+                    <Radio value="true"> Ha </Radio>
+                </Radio.Group>
+            ),
+        },
+    ];
 
     let formData = {};
 
     switch (location.pathname) {
-        case "/others": {
+        case "/others/district": {
             formData = {
-                formData: othersData,
-                editFormData: othersData,
+                formData: othersFormData,
+                editFormData: othersFormData,
                 branchData: false,
                 timeFilterInfo: false,
-                deleteInfo: false,
-                createInfo: false,
-                editInfo: false,
+                deleteInfo: true,
+                createInfo: true,
+                editInfo: true,
                 timelyInfo: false,
-                editModalTitle: "O'zgartirish",
-                modalTitle: "Yangi qo'shish",
+                editModalTitle: "Tuman nomini o'zgartirish",
+                modalTitle: "Tuman qo'shish",
+            };
+            break;
+        }
+        case "/others/subject": {
+            formData = {
+                formData: subjectsFormData,
+                editFormData: subjectsFormData,
+                branchData: false,
+                timeFilterInfo: false,
+                deleteInfo: true,
+                createInfo: true,
+                editInfo: true,
+                timelyInfo: false,
+                editModalTitle: "Fan nomini o'zgartirish",
+                modalTitle: "Fan qo'shish",
+            };
+            break;
+        }
+        case "/others/exam": {
+            formData = {
+                formData: examsFormData,
+                editFormData: editExamsFormData,
+                branchData: false,
+                timeFilterInfo: false,
+                deleteInfo: true,
+                createInfo: true,
+                editInfo: true,
+                timelyInfo: false,
+                editModalTitle: "Imtixon ma'lumotlarini o'zgartirish",
+                modalTitle: "Imtixon qo'shish",
             };
             break;
         }
@@ -87,12 +184,6 @@ export const TableProvider = ({ children }) => {
 
     const value = {
         formData,
-        measurementData,
-        // getCategoryData,
-        // getUserData,
-        categoryData,
-        // user,
-        userLoading,
     };
 
     return (

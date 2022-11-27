@@ -13,7 +13,10 @@ export default function useToken() {
     const saveToken = (userToken, save) => {
         save
             ? localStorage.setItem("math-test-app", JSON.stringify(userToken))
-            : sessionStorage.setItem("math-test-app", JSON.stringify(userToken));
+            : sessionStorage.setItem(
+                  "math-test-app",
+                  JSON.stringify(userToken)
+              );
         setToken(userToken);
     };
 

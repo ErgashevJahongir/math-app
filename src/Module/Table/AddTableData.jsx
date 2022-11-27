@@ -30,7 +30,7 @@ const CollectionCreateForm = ({
 
     return (
         <Modal
-            visible={visible}
+            open={visible}
             title={modalTitle}
             okText="Qo'shish"
             cancelText="Bekor qilish"

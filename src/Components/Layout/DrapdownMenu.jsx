@@ -25,7 +25,7 @@ function DrapdownMenu({ onClose, isVisible }) {
             closable={false}
             size="200px"
             onClose={onClose}
-            visible={isVisible}
+            open={isVisible}
         >
             <Menu
                 style={{

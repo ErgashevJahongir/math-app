@@ -138,6 +138,11 @@ thead:hover {
     border-color: rgba(0, 0, 0, 0.03);
 }
 
+.ant-table-tbody > tr > td:not(first-child) {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
 .ant-form-item {
     margin-bottom: 7px;
 }
@@ -147,5 +152,5 @@ thead:hover {
 }
 
 .ant-table-content {
-    overflow: hidden !important;
+    overflow: auto !important;
 }

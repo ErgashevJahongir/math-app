@@ -1,9 +1,13 @@
-import { createContext, useState } from "react";
+import useToken from "../Hook/UseToken";
+import { createContext, useEffect, useState } from "react";
+import instance from "../Api/Axios";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [userLoading, setUserLoading] = useState(true);
+    const { token } = useToken();
 
     const siginIn = (newUser, cb) => {
         setUser(newUser);
@@ -19,7 +23,24 @@ export const AuthProvider = ({ children }) => {
         // cb() = () => signOut(() => navigate('/', { replace: true }))
     };
 
-    const value = { user, siginIn, signOut };
+    const getUser = (token) => {
+        setUserLoading(true);
+        instance
+            .post("/api/auth/whoiam?token=" + token)
+            .then((data) => {
+                setUser(data.data.data);
+                setUserLoading(false);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
+
+    useEffect(() => {
+        getUser(token);
+    }, [token]);
+
+    const value = { userLoading, user, siginIn, signOut };
 
     return (
         <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

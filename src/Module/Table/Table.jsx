@@ -10,6 +10,7 @@ import {
 import AddData from "./AddTableData";
 import EditData from "./EditTableData";
 import { useData } from "../../Hook/UseData";
+import { useTable } from "../../Hook/UseTable";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -46,7 +47,8 @@ const CustomTable = (props) => {
     const [timelyFilt, setTimelyFilt] = useState(false);
     const [itemValue, setItemValue] = useState(null);
     const [date, setDate] = useState([null, null]);
-    const { formData, user, branchData } = useData();
+    const { formData } = useTable();
+    const { user, branchData } = useData();
 
     const onChange = (pageNumber, page) => {
         setPageSize(page);
@@ -173,7 +175,7 @@ const CustomTable = (props) => {
                 .toString()
                 .toLowerCase()
                 .includes(value.toLowerCase()),
-        onFilterDropdownVisibleChange: (visible) => {
+        onFilterDropdownOpenChange: (visible) => {
             if (visible) {
                 setTimeout(() => searchInput.current?.select(), 100);
             }
@@ -376,7 +378,6 @@ const CustomTable = (props) => {
                 dataSource={tableData}
                 bordered
                 rowKey={"id"}
-                scroll={{ x: true }}
                 onRow={(record) => ({
                     onClick: () => {
                         handleSelect(record);
