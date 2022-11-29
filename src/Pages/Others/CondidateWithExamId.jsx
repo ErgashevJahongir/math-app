@@ -45,9 +45,8 @@ const CondidateWithExamId = () => {
 
     const onCreate = (values) => {
         setPageData((prev) => ({ ...prev, loading: true }));
-        const active = values.active === "true" ? true : false;
         instance
-            .post("/api/exam/createOrUpdate", { ...values, active: active })
+            .post("/api/candidate/create", { ...values })
             .then(function (response) {
                 message.success("Imtixon muvaffaqiyatli qo'shildi");
                 getCondifateWithId(pageData.current - 1, pageData.pageSize);
@@ -115,7 +114,7 @@ const CondidateWithExamId = () => {
             title: "Yashash tumani",
             dataIndex: "district",
             key: "district",
-            width: "20%",
+            width: "15%",
             search: true,
             sorter: (a, b) => {
                 if (a.district < b.district) {
@@ -147,7 +146,7 @@ const CondidateWithExamId = () => {
             title: "Imtihon fani",
             dataIndex: "subjectId",
             key: "subjectId",
-            width: "20%",
+            width: "15%",
             search: false,
             sorter: (a, b) => {
                 if (a.subjectId < b.subjectId) {
@@ -167,7 +166,7 @@ const CondidateWithExamId = () => {
             title: "To'lov qilinganligi",
             dataIndex: "paid",
             key: "paid",
-            width: "10%",
+            width: "15%",
             search: false,
             sorter: (a, b) => {
                 if (a.paid < b.paid) {
@@ -179,7 +178,7 @@ const CondidateWithExamId = () => {
                 return 0;
             },
             render: (record) => {
-                return record ? "Bor" : "Yo'q";
+                return record ? "To'lov qilingan" : "To'lov qilinmagan";
             },
         },
     ];

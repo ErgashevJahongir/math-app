@@ -1,15 +1,17 @@
 import { Avatar, Button, Dropdown, Layout, Menu, Space } from "antd";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     DashboardOutlined,
     MenuOutlined,
     UserOutlined,
     LogoutOutlined,
 } from "@ant-design/icons";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import useToken from "../../Hook/UseToken";
 import DrapdownMenu from "./DrapdownMenu";
 import { useAuth } from "../../Hook/UseAuth";
+import { useTable } from "../../Hook/UseTable";
+import { useData } from "../../Hook/UseData";
 
 const { Header } = Layout;
 
@@ -17,6 +19,9 @@ function Navbar() {
     const [isVisible, setIsVisible] = useState(false);
     const { user } = useAuth();
     const { token } = useToken();
+    const { examsData } = useData();
+    const { examIdWith } = useParams();
+    const { setExamIdWithUrl } = useTable();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -25,6 +30,10 @@ function Navbar() {
         localStorage.removeItem("math-test-app", token);
         navigate("/auth/signin");
     };
+
+    useEffect(() => {
+        setExamIdWithUrl(examIdWith);
+    }, [examIdWith]);
 
     const showDrawer = () => {
         setIsVisible(true);
@@ -160,19 +169,17 @@ function Navbar() {
                                     style={{ fontSize: "18px" }}
                                 />
                             ),
-                            children: [
-                                {
-                                    label: "Imtixonlar",
-                                    key: "/others/condidates/1",
-                                    icon: (
-                                        <Link to="/others/condidates/1">
-                                            <DashboardOutlined
-                                                style={{ fontSize: "18px" }}
-                                            />
-                                        </Link>
-                                    ),
-                                },
-                            ],
+                            children: examsData.map((item) => ({
+                                label: item.title,
+                                key: `/others/condidates/${item.id}`,
+                                icon: (
+                                    <Link to="/others/condidates/1">
+                                        <DashboardOutlined
+                                            style={{ fontSize: "18px" }}
+                                        />
+                                    </Link>
+                                ),
+                            })),
                         },
                     ]}
                 />

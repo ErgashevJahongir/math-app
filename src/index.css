@@ -127,6 +127,14 @@ li {
     display: none;
 }
 
+.ant-modal.seenCont .ant-modal-content {
+    padding: 10px 16px;
+}
+
+.ant-modal.seenCont .ant-list-item {
+    padding: 8px 10px;
+}
+
 @media screen and (max-width: 1440px) {
     .container {
         width: 1020px;

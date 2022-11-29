@@ -6,6 +6,7 @@ export const DataContext = createContext();
 export const DataProvider = ({ children }) => {
     const [subjectsData, setSubjectsData] = useState([]);
     const [districtsData, setDistrictsData] = useState([]);
+    const [examsData, setExamsData] = useState([]);
 
     const getSubjectsData = () => {
         instance
@@ -25,9 +26,19 @@ export const DataProvider = ({ children }) => {
             .catch((err) => console.error(err));
     };
 
+    const getExamsData = () => {
+        instance
+            .get("/api/exam/list?page=0&size=100")
+            .then((data) => {
+                setExamsData(data.data.data);
+            })
+            .catch((err) => console.error(err));
+    };
+
     useEffect(() => {
         getSubjectsData();
         getDistrictsData();
+        getExamsData();
     }, []);
 
     const value = {
@@ -35,6 +46,7 @@ export const DataProvider = ({ children }) => {
         subjectsData,
         getDistrictsData,
         districtsData,
+        examsData,
     };
 
     return (

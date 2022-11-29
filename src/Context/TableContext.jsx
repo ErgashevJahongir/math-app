@@ -1,19 +1,19 @@
 import { DatePicker, Input, InputNumber, Radio } from "antd";
 import moment from "moment";
-import { createContext } from "react";
-import { useLocation } from "react-router-dom";
+import { createContext, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { useData } from "../Hook/UseData";
 import CustomSelect from "../Module/Select/Select";
 
 const disabledDate = (current) => {
-    // Can not select days before today and today
     return current && current < moment().endOf("day");
 };
 
 export const TableContext = createContext();
 
 export const TableProvider = ({ children }) => {
-    const { subjectsData } = useData();
+    const [examIdWithUrl, setExamIdWithUrl] = useState(1);
+    const { subjectsData, districtsData, examsData } = useData();
     let location = useLocation();
 
     const othersFormData = [
@@ -129,6 +129,53 @@ export const TableProvider = ({ children }) => {
         },
     ];
 
+    // {
+    //     "classNumber": "string",
+    //   }
+
+    const condidatesCreateFormData = [
+        {
+            name: "firstName",
+            label: "Ismi",
+            input: <Input placeholder="Qatnashchi ismini kiriting" />,
+        },
+        {
+            name: "lastName",
+            label: "Familiyasi",
+            input: <Input placeholder="Qatnashchi familiyasini kiriting" />,
+        },
+        {
+            name: "phoneNumber",
+            label: "Telefon nomeri",
+            input: <Input placeholder="Qatnashchi nomerini kiriting" />,
+        },
+        {
+            name: "classNumber",
+            label: "Sinfi",
+            input: <Input placeholder="Nechanchi sinifda o'qishi" />,
+        },
+        {
+            name: "districtId",
+            label: "Tuman nomi",
+            input: (
+                <CustomSelect
+                    selectData={districtsData}
+                    placeholder="Tumanni tanlang"
+                />
+            ),
+        },
+        {
+            name: "examId",
+            label: "Imtihon nomi",
+            input: (
+                <CustomSelect
+                    selectData={examsData}
+                    placeholder="Imtihonni tanlang"
+                />
+            ),
+        },
+    ];
+
     let formData = {};
 
     switch (location.pathname) {
@@ -177,6 +224,22 @@ export const TableProvider = ({ children }) => {
             };
             break;
         }
+        case `/others/condidates/${examIdWithUrl}`: {
+            formData = {
+                formData: condidatesCreateFormData,
+                editFormData: condidatesCreateFormData,
+                branchData: false,
+                timeFilterInfo: false,
+                deleteInfo: false,
+                seenInfo: true,
+                createInfo: true,
+                editInfo: false,
+                timelyInfo: false,
+                editModalTitle: "Imtixon ma'lumotlarini o'zgartirish",
+                modalTitle: "Imtixon qo'shish",
+            };
+            break;
+        }
         default: {
             formData = { ...formData };
         }
@@ -184,6 +247,7 @@ export const TableProvider = ({ children }) => {
 
     const value = {
         formData,
+        setExamIdWithUrl,
     };
 
     return (

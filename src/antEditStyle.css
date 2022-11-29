@@ -150,7 +150,3 @@ thead:hover {
 .ant-upload.ant-upload-select {
     display: block;
 }
-
-.ant-table-content {
-    overflow: auto !important;
-}

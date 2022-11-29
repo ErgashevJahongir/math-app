@@ -11,6 +11,7 @@ import AddData from "./AddTableData";
 import EditData from "./EditTableData";
 import { useData } from "../../Hook/UseData";
 import { useTable } from "../../Hook/UseTable";
+import SeenTableData from "./SeenTableData";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -337,6 +338,14 @@ const CustomTable = (props) => {
                     )}
                 </Space>
                 <Space align="center" size="middle" className="new-buttons">
+                    {formData?.seenInfo ? (
+                        selectedRowKeys[0]?.length === 1 ? (
+                            <SeenTableData
+                                selectedRowKeys={{ ...selectedRowKeys[1][0] }}
+                                editModalTitle={"Imtihon qatnashchisi"}
+                            />
+                        ) : null
+                    ) : null}
                     {formData?.editInfo ? (
                         selectedRowKeys[0]?.length === 1 ? (
                             <EditData
