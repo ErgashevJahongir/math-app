@@ -1,7 +1,6 @@
 import useToken from "../Hook/UseToken";
 import { createContext, useEffect, useState } from "react";
 import instance from "../Api/Axios";
-
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -28,6 +27,7 @@ export const AuthProvider = ({ children }) => {
         instance
             .post("/api/auth/whoiam?token=" + token)
             .then((data) => {
+                console.log(data);
                 setUser(data.data.data);
                 setUserLoading(false);
             })

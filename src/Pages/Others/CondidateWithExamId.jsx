@@ -12,9 +12,10 @@ const CondidateWithExamId = () => {
         current: 1,
         pageSize: 10,
     });
-    const { subjectsData } = useData();
+    const { subjectsData, examsData } = useData();
     const { examIdWith } = useParams();
     const navigate = useNavigate();
+    const exam = examsData?.filter((item) => item?.id == examIdWith);
 
     const getCondifateWithId = (current, pageSize) => {
         setPageData((prev) => ({ ...prev, loading: true }));
@@ -25,12 +26,11 @@ const CondidateWithExamId = () => {
             .then((data) => {
                 setPageData((prev) => ({
                     ...prev,
-                    condidateWithExamId: data.data?.data.map((item) => ({
+                    condidateWithExamId: data?.data?.data?.map((item) => ({
                         ...item,
-                        subjectId: item.exam.subjectId,
+                        subjectId: item?.exam?.subjectId,
                     })),
                 }));
-                console.log(data);
             })
             .catch((error) => {
                 console.error(error);
@@ -183,8 +183,10 @@ const CondidateWithExamId = () => {
     ];
 
     return (
-        <div className="container">
-            <h3>Imtihon qatnashchilari</h3>
+        <div className="container" style={{ marginTop: 30 }}>
+            <h2 style={{ marginBottom: 10 }}>
+                {exam[0]?.title} imtihon qatnashchilari
+            </h2>
             <CustomTable
                 columns={columns}
                 pageSizeOptions={[10, 20]}

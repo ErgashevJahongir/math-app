@@ -158,3 +158,15 @@ thead:hover {
 .ant-drawer .ant-drawer-body {
     padding: 0;
 }
+
+.ant-layout .ant-layout-header {
+    background-color: #081f33;
+}
+
+.ant-menu-dark {
+    background-color: #081f33;
+}
+
+.ant-menu-dark.ant-menu-submenu > .ant-menu {
+    background-color: #081f33;
+}

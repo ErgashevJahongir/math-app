@@ -1,7 +1,7 @@
 import { DatePicker, Input, InputNumber, Radio } from "antd";
 import moment from "moment";
 import { createContext, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useData } from "../Hook/UseData";
 import CustomSelect from "../Module/Select/Select";
 
@@ -129,10 +129,6 @@ export const TableProvider = ({ children }) => {
         },
     ];
 
-    // {
-    //     "classNumber": "string",
-    //   }
-
     const condidatesCreateFormData = [
         {
             name: "firstName",
@@ -169,7 +165,10 @@ export const TableProvider = ({ children }) => {
             label: "Imtihon nomi",
             input: (
                 <CustomSelect
-                    selectData={examsData}
+                    selectData={examsData?.map((item) => ({
+                        ...item,
+                        name: item.title,
+                    }))}
                     placeholder="Imtihonni tanlang"
                 />
             ),

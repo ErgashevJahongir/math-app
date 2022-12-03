@@ -1,17 +1,17 @@
 import { Col, Row } from "antd";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./userComp.css";
 import { useNavigate } from "react-router-dom";
 import CondidateRegister from "./CondidateRegister";
+import { useData } from "../../Hook/UseData";
 
 const OurExams = () => {
-    const [examsData, setExamsData] = useState([]);
-    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
+    const { examsData } = useData();
+    const navigate = useNavigate();
     const showDrawer = () => {
         setOpen(true);
     };
@@ -53,24 +53,8 @@ const OurExams = () => {
         ],
     };
 
-    const getExamsData = () => {
-        axios
-            .get("http://143.198.183.45:8080/api/exam/list?page=0&size=100")
-            .then((data) => {
-                console.log(data);
-                setExamsData(data.data.data);
-            })
-            .catch((err) => console.error(err));
-    };
-
-    useEffect(() => {
-        getExamsData();
-    }, []);
-
     return (
-        <section
-            style={{ marginTop: 60, marginBottom: 40, textAlign: "center" }}
-        >
+        <section style={{ marginBottom: 40, textAlign: "center" }}>
             <div className="container">
                 <h2
                     style={{
@@ -153,6 +137,7 @@ const OurExams = () => {
                                             <CondidateRegister
                                                 open={open}
                                                 onClose={onClose}
+                                                examId={item.id}
                                             />
                                         </div>
                                     </div>
@@ -231,6 +216,7 @@ const OurExams = () => {
                                                     <CondidateRegister
                                                         open={open}
                                                         onClose={onClose}
+                                                        examId={item.id}
                                                     />
                                                 </div>
                                             </div>

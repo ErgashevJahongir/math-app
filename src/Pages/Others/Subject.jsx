@@ -117,7 +117,7 @@ const Subjects = () => {
     ];
 
     return (
-        <div className="container">
+        <div className="container" style={{ marginTop: 30 }}>
             <h3>Fanlari</h3>
             <CustomTable
                 columns={columns}

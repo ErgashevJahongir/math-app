@@ -117,7 +117,7 @@ const Districts = () => {
     ];
 
     return (
-        <div className="container">
+        <div className="container" style={{ marginTop: 30 }}>
             <h3>Navoiy viloyati tumanlari</h3>
             <CustomTable
                 columns={columns}

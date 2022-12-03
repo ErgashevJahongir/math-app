@@ -1,11 +1,11 @@
 import { Col, Row } from "antd";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CondidateRegister from "../Components/UsedComp/CondidateRegister";
 import "../Components/UsedComp/userComp.css";
+import { useData } from "../Hook/UseData";
 
 const Exams = () => {
-    const [examsData, setExamsData] = useState([]);
+    const { examsData } = useData();
     const [open, setOpen] = useState(false);
     const showDrawer = () => {
         setOpen(true);
@@ -13,19 +13,6 @@ const Exams = () => {
     const onClose = () => {
         setOpen(false);
     };
-    const getExamsData = () => {
-        axios
-            .get("http://143.198.183.45:8080/api/exam/list?page=0&size=100")
-            .then((data) => {
-                console.log(data);
-                setExamsData(data.data.data);
-            })
-            .catch((err) => console.error(err));
-    };
-
-    useEffect(() => {
-        getExamsData();
-    }, []);
 
     return (
         <section
@@ -113,6 +100,7 @@ const Exams = () => {
                                         <CondidateRegister
                                             open={open}
                                             onClose={onClose}
+                                            examId={item?.id}
                                         />
                                     </div>
                                 </div>

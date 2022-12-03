@@ -1,5 +1,11 @@
 import { Avatar, Button, Dropdown, Layout, Menu, Space } from "antd";
 import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import useToken from "../../Hook/UseToken";
+import DrapdownMenu from "./DrapdownMenu";
+import { useAuth } from "../../Hook/UseAuth";
+import { useTable } from "../../Hook/UseTable";
+import { useData } from "../../Hook/UseData";
 import {
     DashboardOutlined,
     MenuOutlined,
@@ -11,18 +17,13 @@ import {
     ProfileOutlined,
     OrderedListOutlined,
 } from "@ant-design/icons";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import useToken from "../../Hook/UseToken";
-import DrapdownMenu from "./DrapdownMenu";
-import { useAuth } from "../../Hook/UseAuth";
-import { useTable } from "../../Hook/UseTable";
-import { useData } from "../../Hook/UseData";
+import logoSvg from "./logo-math.svg";
 
 const { Header } = Layout;
 
 function Navbar() {
     const [isVisible, setIsVisible] = useState(false);
-    const { user } = useAuth();
+    const { user, signOut } = useAuth();
     const { token } = useToken();
     const { examsData } = useData();
     const { examIdWith } = useParams();
@@ -37,12 +38,16 @@ function Navbar() {
         if (sessionStorage.getItem("math-test-app")) {
             sessionStorage.removeItem("math-test-app", token);
         }
-        navigate("/auth/signin");
+        signOut(() => signOut(() => navigate("/", { replace: true })));
+    };
+
+    const onClickGoPage = (e) => {
+        navigate(e.key);
     };
 
     useEffect(() => {
         setExamIdWithUrl(examIdWith);
-    }, [examIdWith]);
+    }, [examIdWith, location.pathname]);
 
     const showDrawer = () => {
         setIsVisible(true);
@@ -92,10 +97,7 @@ function Navbar() {
                 }}
             >
                 <div className="logo">
-                    <Link
-                        to="/"
-                        style={{ marginTop: "10px", display: "block" }}
-                    >
+                    <Link to="/" style={{ display: "block" }}>
                         <h1
                             style={{
                                 display: "flex",
@@ -103,11 +105,7 @@ function Navbar() {
                                 color: "#ff5722",
                             }}
                         >
-                            LOGO
-                            <i
-                                className="bx bxs-gas-pump"
-                                style={{ marginLeft: "10px", fontSize: "26px" }}
-                            />
+                            <img src={logoSvg} alt="logo" width={80} />
                         </h1>
                     </Link>
                 </div>
@@ -116,27 +114,25 @@ function Navbar() {
                     theme="dark"
                     defaultSelectedKeys={[location.pathname]}
                     mode="horizontal"
+                    onClick={onClickGoPage}
+                    style={{ width: "100%", textAlign: "center" }}
                     items={[
                         {
                             label: "Bosh Sahifa",
                             key: "/",
                             icon: (
-                                <Link to="/">
-                                    <DashboardOutlined
-                                        style={{ fontSize: "18px" }}
-                                    />
-                                </Link>
+                                <DashboardOutlined
+                                    style={{ fontSize: "18px" }}
+                                />
                             ),
                         },
                         {
                             label: "Imtihonlar",
                             key: "/exams",
                             icon: (
-                                <Link to="/exams">
-                                    <UnorderedListOutlined
-                                        style={{ fontSize: "18px" }}
-                                    />
-                                </Link>
+                                <UnorderedListOutlined
+                                    style={{ fontSize: "18px" }}
+                                />
                             ),
                         },
                         user
@@ -144,50 +140,42 @@ function Navbar() {
                                   label: "Qo'shimcha",
                                   key: "/others",
                                   icon: (
-                                      <Link to="/others">
-                                          <SettingOutlined
-                                              style={{ fontSize: "18px" }}
-                                          />
-                                      </Link>
+                                      <SettingOutlined
+                                          style={{ fontSize: "18px" }}
+                                      />
                                   ),
                                   children: [
                                       {
                                           label: "Tumanlar",
                                           key: "/others/district",
                                           icon: (
-                                              <Link to="/others/district">
-                                                  <ProfileOutlined
-                                                      style={{
-                                                          fontSize: "18px",
-                                                      }}
-                                                  />
-                                              </Link>
+                                              <ProfileOutlined
+                                                  style={{
+                                                      fontSize: "18px",
+                                                  }}
+                                              />
                                           ),
                                       },
                                       {
                                           label: "Fanlar",
                                           key: "/others/subject",
                                           icon: (
-                                              <Link to="/others/subject">
-                                                  <OrderedListOutlined
-                                                      style={{
-                                                          fontSize: "18px",
-                                                      }}
-                                                  />
-                                              </Link>
+                                              <OrderedListOutlined
+                                                  style={{
+                                                      fontSize: "18px",
+                                                  }}
+                                              />
                                           ),
                                       },
                                       {
                                           label: "Imtixonlar",
                                           key: "/others/exam",
                                           icon: (
-                                              <Link to="/others/exam">
-                                                  <UnorderedListOutlined
-                                                      style={{
-                                                          fontSize: "18px",
-                                                      }}
-                                                  />
-                                              </Link>
+                                              <UnorderedListOutlined
+                                                  style={{
+                                                      fontSize: "18px",
+                                                  }}
+                                              />
                                           ),
                                       },
                                       {
@@ -202,13 +190,11 @@ function Navbar() {
                                               label: item.title,
                                               key: `/others/condidates/${item.id}`,
                                               icon: (
-                                                  <Link to="/others/condidates/1">
-                                                      <ProfileOutlined
-                                                          style={{
-                                                              fontSize: "18px",
-                                                          }}
-                                                      />
-                                                  </Link>
+                                                  <ProfileOutlined
+                                                      style={{
+                                                          fontSize: "18px",
+                                                      }}
+                                                  />
                                               ),
                                           })),
                                       },
@@ -231,6 +217,7 @@ function Navbar() {
                                 style={{
                                     color: "#f56a00",
                                     backgroundColor: "#fde3cf",
+                                    cursor: "pointer",
                                 }}
                             >
                                 {user?.firstName?.charAt(0)}

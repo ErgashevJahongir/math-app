@@ -17,7 +17,7 @@ import { useData } from "../../Hook/UseData";
 function DrapdownMenu({ onClose, isVisible }) {
     const { token } = useToken();
     const navigate = useNavigate();
-    const { user } = useAuth();
+    const { user, signOut } = useAuth();
     const { examsData } = useData();
     const location = useLocation();
 
@@ -28,7 +28,11 @@ function DrapdownMenu({ onClose, isVisible }) {
         if (sessionStorage.getItem("math-test-app")) {
             sessionStorage.removeItem("math-test-app", token);
         }
-        navigate("/auth/signin");
+        signOut(() => signOut(() => navigate("/", { replace: true })));
+    };
+
+    const onClickGoPage = (e) => {
+        navigate(e.key);
     };
 
     return (
@@ -45,7 +49,8 @@ function DrapdownMenu({ onClose, isVisible }) {
                     paddingTop: 10,
                 }}
                 defaultSelectedKeys={[location.pathname]}
-                defaultOpenKeys={["6"]}
+                defaultOpenKeys={["/others"]}
+                onClick={onClickGoPage}
                 mode="inline"
                 theme="dark"
                 items={[
@@ -53,22 +58,16 @@ function DrapdownMenu({ onClose, isVisible }) {
                         label: "Bosh Sahifa",
                         key: "/",
                         icon: (
-                            <Link to="/">
-                                <DashboardOutlined
-                                    style={{ fontSize: "18px" }}
-                                />
-                            </Link>
+                            <DashboardOutlined style={{ fontSize: "18px" }} />
                         ),
                     },
                     {
                         label: "Imtihonlar",
                         key: "/exams",
                         icon: (
-                            <Link to="/exams">
-                                <UnorderedListOutlined
-                                    style={{ fontSize: "18px" }}
-                                />
-                            </Link>
+                            <UnorderedListOutlined
+                                style={{ fontSize: "18px" }}
+                            />
                         ),
                     },
                     user
@@ -76,50 +75,42 @@ function DrapdownMenu({ onClose, isVisible }) {
                               label: "Qo'shimcha",
                               key: "/others",
                               icon: (
-                                  <Link to="/others">
-                                      <SettingOutlined
-                                          style={{ fontSize: "18px" }}
-                                      />
-                                  </Link>
+                                  <SettingOutlined
+                                      style={{ fontSize: "18px" }}
+                                  />
                               ),
                               children: [
                                   {
                                       label: "Tumanlar",
                                       key: "/others/district",
                                       icon: (
-                                          <Link to="/others/district">
-                                              <ProfileOutlined
-                                                  style={{
-                                                      fontSize: "18px",
-                                                  }}
-                                              />
-                                          </Link>
+                                          <ProfileOutlined
+                                              style={{
+                                                  fontSize: "18px",
+                                              }}
+                                          />
                                       ),
                                   },
                                   {
                                       label: "Fanlar",
                                       key: "/others/subject",
                                       icon: (
-                                          <Link to="/others/subject">
-                                              <OrderedListOutlined
-                                                  style={{
-                                                      fontSize: "18px",
-                                                  }}
-                                              />
-                                          </Link>
+                                          <OrderedListOutlined
+                                              style={{
+                                                  fontSize: "18px",
+                                              }}
+                                          />
                                       ),
                                   },
                                   {
                                       label: "Imtixonlar",
                                       key: "/others/exam",
                                       icon: (
-                                          <Link to="/others/exam">
-                                              <UnorderedListOutlined
-                                                  style={{
-                                                      fontSize: "18px",
-                                                  }}
-                                              />
-                                          </Link>
+                                          <UnorderedListOutlined
+                                              style={{
+                                                  fontSize: "18px",
+                                              }}
+                                          />
                                       ),
                                   },
                                   {
@@ -134,13 +125,11 @@ function DrapdownMenu({ onClose, isVisible }) {
                                           label: item.title,
                                           key: `/others/condidates/${item.id}`,
                                           icon: (
-                                              <Link to="/others/condidates/1">
-                                                  <ProfileOutlined
-                                                      style={{
-                                                          fontSize: "18px",
-                                                      }}
-                                                  />
-                                              </Link>
+                                              <ProfileOutlined
+                                                  style={{
+                                                      fontSize: "18px",
+                                                  }}
+                                              />
                                           ),
                                       })),
                                   },

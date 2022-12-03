@@ -10,13 +10,11 @@ import "./antEditStyle.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <ConfigProvider locale={locale}>
-                <App />
-            </ConfigProvider>
-        </BrowserRouter>
-    </React.StrictMode>
+    <BrowserRouter>
+        <ConfigProvider locale={locale}>
+            <App />
+        </ConfigProvider>
+    </BrowserRouter>
 );
 
 reportWebVitals();

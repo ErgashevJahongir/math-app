@@ -12,7 +12,7 @@ function LayoutMenu() {
                 <Content
                     className="site-layout-background"
                     style={{
-                        minHeight: "calc(100vh - 115px)",
+                        minHeight: "calc(100vh - 65px)",
                     }}
                 >
                     <FloatButton.BackTop />

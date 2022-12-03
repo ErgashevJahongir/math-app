@@ -4,8 +4,10 @@ import axios from "axios";
 const token1 = JSON.parse(sessionStorage.getItem("math-test-app"));
 const token2 = JSON.parse(sessionStorage.getItem("math-test-app"));
 
+const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
+
 const instance = axios.create({
-    baseURL: "http://143.198.183.45:8080",
+    baseURL: REACT_APP_BASE_URL,
     headers: {
         "Content-Type": "application/json",
         "Accept-Language": "uz",

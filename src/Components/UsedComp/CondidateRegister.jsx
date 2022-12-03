@@ -2,7 +2,7 @@ import { Button, Col, Drawer, Form, Input, Row, Space } from "antd";
 import { useData } from "../../Hook/UseData";
 import CustomSelect from "../../Module/Select/Select";
 
-const CondidateRegister = ({ onClose, open }) => {
+const CondidateRegister = ({ onClose, open, examId }) => {
     const { examsData, districtsData } = useData();
     const [form] = Form.useForm();
 
@@ -115,17 +115,17 @@ const CondidateRegister = ({ onClose, open }) => {
                             rules={[
                                 {
                                     required: true,
-                                    message:
-                                        "Iltimos qatnashchi tumanini tanlang",
+                                    message: "Iltimos imtihon nomini tanlang",
                                 },
                             ]}
                         >
                             <CustomSelect
-                                selectData={examsData.map((item) => ({
+                                selectData={examsData?.map((item) => ({
                                     ...item,
                                     name: item.title,
                                 }))}
                                 placeholder="Imtihonni tanlang"
+                                DValue={examId}
                             />
                         </Form.Item>
                     </Col>

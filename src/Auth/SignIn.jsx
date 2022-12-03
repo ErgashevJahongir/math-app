@@ -1,17 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import instance from "../Api/Axios";
 import Loading from "../Components/Loading";
 import { useAuth } from "../Hook/UseAuth";
 import useToken from "../Hook/UseToken";
 import "./signin.css";
 
+const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const SignIn = () => {
     const [loading, setLoading] = useState(true);
     const { token, setToken } = useToken();
     const location = useLocation();
-    // const { siginIn } = useAuth();
+    const { siginIn } = useAuth();
     let navigate = useNavigate();
     const fromPage = location.state?.from?.pathname || "/";
 
@@ -22,23 +23,14 @@ export const SignIn = () => {
         var { phone, password } = document.forms[0];
 
         axios
-            .post("http://143.198.183.45:8080/api/auth/login", {
+            .post(`${REACT_APP_BASE_URL}/api/auth/login`, {
                 number: phone.value,
                 password: password.value,
             })
             .then((data) => {
-                console.log(data);
                 setToken(data.data, true);
+                siginIn(data.data, () => navigate(fromPage, { replace: true }));
                 window.location.href = "/";
-                // data.data &&
-                //     instance
-                //         .post("/api/auth?token=" + data.data)
-                //         .then((data) => {
-                // siginIn(data.data, () => navigate(fromPage, { replace: true }));
-                // })
-                // .catch((err) => {
-                //     console.error(err);
-                // });
             })
             .catch((err) => {
                 setLoading(false);
@@ -53,7 +45,7 @@ export const SignIn = () => {
             navigate("/");
         }
         setLoading(false);
-    }, []);
+    }, [token]);
 
     if (loading) {
         return <Loading />;
@@ -61,10 +53,6 @@ export const SignIn = () => {
 
     return (
         <>
-            <div className="background">
-                <div className="shape"></div>
-                <div className="shape"></div>
-            </div>
             <form onSubmit={handleSubmit} className="new-login">
                 <h3>Kirish</h3>
                 <div>

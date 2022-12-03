@@ -20,27 +20,6 @@ const RoutesPage = () => {
         return <Loading />;
     }
 
-    // const RequairedToken = () => {
-    //     return (
-    //         <Routes>
-    //             <Route element={<LayoutMenu />}>
-    //                 <Route index element={<Dashboard />} />
-    //                 <Route
-    //                     path="others/district"
-    //                     element={
-    //                         <RequireAuth>
-    //                             <Districts />
-    //                         </RequireAuth>
-    //                     }
-    //                 />
-    //             </Route>
-    //             <Route path="auth/signin" element={<SignIn />} />
-    //             <Route path="*" element={<Error404 />} />
-    //             <Route path="server-error" element={<Error500 />} />
-    //         </Routes>
-    //     );
-    // };
-
     return (
         <Routes>
             <Route element={<LayoutMenu />}>

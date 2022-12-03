@@ -193,7 +193,7 @@ const ExamsComp = () => {
     ];
 
     return (
-        <div className="container">
+        <div className="container" style={{ marginTop: 30 }}>
             <h3>Imtixonlari</h3>
             <CustomTable
                 columns={columns}
