@@ -152,7 +152,7 @@ export const TableProvider = ({ children }) => {
         {
             name: "classNumber",
             label: "Sinfi",
-            input: <Input placeholder="Nechanchi sinifda o'qishi" />,
+            input: <Input placeholder="Nechanchi sinfda o'qishi" />,
         },
         {
             name: "districtId",

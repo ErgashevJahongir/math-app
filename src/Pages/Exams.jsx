@@ -1,10 +1,18 @@
 import { Col, Row } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import CondidateRegister from "../Components/UsedComp/CondidateRegister";
 import "../Components/UsedComp/userComp.css";
 
 const Exams = () => {
     const [examsData, setExamsData] = useState([]);
+    const [open, setOpen] = useState(false);
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
     const getExamsData = () => {
         axios
             .get("http://143.198.183.45:8080/api/exam/list?page=0&size=100")
@@ -21,6 +29,7 @@ const Exams = () => {
 
     return (
         <section
+            className="examsData"
             style={{ marginTop: 30, marginBottom: 40, textAlign: "center" }}
         >
             <div className="container">
@@ -97,9 +106,14 @@ const Exams = () => {
                                         <button
                                             className="subscribe"
                                             style={{ padding: "10px 20px" }}
+                                            onClick={showDrawer}
                                         >
                                             Ro'yxatdan o'tish
                                         </button>
+                                        <CondidateRegister
+                                            open={open}
+                                            onClose={onClose}
+                                        />
                                     </div>
                                 </div>
                             </Col>

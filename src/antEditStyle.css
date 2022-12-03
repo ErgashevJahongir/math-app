@@ -151,6 +151,10 @@ thead:hover {
     display: block;
 }
 
+.examsData .ant-drawer .ant-drawer-body {
+    padding: 16px;
+}
+
 .ant-drawer .ant-drawer-body {
     padding: 0;
 }

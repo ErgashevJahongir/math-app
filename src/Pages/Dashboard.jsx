@@ -9,8 +9,8 @@ const Dashboard = () => {
         <div>
             <Taklif />
             <OurExams />
-            <SocialsAndSubscribe />
             <OurTeachers />
+            <SocialsAndSubscribe />
             <Contacts />
         </div>
     );

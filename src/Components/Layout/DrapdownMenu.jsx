@@ -25,8 +25,8 @@ function DrapdownMenu({ onClose, isVisible }) {
         e.preventDefault();
         if (sessionStorage.getItem("math-test-app"))
             sessionStorage.removeItem("math-test-app", token);
-        if (localStorage.getItem("math-test-app")) {
-            localStorage.removeItem("math-test-app", token);
+        if (sessionStorage.getItem("math-test-app")) {
+            sessionStorage.removeItem("math-test-app", token);
         }
         navigate("/auth/signin");
     };

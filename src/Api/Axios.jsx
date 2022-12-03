@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import axios from "axios";
 
 const token1 = JSON.parse(sessionStorage.getItem("math-test-app"));
-const token2 = JSON.parse(localStorage.getItem("math-test-app"));
+const token2 = JSON.parse(sessionStorage.getItem("math-test-app"));
 
 const instance = axios.create({
     baseURL: "http://143.198.183.45:8080",
@@ -33,8 +33,8 @@ const AxiosInterceptor = ({ children }) => {
             if (error?.response?.status === 401) {
                 if (sessionStorage.getItem("math-test-app"))
                     sessionStorage.removeItem("math-test-app", token1);
-                if (localStorage.getItem("math-test-app")) {
-                    localStorage.removeItem("math-test-app", token2);
+                if (sessionStorage.getItem("math-test-app")) {
+                    sessionStorage.removeItem("math-test-app", token2);
                 }
                 window.location.href = "/auth/signin";
             }
