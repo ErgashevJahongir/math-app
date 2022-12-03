@@ -1,0 +1,20 @@
+.contact {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background: #001529;
+    background: -webkit-linear-gradient(to right, #3a6073, #001529);
+    background: linear-gradient(to right, #3a6073, #001529);
+    color: #fff;
+    margin-top: 60px;
+    text-align: center;
+    padding: 30px 0;
+}
+
+.contact h2 {
+    margin-bottom: 20px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.5;
+}

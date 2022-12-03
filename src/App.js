@@ -12,25 +12,25 @@ function App() {
     const { token } = useToken();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!token) {
-            return navigate("/login", { replace: true });
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (!token) {
+    //         return navigate("/auth/signin", { replace: true });
+    //     }
+    // }, []);
 
     return (
         <>
-            {token ? (
-                <AxiosInterceptor>
-                    <AuthProvider>
-                        <DataProvider>
-                            <TableProvider>
-                                <RoutesPage />
-                            </TableProvider>
-                        </DataProvider>
-                    </AuthProvider>
-                </AxiosInterceptor>
-            ) : null}
+            {/* {token ? ( */}
+            <AxiosInterceptor>
+                <AuthProvider>
+                    <DataProvider>
+                        <TableProvider>
+                            <RoutesPage />
+                        </TableProvider>
+                    </DataProvider>
+                </AuthProvider>
+            </AxiosInterceptor>
+            {/* ) : null}
             {token ? null : (
                 <Routes>
                     <Route path="/auth/signin" element={<SignIn />} />
@@ -39,19 +39,9 @@ function App() {
                         element={<Navigate to="/auth/signin" replace />}
                     />
                 </Routes>
-            )}
+            )} */}
         </>
     );
-
-    // return (
-    //     <AuthProvider>
-    //         <DataProvider>
-    //             <AxiosInterceptor>
-    //                 <RoutesPage />
-    //             </AxiosInterceptor>
-    //         </DataProvider>
-    //     </AuthProvider>
-    // );
 }
 
 export default App;

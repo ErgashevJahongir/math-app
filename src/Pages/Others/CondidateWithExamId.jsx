@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { message } from "antd";
-import moment from "moment";
 import instance from "../../Api/Axios";
 import CustomTable from "../../Module/Table/Table";
 import { useData } from "../../Hook/UseData";
@@ -184,7 +183,7 @@ const CondidateWithExamId = () => {
     ];
 
     return (
-        <div>
+        <div className="container">
             <h3>Imtihon qatnashchilari</h3>
             <CustomTable
                 columns={columns}

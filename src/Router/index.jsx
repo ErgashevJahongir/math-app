@@ -11,6 +11,7 @@ import Subjects from "../Pages/Others/Subject";
 import { useAuth } from "../Hook/UseAuth";
 import ExamsComp from "../Pages/Others/Exams";
 import CondidateWithExamId from "../Pages/Others/CondidateWithExamId";
+import Exams from "../Pages/Exams";
 
 const RoutesPage = () => {
     const { user, userLoading } = useAuth();
@@ -76,6 +77,7 @@ const RoutesPage = () => {
                         </RequireAuth>
                     }
                 />
+                <Route path="exams" element={<Exams />} />
             </Route>
             <Route path="auth/signin" element={<SignIn />} />
             <Route path="*" element={<Error404 />} />

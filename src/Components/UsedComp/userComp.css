@@ -1,0 +1,70 @@
+.socials {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background: #001529;
+    background: -webkit-linear-gradient(to right, #3a6073, #001529);
+    background: linear-gradient(to right, #3a6073, #001529);
+}
+
+.Follow {
+    margin-bottom: 27px;
+}
+
+.Follow h3 {
+    color: #fff;
+    font-size: 25px;
+    line-height: 30px;
+    font-weight: 600;
+    border-bottom: #fff solid 1px;
+    border-bottom-width: 1px;
+    border-width: 1px;
+    display: inline-block;
+    padding-bottom: 2px;
+}
+
+.Follow p {
+    color: #fff;
+    margin-top: 15px;
+}
+
+.subscribe {
+    padding: 10px 45px;
+    margin-left: 10px;
+    text-align: center;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: #fff;
+    border: none;
+    background-image: linear-gradient(
+        to right,
+        #2c3e50 0%,
+        #3498db 51%,
+        #2c3e50 100%
+    );
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+
+.subscribe:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+}
+
+.location_icon {
+    display: flex;
+    gap: 20px;
+}
+
+.location_icon li {
+    font-size: 25px;
+    color: #fff;
+}
+
+.input-com input::placeholder {
+    color: #00152980;
+}

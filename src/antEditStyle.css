@@ -150,3 +150,7 @@ thead:hover {
 .ant-upload.ant-upload-select {
     display: block;
 }
+
+.ant-drawer .ant-drawer-body {
+    padding: 0;
+}

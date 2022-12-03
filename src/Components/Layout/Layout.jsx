@@ -12,15 +12,11 @@ function LayoutMenu() {
                 <Content
                     className="site-layout-background"
                     style={{
-                        margin: "12px 8px",
-                        padding: 12,
                         minHeight: "calc(100vh - 115px)",
                     }}
                 >
-                    <div className="container">
-                        <FloatButton.BackTop />
-                        <Outlet />
-                    </div>
+                    <FloatButton.BackTop />
+                    <Outlet />
                 </Content>
             </Layout>
         </Layout>

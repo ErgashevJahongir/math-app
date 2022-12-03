@@ -3,8 +3,13 @@ import { useState, useEffect } from "react";
 import {
     DashboardOutlined,
     MenuOutlined,
-    UserOutlined,
     LogoutOutlined,
+    LoginOutlined,
+    SettingOutlined,
+    UserOutlined,
+    UnorderedListOutlined,
+    ProfileOutlined,
+    OrderedListOutlined,
 } from "@ant-design/icons";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import useToken from "../../Hook/UseToken";
@@ -27,7 +32,11 @@ function Navbar() {
 
     const handleLogOut = (e) => {
         e.preventDefault();
-        localStorage.removeItem("math-test-app", token);
+        if (sessionStorage.getItem("math-test-app"))
+            sessionStorage.removeItem("math-test-app", token);
+        if (localStorage.getItem("math-test-app")) {
+            localStorage.removeItem("math-test-app", token);
+        }
         navigate("/auth/signin");
     };
 
@@ -46,18 +55,6 @@ function Navbar() {
     const menu = (
         <Menu
             items={[
-                {
-                    key: "1",
-                    icon: <UserOutlined />,
-                    label: (
-                        <Link
-                            to="/profil"
-                            style={{ width: "100px", display: "inline-block" }}
-                        >
-                            Profil
-                        </Link>
-                    ),
-                },
                 {
                     key: "2",
                     danger: true,
@@ -81,6 +78,9 @@ function Navbar() {
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
+                position: "sticky",
+                top: 0,
+                zIndex: 1,
             }}
         >
             <div
@@ -88,6 +88,7 @@ function Navbar() {
                 style={{
                     display: "flex",
                     alignItems: "center",
+                    justifyContent: "space-between",
                 }}
             >
                 <div className="logo">
@@ -111,7 +112,6 @@ function Navbar() {
                     </Link>
                 </div>
                 <Menu
-                    style={{ width: "75%" }}
                     className="inline-navber"
                     theme="dark"
                     defaultSelectedKeys={[location.pathname]}
@@ -129,65 +129,96 @@ function Navbar() {
                             ),
                         },
                         {
-                            label: "Tumanlar",
-                            key: "/others/district",
+                            label: "Imtihonlar",
+                            key: "/exams",
                             icon: (
-                                <Link to="/others/district">
-                                    <DashboardOutlined
+                                <Link to="/exams">
+                                    <UnorderedListOutlined
                                         style={{ fontSize: "18px" }}
                                     />
                                 </Link>
                             ),
                         },
-                        {
-                            label: "Fanlar",
-                            key: "/others/subject",
-                            icon: (
-                                <Link to="/others/subject">
-                                    <DashboardOutlined
-                                        style={{ fontSize: "18px" }}
-                                    />
-                                </Link>
-                            ),
-                        },
-                        {
-                            label: "Imtixonlar",
-                            key: "/others/exam",
-                            icon: (
-                                <Link to="/others/exam">
-                                    <DashboardOutlined
-                                        style={{ fontSize: "18px" }}
-                                    />
-                                </Link>
-                            ),
-                        },
-                        {
-                            label: "Qatnashchilar",
-                            key: "/others/condidates",
-                            icon: (
-                                <DashboardOutlined
-                                    style={{ fontSize: "18px" }}
-                                />
-                            ),
-                            children: examsData.map((item) => ({
-                                label: item.title,
-                                key: `/others/condidates/${item.id}`,
-                                icon: (
-                                    <Link to="/others/condidates/1">
-                                        <DashboardOutlined
-                                            style={{ fontSize: "18px" }}
-                                        />
-                                    </Link>
-                                ),
-                            })),
-                        },
+                        user
+                            ? {
+                                  label: "Qo'shimcha",
+                                  key: "/others",
+                                  icon: (
+                                      <Link to="/others">
+                                          <SettingOutlined
+                                              style={{ fontSize: "18px" }}
+                                          />
+                                      </Link>
+                                  ),
+                                  children: [
+                                      {
+                                          label: "Tumanlar",
+                                          key: "/others/district",
+                                          icon: (
+                                              <Link to="/others/district">
+                                                  <ProfileOutlined
+                                                      style={{
+                                                          fontSize: "18px",
+                                                      }}
+                                                  />
+                                              </Link>
+                                          ),
+                                      },
+                                      {
+                                          label: "Fanlar",
+                                          key: "/others/subject",
+                                          icon: (
+                                              <Link to="/others/subject">
+                                                  <OrderedListOutlined
+                                                      style={{
+                                                          fontSize: "18px",
+                                                      }}
+                                                  />
+                                              </Link>
+                                          ),
+                                      },
+                                      {
+                                          label: "Imtixonlar",
+                                          key: "/others/exam",
+                                          icon: (
+                                              <Link to="/others/exam">
+                                                  <UnorderedListOutlined
+                                                      style={{
+                                                          fontSize: "18px",
+                                                      }}
+                                                  />
+                                              </Link>
+                                          ),
+                                      },
+                                      {
+                                          label: "Qatnashchilar",
+                                          key: "/others/condidates",
+                                          icon: (
+                                              <UserOutlined
+                                                  style={{ fontSize: "18px" }}
+                                              />
+                                          ),
+                                          children: examsData.map((item) => ({
+                                              label: item.title,
+                                              key: `/others/condidates/${item.id}`,
+                                              icon: (
+                                                  <Link to="/others/condidates/1">
+                                                      <ProfileOutlined
+                                                          style={{
+                                                              fontSize: "18px",
+                                                          }}
+                                                      />
+                                                  </Link>
+                                              ),
+                                          })),
+                                      },
+                                  ],
+                              }
+                            : null,
                     ]}
                 />
                 {user ? (
-                    <span
-                        className={"inline_navbar"}
-                        style={{ marginLeft: "auto" }}
-                    >
+                    <span className={"inline-navber"}>
                         <Dropdown
                             menu={menu}
                             overlay={menu}
@@ -207,17 +238,15 @@ function Navbar() {
                         </Dropdown>
                     </span>
                 ) : (
-                    <Space>
+                    <Space className="inline-navber">
                         <Button
                             type="primary"
                             shape="round"
                             ghost
                             onClick={() => navigate("auth/signin")}
+                            icon={<LoginOutlined />}
                         >
                             Kirish
-                        </Button>
-                        <Button type="primary" shape="round">
-                            Ro'yxatdan o'tish
                         </Button>
                     </Space>
                 )}

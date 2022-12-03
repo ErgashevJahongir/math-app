@@ -127,12 +127,38 @@ li {
     display: none;
 }
 
+.inline-navber {
+    display: block !important;
+}
+
+.example {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
 .ant-modal.seenCont .ant-modal-content {
     padding: 10px 16px;
 }
 
 .ant-modal.seenCont .ant-list-item {
     padding: 8px 10px;
+}
+
+.slick-prev,
+.slick-next {
+    display: none !important;
+}
+
+.future-heading {
+    background: -webkit-linear-gradient(19deg, #7ab1cd 0%, #001529 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logout-btn {
+    padding: 0;
 }
 
 @media screen and (max-width: 1440px) {
@@ -151,7 +177,7 @@ li {
 @media screen and (max-width: 767px) {
     .container {
         width: 100%;
-        padding: 0 5px;
+        padding: 0 10px;
     }
 
     .burger-menu {
