@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loading from "../Components/Loading";
 import { useAuth } from "../Hook/UseAuth";
 import useToken from "../Hook/UseToken";
@@ -9,12 +9,10 @@ import "./signin.css";
 const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const SignIn = () => {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const { token, setToken } = useToken();
-    const location = useLocation();
     const { siginIn } = useAuth();
     let navigate = useNavigate();
-    const fromPage = location.state?.from?.pathname || "/";
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -29,7 +27,6 @@ export const SignIn = () => {
             })
             .then((data) => {
                 setToken(data.data, true);
-                siginIn(data.data, () => navigate(fromPage, { replace: true }));
                 window.location.href = "/";
             })
             .catch((err) => {

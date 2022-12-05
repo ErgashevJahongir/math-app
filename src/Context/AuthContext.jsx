@@ -27,9 +27,10 @@ export const AuthProvider = ({ children }) => {
         instance
             .post("/api/auth/whoiam?token=" + token)
             .then((data) => {
-                console.log(data);
                 setUser(data.data.data);
-                setUserLoading(false);
+                setTimeout(() => {
+                    setUserLoading(false);
+                }, 1500);
             })
             .catch((err) => {
                 console.error(err);

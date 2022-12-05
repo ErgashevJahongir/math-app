@@ -35,7 +35,7 @@ const CondidateWithExamId = () => {
             .catch((error) => {
                 console.error(error);
                 if (error.response?.status === 500) navigate("/server-error");
-                message.error("Imtixonlarni yuklashda muammo bo'ldi");
+                message.error("Abuturientlarni yuklashda muammo bo'ldi");
             })
             .finally(() =>
                 setPageData((prev) => ({ ...prev, loading: false }))
@@ -47,13 +47,13 @@ const CondidateWithExamId = () => {
         instance
             .post("/api/candidate/create", { ...values })
             .then(function (response) {
-                message.success("Imtixon muvaffaqiyatli qo'shildi");
+                message.success("Abuturient muvaffaqiyatli qo'shildi");
                 getCondifateWithId(pageData.current - 1, pageData.pageSize);
             })
             .catch(function (error) {
                 console.error(error);
                 if (error.response?.status === 500) navigate("/server-error");
-                message.error("Imtixonni qo'shishda muammo bo'ldi");
+                message.error("Abuturientni qo'shishda muammo bo'ldi");
             })
             .finally(() => {
                 setPageData((prev) => ({ ...prev, loading: false }));

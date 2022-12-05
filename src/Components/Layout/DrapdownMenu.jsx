@@ -33,13 +33,14 @@ function DrapdownMenu({ onClose, isVisible }) {
 
     const onClickGoPage = (e) => {
         navigate(e.key);
+        onClose();
     };
 
     return (
         <Drawer
             placement="right"
             closable={false}
-            size="200px"
+            width={250}
             onClose={onClose}
             open={isVisible}
         >
@@ -115,23 +116,12 @@ function DrapdownMenu({ onClose, isVisible }) {
                                   },
                                   {
                                       label: "Qatnashchilar",
-                                      key: "/others/condidates",
+                                      key: "/others/candidate",
                                       icon: (
                                           <UserOutlined
                                               style={{ fontSize: "18px" }}
                                           />
                                       ),
-                                      children: examsData.map((item) => ({
-                                          label: item.title,
-                                          key: `/others/condidates/${item.id}`,
-                                          icon: (
-                                              <ProfileOutlined
-                                                  style={{
-                                                      fontSize: "18px",
-                                                  }}
-                                              />
-                                          ),
-                                      })),
                                   },
                               ],
                           }

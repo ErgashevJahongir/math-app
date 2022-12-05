@@ -170,3 +170,7 @@ thead:hover {
 .ant-menu-dark.ant-menu-submenu > .ant-menu {
     background-color: #081f33;
 }
+
+.ant-table-wrapper .ant-table-thead > tr > th {
+    z-index: 0;
+}

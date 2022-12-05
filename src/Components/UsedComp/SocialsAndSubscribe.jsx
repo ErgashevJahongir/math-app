@@ -1,20 +1,19 @@
 import { Link } from "react-router-dom";
 import { FaInstagram, FaTelegram, FaTwitter, FaFacebook } from "react-icons/fa";
 import "./userComp.css";
-import { Col, Input, Row } from "antd";
+import { Col, Row } from "antd";
 
 const SocialsAndSubscribe = () => {
     return (
         <div className="socials">
             <div className="container">
-                <Row
-                    gutter={[20, 20]}
-                    style={{ paddingTop: 30, paddingBottom: 30 }}
-                >
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                <Row gutter={20} style={{ paddingTop: 30, paddingBottom: 30 }}>
+                    <Col xs={24} sm={16} md={16} lg={16} xl={16}>
                         <div className="Follow">
                             <h3>Ijtimoiy tarmoqlarda bizga azo bo'ling!</h3>
                         </div>
+                    </Col>
+                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
                         <ul className="location_icon">
                             <li>
                                 {" "}
@@ -42,7 +41,7 @@ const SocialsAndSubscribe = () => {
                             </li>
                         </ul>
                     </Col>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                    {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <div className="Follow">
                             <h3>To'liq ma'lumot oling</h3>
                             <p>
@@ -61,7 +60,7 @@ const SocialsAndSubscribe = () => {
                             />
                             <button className="subscribe">Subscribe</button>
                         </div>
-                    </Col>
+                    </Col> */}
                 </Row>
             </div>
         </div>

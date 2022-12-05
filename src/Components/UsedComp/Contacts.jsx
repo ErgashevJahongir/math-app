@@ -7,7 +7,7 @@ const Contacts = () => {
         <section className="contact">
             <div className="container">
                 <h2>Kontaktlar</h2>
-                <Row gutter={20}>
+                <Row gutter={20} className="contact-Cont">
                     <Col
                         xs={24}
                         sm={24}

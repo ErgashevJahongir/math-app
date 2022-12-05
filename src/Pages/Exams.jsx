@@ -1,18 +1,11 @@
-import { Col, Row } from "antd";
-import { useState } from "react";
+import { Col, Row, Space } from "antd";
+import moment from "moment";
 import CondidateRegister from "../Components/UsedComp/CondidateRegister";
 import "../Components/UsedComp/userComp.css";
 import { useData } from "../Hook/UseData";
 
 const Exams = () => {
     const { examsData } = useData();
-    const [open, setOpen] = useState(false);
-    const showDrawer = () => {
-        setOpen(true);
-    };
-    const onClose = () => {
-        setOpen(false);
-    };
 
     return (
         <section
@@ -71,6 +64,14 @@ const Exams = () => {
                                     >
                                         {item.title}
                                     </h3>
+                                    <Space style={{ marginBottom: 10 }}>
+                                        <span>Bo'lish vaqti:</span>
+                                        <span>
+                                            {moment(item.startedDate).format(
+                                                "YYYY-MM-DD hh:mm"
+                                            )}
+                                        </span>
+                                    </Space>
                                     <div
                                         style={{
                                             display: "flex",
@@ -90,17 +91,10 @@ const Exams = () => {
                                         >
                                             Narxi: {item.price} So'm
                                         </p>
-                                        <button
-                                            className="subscribe"
-                                            style={{ padding: "10px 20px" }}
-                                            onClick={showDrawer}
-                                        >
-                                            Ro'yxatdan o'tish
-                                        </button>
+
                                         <CondidateRegister
-                                            open={open}
-                                            onClose={onClose}
-                                            examId={item?.id}
+                                            examId={item.id}
+                                            amaunt={item.price}
                                         />
                                     </div>
                                 </div>

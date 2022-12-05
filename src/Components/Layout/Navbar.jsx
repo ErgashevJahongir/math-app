@@ -5,7 +5,6 @@ import useToken from "../../Hook/UseToken";
 import DrapdownMenu from "./DrapdownMenu";
 import { useAuth } from "../../Hook/UseAuth";
 import { useTable } from "../../Hook/UseTable";
-import { useData } from "../../Hook/UseData";
 import {
     DashboardOutlined,
     MenuOutlined,
@@ -25,7 +24,6 @@ function Navbar() {
     const [isVisible, setIsVisible] = useState(false);
     const { user, signOut } = useAuth();
     const { token } = useToken();
-    const { examsData } = useData();
     const { examIdWith } = useParams();
     const { setExamIdWithUrl } = useTable();
     const navigate = useNavigate();
@@ -115,7 +113,7 @@ function Navbar() {
                     defaultSelectedKeys={[location.pathname]}
                     mode="horizontal"
                     onClick={onClickGoPage}
-                    style={{ width: "100%", textAlign: "center" }}
+                    style={{ width: "100%", textAlign: "left" }}
                     items={[
                         {
                             label: "Bosh Sahifa",
@@ -180,23 +178,12 @@ function Navbar() {
                                       },
                                       {
                                           label: "Qatnashchilar",
-                                          key: "/others/condidates",
+                                          key: "/others/candidate",
                                           icon: (
                                               <UserOutlined
                                                   style={{ fontSize: "18px" }}
                                               />
                                           ),
-                                          children: examsData.map((item) => ({
-                                              label: item.title,
-                                              key: `/others/condidates/${item.id}`,
-                                              icon: (
-                                                  <ProfileOutlined
-                                                      style={{
-                                                          fontSize: "18px",
-                                                      }}
-                                                  />
-                                              ),
-                                          })),
                                       },
                                   ],
                               }

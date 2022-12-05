@@ -208,4 +208,12 @@ li {
     .select-add {
         margin-bottom: 8px;
     }
+
+    .ant-layout .ant-layout-header {
+        padding-inline: 10px;
+    }
+
+    .contact-Cont {
+        flex-direction: column-reverse;
+    }
 }

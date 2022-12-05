@@ -223,7 +223,7 @@ export const TableProvider = ({ children }) => {
             };
             break;
         }
-        case `/others/condidates/${examIdWithUrl}`: {
+        case `/others/candidates/${examIdWithUrl}`: {
             formData = {
                 formData: condidatesCreateFormData,
                 editFormData: condidatesCreateFormData,

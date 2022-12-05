@@ -10,8 +10,8 @@ const Dashboard = () => {
             <Taklif />
             <OurExams />
             <OurTeachers />
-            <SocialsAndSubscribe />
             <Contacts />
+            <SocialsAndSubscribe />
         </div>
     );
 };

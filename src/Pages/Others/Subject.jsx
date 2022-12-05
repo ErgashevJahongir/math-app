@@ -41,7 +41,10 @@ const Subjects = () => {
         instance
             .post("/api/subject/createOrUpdate", { ...values })
             .then(function (response) {
-                message.success("Fan muvaffaqiyatli qo'shildi");
+                response.data?.code === 211 &&
+                    message.error(response.data?.message);
+                response.data?.code === 200 &&
+                    message.success("Fan muvaffaqiyatli qo'shildi");
                 getSubjects(pageData.current - 1, pageData.pageSize);
             })
             .catch(function (error) {
@@ -62,7 +65,9 @@ const Subjects = () => {
                 id: initial.id,
             })
             .then((res) => {
-                message.success("Fan muvaffaqiyatli taxrirlandi");
+                res.data?.code === 211 && message.error(res.data?.message);
+                res.data?.code === 200 &&
+                    message.success("Fan muvaffaqiyatli taxrirlandi");
                 getSubjects(pageData.current - 1, pageData.pageSize);
             })
             .catch(function (error) {

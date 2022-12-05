@@ -41,7 +41,10 @@ const Districts = () => {
         instance
             .post("/api/district/createOrUpdate", { ...values })
             .then(function (response) {
-                message.success("Tuman muvaffaqiyatli qo'shildi");
+                response.data?.code === 211 &&
+                    message.error(response.data?.message);
+                response.data?.code === 200 &&
+                    message.success("Tuman muvaffaqiyatli qo'shildi");
                 getDistricts(pageData.current - 1, pageData.pageSize);
             })
             .catch(function (error) {
@@ -62,7 +65,9 @@ const Districts = () => {
                 id: initial.id,
             })
             .then((res) => {
-                message.success("Tuman muvaffaqiyatli taxrirlandi");
+                res.data.code === 211 && message.error(res.data?.message);
+                res.data.code === 200 &&
+                    message.success("Tuman muvaffaqiyatli taxrirlandi");
                 getDistricts(pageData.current - 1, pageData.pageSize);
             })
             .catch(function (error) {

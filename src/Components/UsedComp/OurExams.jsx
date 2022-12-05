@@ -1,5 +1,5 @@
-import { Col, Row } from "antd";
-import { useState } from "react";
+import { Col, Row, Space } from "antd";
+// import { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -7,17 +7,11 @@ import "./userComp.css";
 import { useNavigate } from "react-router-dom";
 import CondidateRegister from "./CondidateRegister";
 import { useData } from "../../Hook/UseData";
+import moment from "moment";
 
 const OurExams = () => {
-    const [open, setOpen] = useState(false);
     const { examsData } = useData();
     const navigate = useNavigate();
-    const showDrawer = () => {
-        setOpen(true);
-    };
-    const onClose = () => {
-        setOpen(false);
-    };
 
     const settings = {
         dots: true,
@@ -127,17 +121,9 @@ const OurExams = () => {
                                             >
                                                 Narxi: {item.price} So'm
                                             </p>
-                                            <button
-                                                className="subscribe"
-                                                style={{ padding: "10px 20px" }}
-                                                onClick={showDrawer}
-                                            >
-                                                Ro'yxatdan o'tish
-                                            </button>
                                             <CondidateRegister
-                                                open={open}
-                                                onClose={onClose}
                                                 examId={item.id}
+                                                amaunt={item.price}
                                             />
                                         </div>
                                     </div>
@@ -183,6 +169,18 @@ const OurExams = () => {
                                                 >
                                                     {item.title}
                                                 </h3>
+                                                <Space
+                                                    style={{ marginBottom: 10 }}
+                                                >
+                                                    <span>Bo'lish vaqti:</span>
+                                                    <span>
+                                                        {moment(
+                                                            item.startedDate
+                                                        ).format(
+                                                            "YYYY-MM-DD hh:mm"
+                                                        )}
+                                                    </span>
+                                                </Space>
                                                 <div
                                                     style={{
                                                         display: "flex",
@@ -203,20 +201,9 @@ const OurExams = () => {
                                                     >
                                                         Narxi: {item.price} So'm
                                                     </p>
-                                                    <button
-                                                        className="subscribe"
-                                                        style={{
-                                                            padding:
-                                                                "10px 20px",
-                                                        }}
-                                                        onClick={showDrawer}
-                                                    >
-                                                        Ro'yxatdan o'tish
-                                                    </button>
                                                     <CondidateRegister
-                                                        open={open}
-                                                        onClose={onClose}
                                                         examId={item.id}
+                                                        amaunt={item.price}
                                                     />
                                                 </div>
                                             </div>

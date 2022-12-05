@@ -13,7 +13,7 @@ const ExamsComp = () => {
         current: 1,
         pageSize: 10,
     });
-    const { subjectsData } = useData();
+    const { subjectsData, getExamsData } = useData();
     const navigate = useNavigate();
 
     const getExams = (current, pageSize) => {
@@ -28,9 +28,12 @@ const ExamsComp = () => {
                         startedDate: moment(item?.startedDate).format(
                             "YYYY-MM-DD hh:mm"
                         ),
+                        createdAt: moment(item?.createdAt).format(
+                            "YYYY-MM-DD hh:mm"
+                        ),
                     })),
                 }));
-                console.log(data);
+                getExamsData();
             })
             .catch((error) => {
                 console.error(error);
@@ -48,7 +51,10 @@ const ExamsComp = () => {
         instance
             .post("/api/exam/createOrUpdate", { ...values, active: active })
             .then(function (response) {
-                message.success("Imtixon muvaffaqiyatli qo'shildi");
+                response.data.code === 211 &&
+                    message.error(response.data.message);
+                response.data.code === 200 &&
+                    message.success("Imtixon muvaffaqiyatli qo'shildi");
                 getExams(pageData.current - 1, pageData.pageSize);
             })
             .catch(function (error) {
@@ -76,7 +82,9 @@ const ExamsComp = () => {
                 id: initial.id,
             })
             .then((res) => {
-                message.success("Imtixon muvaffaqiyatli taxrirlandi");
+                res.data.code === 211 && message.error(res.data.message);
+                res.data.code === 200 &&
+                    message.success("Imtixon muvaffaqiyatli taxrirlandi");
                 getExams(pageData.current - 1, pageData.pageSize);
             })
             .catch(function (error) {
@@ -116,7 +124,7 @@ const ExamsComp = () => {
             title: "Fan nomi",
             dataIndex: "subjectId",
             key: "subjectId",
-            width: "20%",
+            width: "15%",
             search: false,
             sorter: (a, b) => {
                 if (a.subjectId < b.subjectId) {
@@ -136,8 +144,24 @@ const ExamsComp = () => {
             title: "Ma'lumot",
             dataIndex: "title",
             key: "title",
-            width: "40%",
+            width: "30%",
             search: true,
+        },
+        {
+            title: "Yaratilgan vaqti",
+            dataIndex: "createdAt",
+            key: "createdAt",
+            width: "15%",
+            search: false,
+            sorter: (a, b) => {
+                if (a.createdAt < b.createdAt) {
+                    return -1;
+                }
+                if (a.createdAt > b.createdAt) {
+                    return 1;
+                }
+                return 0;
+            },
         },
         {
             title: "Bo'lish vaqti",

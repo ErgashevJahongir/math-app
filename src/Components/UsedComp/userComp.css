@@ -7,10 +7,6 @@
     background: linear-gradient(to right, #3a6073, #001529);
 }
 
-.Follow {
-    margin-bottom: 27px;
-}
-
 .Follow h3 {
     color: #fff;
     font-size: 25px;
@@ -58,6 +54,7 @@
 .location_icon {
     display: flex;
     gap: 20px;
+    justify-content: flex-end;
 }
 
 .location_icon li {
@@ -67,4 +64,10 @@
 
 .input-com input::placeholder {
     color: #00152980;
+}
+
+@media screen and (max-width: 767px) {
+    .Follow {
+        margin-bottom: 27px;
+    }
 }

@@ -47,6 +47,7 @@ export const DataProvider = ({ children }) => {
         getDistrictsData,
         districtsData,
         examsData,
+        getExamsData,
     };
 
     return (
