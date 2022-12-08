@@ -34,7 +34,12 @@ export const AuthProvider = ({ children }) => {
             })
             .catch((err) => {
                 console.error(err);
-            });
+            })
+            .finally(() =>
+                setTimeout(() => {
+                    setUserLoading(false);
+                }, 1500)
+            );
     };
 
     useEffect(() => {

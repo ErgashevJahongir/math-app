@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, Modal } from "antd";
+import { Button, Col, Form, Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import useKeyPress from "../../Hook/UseKeyPress";
 
@@ -34,7 +34,13 @@ const CollectionCreateForm = ({
             title={modalTitle}
             okText="Qo'shish"
             cancelText="Bekor qilish"
-            width={350}
+            width={
+                Object.keys(formData).length > 8
+                    ? window.innerWidth > 720
+                        ? 700
+                        : 350
+                    : 350
+            }
             onCancel={() => {
                 onCancel();
             }}
@@ -51,19 +57,26 @@ const CollectionCreateForm = ({
             >
                 {formData?.map((data) => {
                     return (
-                        <Form.Item
+                        <Col
+                            span={Object.keys(formData).length > 8 ? 12 : 24}
                             key={data.name}
-                            name={data.name}
-                            label={data.label}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: `${data.label}ni kiriting`,
-                                },
-                            ]}
                         >
-                            {data.input}
-                        </Form.Item>
+                            <Form.Item
+                                key={data.name}
+                                name={data.name}
+                                label={data.label}
+                                rules={[
+                                    {
+                                        required: data.required
+                                            ? data.required
+                                            : true,
+                                        message: `${data.label}ni kiriting`,
+                                    },
+                                ]}
+                            >
+                                {data.input}
+                            </Form.Item>
+                        </Col>
                     );
                 })}
             </Form>

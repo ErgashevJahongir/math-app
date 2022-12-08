@@ -226,6 +226,7 @@ const ExamsComp = () => {
                 onDelete={handleDelete}
                 onCreate={onCreate}
                 onEdit={onEdit}
+                tableData={pageData.exams}
                 current={pageData.current}
                 pageSize={pageData.pageSize}
                 setCurrent={(newProp) =>
@@ -234,7 +235,6 @@ const ExamsComp = () => {
                 setPageSize={(newProp) =>
                     setPageData((prev) => ({ ...prev, pageSize: newProp }))
                 }
-                tableData={pageData.exams}
                 loading={pageData.loading}
                 setLoading={(newProp) =>
                     setPageData((prev) => ({ ...prev, loading: newProp }))

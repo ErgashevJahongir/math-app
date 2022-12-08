@@ -3,22 +3,9 @@ import { Col, Row } from "antd";
 
 const Taklif = () => {
     return (
-        <section
-            style={{ marginTop: 30, marginBottom: 40, textAlign: "center" }}
-        >
+        <section className="textAlignCenter sectionCont">
             <div className="container">
-                <h2
-                    style={{
-                        marginBottom: 50,
-                        fontSize: 32,
-                        fontWeight: 600,
-                        color: "rgb(49, 70, 89)",
-                        lineHeight: 1.5,
-                    }}
-                    className="future-heading"
-                >
-                    Biz sizga nima takif qilamiz
-                </h2>
+                <h2 className="future-heading">Biz sizga nima takif qilamiz</h2>
                 <Row>
                     <Col
                         xs={24}
@@ -38,17 +25,7 @@ const Taklif = () => {
                                 marginBottom: 20,
                             }}
                         />
-                        <h3
-                            style={{
-                                fontSize: 24,
-                                fontWeight: 600,
-                                color: "rgb(49, 70, 89)",
-                                lineHeight: "32px",
-                                marginBottom: 2,
-                            }}
-                        >
-                            Arzon narxlar
-                        </h3>
+                        <h3 className="itemTitleH3">Arzon narxlar</h3>
                         <p
                             style={{
                                 lineHeight: 1.5,
@@ -77,15 +54,7 @@ const Taklif = () => {
                                 marginBottom: 20,
                             }}
                         />
-                        <h3
-                            style={{
-                                fontSize: 24,
-                                fontWeight: 600,
-                                color: "rgb(49, 70, 89)",
-                                lineHeight: "32px",
-                                marginBottom: 2,
-                            }}
-                        >
+                        <h3 className="itemTitleH3">
                             Qiyinlashtirilgan testlar
                         </h3>
                         <p
@@ -117,15 +86,7 @@ const Taklif = () => {
                                 marginBottom: 20,
                             }}
                         />
-                        <h3
-                            style={{
-                                fontSize: 24,
-                                fontWeight: 600,
-                                color: "rgb(49, 70, 89)",
-                                lineHeight: "32px",
-                                marginBottom: 2,
-                            }}
-                        >
+                        <h3 className="itemTitleH3">
                             Bilim darajangizni oshirish
                         </h3>
                         <p

@@ -39,21 +39,9 @@ const OurTeachers = () => {
         ],
     };
     return (
-        <div style={{ textAlign: "center", marginBottom: 70 }}>
+        <div className="textAlignCenter sectionCont teachersCont">
             <div className="container">
-                <h2
-                    style={{
-                        marginTop: 40,
-                        marginBottom: 20,
-                        fontSize: 32,
-                        fontWeight: 600,
-                        color: "rgb(49, 70, 89)",
-                        lineHeight: 1.5,
-                    }}
-                    className="future-heading"
-                >
-                    Bizning O'qituvchilar
-                </h2>
+                <h2 className="future-heading">Bizning O'qituvchilar</h2>
                 <Slider {...settings}>
                     <Col>
                         <img
@@ -66,17 +54,7 @@ const OurTeachers = () => {
                                 marginBottom: 5,
                             }}
                         />
-                        <h3
-                            style={{
-                                fontSize: 24,
-                                fontWeight: 600,
-                                color: "rgb(49, 70, 89)",
-                                lineHeight: "32px",
-                                marginBottom: 2,
-                            }}
-                        >
-                            Azamat Nortojiyev
-                        </h3>
+                        <h3 className="itemTitleH3">Azamat Nortojiyev</h3>
                         <p
                             style={{
                                 lineHeight: 1.5,
@@ -98,17 +76,7 @@ const OurTeachers = () => {
                                 marginBottom: 5,
                             }}
                         />
-                        <h3
-                            style={{
-                                fontSize: 24,
-                                fontWeight: 600,
-                                color: "rgb(49, 70, 89)",
-                                lineHeight: "32px",
-                                marginBottom: 2,
-                            }}
-                        >
-                            Farxod Jumayev
-                        </h3>
+                        <h3 className="itemTitleH3">Farxod Jumayev</h3>
                         <p
                             style={{
                                 lineHeight: 1.5,
@@ -130,17 +98,7 @@ const OurTeachers = () => {
                                 marginBottom: 5,
                             }}
                         />
-                        <h3
-                            style={{
-                                fontSize: 24,
-                                fontWeight: 600,
-                                color: "rgb(49, 70, 89)",
-                                lineHeight: "32px",
-                                marginBottom: 2,
-                            }}
-                        >
-                            Kamoliddin Qarshiyev
-                        </h3>
+                        <h3 className="itemTitleH3">Kamoliddin Qarshiyev</h3>
                         <p
                             style={{
                                 lineHeight: 1.5,
@@ -162,17 +120,7 @@ const OurTeachers = () => {
                                 marginBottom: 5,
                             }}
                         />
-                        <h3
-                            style={{
-                                fontSize: 24,
-                                fontWeight: 600,
-                                color: "rgb(49, 70, 89)",
-                                lineHeight: "32px",
-                                marginBottom: 2,
-                            }}
-                        >
-                            Azamat Nortojiyev
-                        </h3>
+                        <h3 className="itemTitleH3">Azamat Nortojiyev</h3>
                         <p
                             style={{
                                 lineHeight: 1.5,
@@ -194,17 +142,7 @@ const OurTeachers = () => {
                                 marginBottom: 5,
                             }}
                         />
-                        <h3
-                            style={{
-                                fontSize: 24,
-                                fontWeight: 600,
-                                color: "rgb(49, 70, 89)",
-                                lineHeight: "32px",
-                                marginBottom: 2,
-                            }}
-                        >
-                            Farxod Jumayev
-                        </h3>
+                        <h3 className="itemTitleH3">Farxod Jumayev</h3>
                         <p
                             style={{
                                 lineHeight: 1.5,
@@ -226,17 +164,7 @@ const OurTeachers = () => {
                                 marginBottom: 5,
                             }}
                         />
-                        <h3
-                            style={{
-                                fontSize: 24,
-                                fontWeight: 600,
-                                color: "rgb(49, 70, 89)",
-                                lineHeight: "32px",
-                                marginBottom: 2,
-                            }}
-                        >
-                            Kamoliddin Qarshiyev
-                        </h3>
+                        <h3 className="itemTitleH3">Kamoliddin Qarshiyev</h3>
                         <p
                             style={{
                                 lineHeight: 1.5,

@@ -16,17 +16,7 @@ const Contacts = () => {
                         xl={6}
                         style={{ marginBottom: 20 }}
                     >
-                        <h3
-                            style={{
-                                fontSize: 20,
-                                fontWeight: 600,
-                                color: "#fff",
-                                lineHeight: "24px",
-                                marginBottom: 10,
-                            }}
-                        >
-                            Manzilimiz
-                        </h3>
+                        <h3 style={{}}>Manzilimiz</h3>
                         <p
                             style={{
                                 lineHeight: 1.5,
@@ -38,17 +28,7 @@ const Contacts = () => {
                             O'zbekiston, TOSHKENT, Mirzo-Ulug'bek BUYUK IPAK
                             YO'LI ko'chasi, 115 uy
                         </p>
-                        <h3
-                            style={{
-                                fontSize: 20,
-                                fontWeight: 600,
-                                color: "#fff",
-                                lineHeight: "24px",
-                                marginBottom: 10,
-                            }}
-                        >
-                            Telefon nomerlarimiz
-                        </h3>
+                        <h3>Telefon nomerlarimiz</h3>
                         <div
                             style={{
                                 display: "flex",
@@ -89,17 +69,7 @@ const Contacts = () => {
                                 +998911236353
                             </p>
                         </div>
-                        <h3
-                            style={{
-                                fontSize: 20,
-                                fontWeight: 600,
-                                color: "#fff",
-                                lineHeight: "24px",
-                                marginBottom: 10,
-                            }}
-                        >
-                            Elektron manzilimiz
-                        </h3>
+                        <h3>Elektron manzilimiz</h3>
                         <div
                             style={{
                                 display: "flex",
@@ -130,6 +100,7 @@ const Contacts = () => {
                         style={{ marginBottom: 20 }}
                     >
                         <iframe
+                            title="Bizning manzil"
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1827.629984716106!2d65.37459509943395!3d40.10704417012549!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f51c70627169851%3A0x6ebac45bbfcc24d5!2s%22Elegant%22%20o&#39;quv%20markazi!5e0!3m2!1suz!2s!4v1670030850357!5m2!1suz!2s"
                             width="100%"
                             height="350"

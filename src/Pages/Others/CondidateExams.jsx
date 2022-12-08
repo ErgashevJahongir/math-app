@@ -9,7 +9,6 @@ const CondidateExams = () => {
     const navigate = useNavigate();
 
     const navigatePage = (id) => {
-        console.log(id);
         navigate(`/others/candidates/${id}`);
     };
 

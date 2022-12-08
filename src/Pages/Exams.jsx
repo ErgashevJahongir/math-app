@@ -8,23 +8,9 @@ const Exams = () => {
     const { examsData } = useData();
 
     return (
-        <section
-            className="examsData"
-            style={{ marginTop: 30, marginBottom: 40, textAlign: "center" }}
-        >
+        <section className="examsData textAlignCenter sectionCont">
             <div className="container">
-                <h2
-                    style={{
-                        marginBottom: 30,
-                        fontSize: 32,
-                        fontWeight: 600,
-                        color: "rgb(49, 70, 89)",
-                        lineHeight: 1.5,
-                    }}
-                    className="future-heading"
-                >
-                    Imtihonlar
-                </h2>
+                <h2 className="future-heading">Imtihonlar</h2>
                 <Row gutter={[20, 20]}>
                     {examsData.map((item, key) => {
                         return (
@@ -53,15 +39,7 @@ const Exams = () => {
                                             marginBottom: 10,
                                         }}
                                     />
-                                    <h3
-                                        style={{
-                                            fontSize: 24,
-                                            fontWeight: 600,
-                                            color: "rgb(49, 70, 89)",
-                                            lineHeight: "32px",
-                                            marginBottom: 10,
-                                        }}
-                                    >
+                                    <h3 className="itemTitleH3">
                                         {item.title}
                                     </h3>
                                     <Space style={{ marginBottom: 10 }}>

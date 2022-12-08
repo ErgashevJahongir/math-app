@@ -48,20 +48,9 @@ const OurExams = () => {
     };
 
     return (
-        <section style={{ marginBottom: 40, textAlign: "center" }}>
+        <section className="textAlignCenter sectionCont">
             <div className="container">
-                <h2
-                    style={{
-                        marginBottom: 50,
-                        fontSize: 32,
-                        fontWeight: 600,
-                        color: "rgb(49, 70, 89)",
-                        lineHeight: 1.5,
-                    }}
-                    className="future-heading"
-                >
-                    Imtihonlar
-                </h2>
+                <h2 className="future-heading">Imtihonlar</h2>
                 {examsData.length < 3 ? (
                     <Row gutter={[20, 20]}>
                         {examsData.map((item, key) => {
@@ -91,15 +80,7 @@ const OurExams = () => {
                                                 marginBottom: 10,
                                             }}
                                         />
-                                        <h3
-                                            style={{
-                                                fontSize: 24,
-                                                fontWeight: 600,
-                                                color: "rgb(49, 70, 89)",
-                                                lineHeight: "32px",
-                                                marginBottom: 10,
-                                            }}
-                                        >
+                                        <h3 className="itemTitleH3">
                                             {item.title}
                                         </h3>
                                         <div
@@ -158,15 +139,7 @@ const OurExams = () => {
                                                         marginBottom: 10,
                                                     }}
                                                 />
-                                                <h3
-                                                    style={{
-                                                        fontSize: 24,
-                                                        fontWeight: 600,
-                                                        color: "rgb(49, 70, 89)",
-                                                        lineHeight: "32px",
-                                                        marginBottom: 10,
-                                                    }}
-                                                >
+                                                <h3 className="itemTitleH3">
                                                     {item.title}
                                                 </h3>
                                                 <Space

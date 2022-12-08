@@ -70,4 +70,8 @@
     .Follow {
         margin-bottom: 27px;
     }
+
+    .Follow h3 {
+        font-size: 21px;
+    }
 }

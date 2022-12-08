@@ -4,7 +4,6 @@ import {
     Drawer,
     Form,
     Input,
-    InputNumber,
     message,
     Row,
     Space,
@@ -55,7 +54,7 @@ const CondidateRegister = ({ examId, amaunt }) => {
         };
 
         const onFinishFailed = (errorInfo) => {
-            console.log("Failed:", errorInfo);
+            console.error("Failed:", errorInfo);
         };
 
         const onReset = () => {
@@ -217,7 +216,6 @@ const CondidateRegister = ({ examId, amaunt }) => {
         const navigate = useNavigate();
 
         const onFinish = (values) => {
-            console.log(user);
             axios
                 .post(`${REACT_APP_BASE_URL}/api/payment/create`, {
                     amount: amaunt,
@@ -227,6 +225,7 @@ const CondidateRegister = ({ examId, amaunt }) => {
                     number: values.number,
                 })
                 .then(function (data) {
+                    data.data.code === 500 && message.error(data.data.message);
                     data?.data?.code === 200 && setCurrent(2);
                 })
                 .catch(function (error) {
@@ -238,7 +237,7 @@ const CondidateRegister = ({ examId, amaunt }) => {
         };
 
         const onFinishFailed = (errorInfo) => {
-            console.log("Failed:", errorInfo);
+            console.error("Failed:", errorInfo);
         };
 
         const onReset = () => {
@@ -346,7 +345,6 @@ const CondidateRegister = ({ examId, amaunt }) => {
         const navigate = useNavigate();
 
         const onFinish = (values) => {
-            console.log(user);
             axios
                 .post(`${REACT_APP_BASE_URL}/api/payment/verifyCode`, {
                     candidateId: user.id,
@@ -367,7 +365,7 @@ const CondidateRegister = ({ examId, amaunt }) => {
         };
 
         const onFinishFailed = (errorInfo) => {
-            console.log("Failed:", errorInfo);
+            console.error("Failed:", errorInfo);
         };
 
         const onReset = () => {

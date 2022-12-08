@@ -142,6 +142,18 @@ li {
     padding: 10px 16px;
 }
 
+.textAlignCenter {
+    text-align: center;
+}
+
+.sectionCont {
+    margin: 20px 0;
+}
+
+.teachersCont {
+    margin-bottom: 50px;
+}
+
 .ant-modal.seenCont .ant-list-item {
     padding: 8px 10px;
 }
@@ -155,6 +167,19 @@ li {
     background: -webkit-linear-gradient(19deg, #7ab1cd 0%, #001529 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-size: 32px;
+    font-weight: 600;
+    color: rgb(49, 70, 89);
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+
+.itemTitleH3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: rgb(49, 70, 89);
+    line-height: 32px;
+    margin-bottom: 6px;
 }
 
 .logout-btn {
@@ -215,5 +240,15 @@ li {
 
     .contact-Cont {
         flex-direction: column-reverse;
+    }
+
+    .future-heading {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .itemTitleH3 {
+        font-size: 20px;
+        line-height: 26px;
     }
 }
