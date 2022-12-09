@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Components/Loading";
@@ -6,12 +5,15 @@ import useToken from "../Hook/UseToken";
 import pic from "./Teacher-pic.svg";
 import logo from "./markaz-img.png";
 import "./signin.css";
+import { useAuth } from "../Hook/UseAuth";
+import instance from "../Api/Axios";
 
 const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const SignIn = () => {
     const [loading, setLoading] = useState(false);
-    const { token, setToken } = useToken();
+    const { setToken } = useToken();
+    const { user } = useAuth();
     let navigate = useNavigate();
 
     const handleSubmit = (event) => {
@@ -20,7 +22,7 @@ export const SignIn = () => {
 
         var { phone, password } = document.forms[0];
 
-        axios
+        instance
             .post(`${REACT_APP_BASE_URL}/api/auth/login`, {
                 number: phone.value,
                 password: password.value,
@@ -38,11 +40,11 @@ export const SignIn = () => {
     };
 
     useEffect(() => {
-        if (token) {
+        if (user) {
             navigate("/");
         }
         setLoading(false);
-    }, [token]);
+    }, [user]);
 
     if (loading) {
         return <Loading />;

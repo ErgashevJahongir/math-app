@@ -11,7 +11,7 @@ const instance = axios.create({
     headers: {
         "Content-Type": "application/json",
         "Accept-Language": "uz",
-        timeout: 10000,
+        timeout: 30000,
         Authorization: `Bearer ${token1 || token2}`,
     },
 });

@@ -9,9 +9,9 @@ import {
     Space,
     Steps,
 } from "antd";
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import instance from "../../Api/Axios";
 import { useData } from "../../Hook/UseData";
 import CustomSelect from "../../Module/Select/Select";
 
@@ -31,17 +31,31 @@ const CondidateRegister = ({ examId, amaunt }) => {
     };
 
     const CondidateInfo = ({ examId }) => {
+        const [errorList, setErrorList] = useState({
+            phoneNumber: "",
+            phoneNumberMessage: "",
+        });
         const { examsData, districtsData } = useData();
         const navigate = useNavigate();
         const [form] = Form.useForm();
 
         const onFinish = (values) => {
-            axios
+            instance
                 .post(`${REACT_APP_BASE_URL}/api/candidate/create`, {
                     ...values,
                     phoneNumber: "+998" + values.phoneNumber,
                 })
                 .then(function (data) {
+                    console.log(data);
+                    const getError = (error) => {
+                        message.error(error?.message);
+                        setErrorList((prev) => ({
+                            ...prev,
+                            phoneNumber: "error",
+                            phoneNumberMessage: error.message,
+                        }));
+                    };
+                    data?.data?.code === 211 && getError(data.data);
                     data?.data?.code === 200 && setUser(data.data?.data);
                     data?.data?.code === 200 && setCurrent(1);
                 })
@@ -114,17 +128,32 @@ const CondidateRegister = ({ examId, amaunt }) => {
                 <Row gutter={16}>
                     <Col span={12}>
                         <Form.Item
+                            validateStatus={errorList.phoneNumber}
+                            help={errorList.phoneNumberMessage}
                             name="phoneNumber"
                             label="Telefon nomeri"
+                            hasFeedback
                             rules={[
                                 {
                                     required: true,
                                     message:
                                         "Iltimos qatnashchi nomerini kiriting",
                                 },
+                                {
+                                    required: true,
+                                    validator(_, value) {
+                                        if (!value || value.length === 9) {
+                                            return Promise.resolve();
+                                        }
+                                        return Promise.reject(
+                                            "13 ta sondan iborat bulishi kerak"
+                                        );
+                                    },
+                                },
                             ]}
                         >
                             <Input
+                                maxLength={9}
                                 addonBefore="+998"
                                 placeholder="Qatnashchi nomerini kiriting"
                             />
@@ -216,7 +245,7 @@ const CondidateRegister = ({ examId, amaunt }) => {
         const navigate = useNavigate();
 
         const onFinish = (values) => {
-            axios
+            instance
                 .post(`${REACT_APP_BASE_URL}/api/payment/create`, {
                     amount: amaunt,
                     candidateId: user.id,
@@ -285,6 +314,17 @@ const CondidateRegister = ({ examId, amaunt }) => {
                                     required: true,
                                     message: "Iltimos karta nomerini kiriting",
                                 },
+                                {
+                                    required: true,
+                                    validator(_, value) {
+                                        if (!value || value.length === 16) {
+                                            return Promise.resolve();
+                                        }
+                                        return Promise.reject(
+                                            "Karta nomer 16 ta sondan iborat bulishi kerak"
+                                        );
+                                    },
+                                },
                             ]}
                         >
                             <Input
@@ -345,13 +385,14 @@ const CondidateRegister = ({ examId, amaunt }) => {
         const navigate = useNavigate();
 
         const onFinish = (values) => {
-            axios
+            instance
                 .post(`${REACT_APP_BASE_URL}/api/payment/verifyCode`, {
                     candidateId: user.id,
                     examId: user.exam.id,
                     code: values.code,
                 })
                 .then(function (data) {
+                    data.data.code === 230 && message.error(data.data.message);
                     data?.data?.code === 200 &&
                         message.success("Abuturient muvaffaqiyatli qo'shildi");
                     data?.data?.code === 200 && onClose();

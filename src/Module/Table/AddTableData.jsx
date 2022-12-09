@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Col, Form, Modal } from "antd";
+import { Button, Col, Form, Modal, Row } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import useKeyPress from "../../Hook/UseKeyPress";
 
@@ -47,38 +47,39 @@ const CollectionCreateForm = ({
             onOk={formValidate}
             forceRender
         >
-            <Form
-                form={form}
-                layout="vertical"
-                name="form_in_modal"
-                initialValues={{
-                    modifier: "public",
-                }}
-            >
-                {formData?.map((data) => {
-                    return (
-                        <Col
-                            span={Object.keys(formData).length > 8 ? 12 : 24}
-                            key={data.name}
-                        >
-                            <Form.Item
+            <Form form={form} layout="vertical" name="table_adddata_modal">
+                <Row gutter={12}>
+                    {formData?.map((data) => {
+                        return (
+                            <Col
+                                span={
+                                    Object.keys(formData).length > 8
+                                        ? window.innerWidth > 720
+                                            ? 12
+                                            : 24
+                                        : 24
+                                }
                                 key={data.name}
-                                name={data.name}
-                                label={data.label}
-                                rules={[
-                                    {
-                                        required: data.required
-                                            ? data.required
-                                            : true,
-                                        message: `${data.label}ni kiriting`,
-                                    },
-                                ]}
                             >
-                                {data.input}
-                            </Form.Item>
-                        </Col>
-                    );
-                })}
+                                <Form.Item
+                                    key={data.name}
+                                    name={data.name}
+                                    label={data.label}
+                                    rules={[
+                                        {
+                                            required: data.required
+                                                ? data.required
+                                                : true,
+                                            message: `${data.label}ni kiriting`,
+                                        },
+                                    ]}
+                                >
+                                    {data.input}
+                                </Form.Item>
+                            </Col>
+                        );
+                    })}
+                </Row>
             </Form>
         </Modal>
     );

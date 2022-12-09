@@ -3,10 +3,12 @@ import { createContext, useEffect, useState } from "react";
 import instance from "../Api/Axios";
 export const AuthContext = createContext();
 
+const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [userLoading, setUserLoading] = useState(true);
-    const { token } = useToken();
+    const { token, setToken } = useToken();
 
     const siginIn = (newUser, cb) => {
         setUser(newUser);
@@ -25,25 +27,28 @@ export const AuthProvider = ({ children }) => {
     const getUser = (token) => {
         setUserLoading(true);
         instance
-            .post("/api/auth/whoiam?token=" + token)
+            .post("/api/auth/whoAmI?token=" + token)
             .then((data) => {
-                setUser(data.data.data);
-                setTimeout(() => {
-                    setUserLoading(false);
-                }, 1500);
+                console.log(data, token);
+                !(data.data.data.roles[0] === "USER") &&
+                    setUser(data.data.data);
+                setUserLoading(false);
             })
             .catch((err) => {
                 console.error(err);
             })
-            .finally(() =>
-                setTimeout(() => {
-                    setUserLoading(false);
-                }, 1500)
-            );
+            .finally(() => setUserLoading(false));
     };
 
     useEffect(() => {
-        getUser(token);
+        token
+            ? getUser(token)
+            : instance
+                  .get(`${REACT_APP_BASE_URL}/api/auth/token`)
+                  .then((data) => {
+                      getUser(data.data?.data);
+                      setToken(data.data.data, true);
+                  });
     }, [token]);
 
     const value = { userLoading, user, siginIn, signOut };

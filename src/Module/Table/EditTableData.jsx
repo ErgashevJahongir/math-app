@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, Modal } from "antd";
+import { Button, Col, Form, Modal, Row } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import useKeyPress from "../../Hook/UseKeyPress";
 
@@ -59,34 +59,55 @@ const EditData = ({
                 title={editModalTitle}
                 okText="O'zgartirish"
                 cancelText="Bekor qilish"
-                width={350}
+                width={
+                    Object.keys(editData).length > 8
+                        ? window.innerWidth > 720
+                            ? 700
+                            : 350
+                        : 350
+                }
                 onCancel={() => {
                     onCancel();
                 }}
                 onOk={formValidate}
             >
                 <Form form={form} layout="vertical" name="form_in_modal">
-                    {editData?.map((data) => {
-                        return (
-                            <Form.Item
-                                name={data.name}
-                                key={data.name}
-                                label={data.label}
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: `${data.label}ni kiriting`,
-                                    },
-                                ]}
-                            >
-                                {data.hasOwnProperty("input")
-                                    ? data.input
-                                    : data.inputSelect(
-                                          selectedRowKeys[data.name]
-                                      )}
-                            </Form.Item>
-                        );
-                    })}
+                    <Row gutter={12}>
+                        {editData?.map((data) => {
+                            return (
+                                <Col
+                                    span={
+                                        Object.keys(editData).length > 8
+                                            ? window.innerWidth > 720
+                                                ? 12
+                                                : 24
+                                            : 24
+                                    }
+                                    key={data.name}
+                                >
+                                    <Form.Item
+                                        name={data.name}
+                                        key={data.name}
+                                        label={data.label}
+                                        rules={[
+                                            {
+                                                required: data.required
+                                                    ? data.required
+                                                    : true,
+                                                message: `${data.label}ni kiriting`,
+                                            },
+                                        ]}
+                                    >
+                                        {data.hasOwnProperty("input")
+                                            ? data.input
+                                            : data.inputSelect(
+                                                  selectedRowKeys[data.name]
+                                              )}
+                                    </Form.Item>
+                                </Col>
+                            );
+                        })}
+                    </Row>
                 </Form>
             </Modal>
         </div>

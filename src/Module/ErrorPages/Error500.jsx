@@ -10,7 +10,7 @@ const Error500 = () => {
             <h1>Serverda muammo bo'ldi</h1>
             <p>
                 Kechirasiz serverda muammo topildi!{" "}
-                <a href="https://t.me/zukhriddin_08">Bizga murojaat</a>{" "}
+                <a href="https://t.me/muhammadqodir_0612">Bizga murojaat</a>{" "}
                 qilishingizni so'raymiz.
             </p>
             <Button className="btn-home">

@@ -1,5 +1,5 @@
 import { Button, Drawer, Menu } from "antd";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
     DashboardOutlined,
     LogoutOutlined,
@@ -12,13 +12,11 @@ import {
 } from "@ant-design/icons";
 import useToken from "../../Hook/UseToken";
 import { useAuth } from "../../Hook/UseAuth";
-import { useData } from "../../Hook/UseData";
 
 function DrapdownMenu({ onClose, isVisible }) {
     const { token } = useToken();
     const navigate = useNavigate();
     const { user, signOut } = useAuth();
-    const { examsData } = useData();
     const location = useLocation();
 
     const handleLogOut = (e) => {

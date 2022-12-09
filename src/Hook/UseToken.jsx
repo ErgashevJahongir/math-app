@@ -11,6 +11,7 @@ export default function useToken() {
     const [token, setToken] = useState(getToken());
 
     const saveToken = (userToken, save) => {
+        sessionStorage.removeItem("math-test-app", token);
         save
             ? sessionStorage.setItem("math-test-app", JSON.stringify(userToken))
             : sessionStorage.setItem(
