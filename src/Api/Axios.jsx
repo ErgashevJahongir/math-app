@@ -10,7 +10,6 @@ const instance = axios.create({
     baseURL: REACT_APP_BASE_URL,
     headers: {
         "Content-Type": "application/json",
-        "Accept-Language": "uz",
         timeout: 30000,
         Authorization: `Bearer ${token1 || token2}`,
     },

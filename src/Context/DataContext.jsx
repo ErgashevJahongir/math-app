@@ -7,6 +7,7 @@ export const DataProvider = ({ children }) => {
     const [subjectsData, setSubjectsData] = useState([]);
     const [districtsData, setDistrictsData] = useState([]);
     const [examsData, setExamsData] = useState([]);
+    const [directionsData, setDirectionsData] = useState([]);
 
     const getSubjectsData = () => {
         instance
@@ -35,10 +36,21 @@ export const DataProvider = ({ children }) => {
             .catch((err) => console.error(err));
     };
 
+    const getDirectionData = () => {
+        instance
+            .get("/api/direction/list?page=0&size=10")
+            .then((data) => {
+                console.log(data);
+                setDirectionsData(data.data.data);
+            })
+            .catch((err) => console.error(err));
+    };
+
     useEffect(() => {
         getSubjectsData();
         getDistrictsData();
         getExamsData();
+        getDirectionData();
     }, []);
 
     const value = {
@@ -46,8 +58,10 @@ export const DataProvider = ({ children }) => {
         subjectsData,
         getDistrictsData,
         districtsData,
-        examsData,
         getExamsData,
+        examsData,
+        getDirectionData,
+        directionsData,
     };
 
     return (

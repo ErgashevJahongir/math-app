@@ -210,7 +210,7 @@ li {
 @media screen and (max-width: 767px) {
     .container {
         width: 100%;
-        padding: 0 10px;
+        padding: 0 25px;
     }
 
     .burger-menu {
@@ -258,5 +258,9 @@ li {
     .itemTitleH3 {
         font-size: 20px;
         line-height: 26px;
+    }
+
+    .examCard {
+        margin: 0 20px;
     }
 }

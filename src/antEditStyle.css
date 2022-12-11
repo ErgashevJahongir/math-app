@@ -129,6 +129,10 @@ thead:hover {
     background: rgb(203, 227, 247) !important;
 }
 
+.ant-table-body {
+    overflow-y: auto !important;
+}
+
 .ant-table-tbody > tr.ant-table-row:hover > td {
     background: none !important;
 }

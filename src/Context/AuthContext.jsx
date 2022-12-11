@@ -1,6 +1,6 @@
 import useToken from "../Hook/UseToken";
 import { createContext, useEffect, useState } from "react";
-import instance from "../Api/Axios";
+import axios from "axios";
 export const AuthContext = createContext();
 
 const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -26,8 +26,14 @@ export const AuthProvider = ({ children }) => {
 
     const getUser = (token) => {
         setUserLoading(true);
-        instance
-            .post("/api/auth/whoAmI?token=" + token)
+        axios({
+            method: "post",
+            baseURL: `${REACT_APP_BASE_URL}`,
+            url: `/api/auth/whoAmI?token=${token}`,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((data) => {
                 console.log(data, token);
                 !(data.data.data.roles[0] === "USER") &&
@@ -43,12 +49,10 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         token
             ? getUser(token)
-            : instance
-                  .get(`${REACT_APP_BASE_URL}/api/auth/token`)
-                  .then((data) => {
-                      getUser(data.data?.data);
-                      setToken(data.data.data, true);
-                  });
+            : axios.get(`${REACT_APP_BASE_URL}/api/auth/token`).then((data) => {
+                  getUser(data.data?.data);
+                  setToken(data.data.data, true);
+              });
     }, [token]);
 
     const value = { userLoading, user, siginIn, signOut };

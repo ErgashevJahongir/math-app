@@ -102,6 +102,17 @@ function DrapdownMenu({ onClose, isVisible }) {
                                       ),
                                   },
                                   {
+                                      label: "Yo'nalishlar",
+                                      key: "/others/direction",
+                                      icon: (
+                                          <OrderedListOutlined
+                                              style={{
+                                                  fontSize: "18px",
+                                              }}
+                                          />
+                                      ),
+                                  },
+                                  {
                                       label: "Imtixonlar",
                                       key: "/others/exam",
                                       icon: (

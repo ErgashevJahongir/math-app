@@ -392,7 +392,10 @@ const CustomTable = (props) => {
                         handleSelect(record);
                     },
                 })}
-                scroll={{ x: 900 }}
+                scroll={{
+                    x: "900px",
+                    y: "hidden",
+                }}
                 pagination={{
                     showSizeChanger: true,
                     total: totalItems,

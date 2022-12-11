@@ -6,7 +6,7 @@ import pic from "./Teacher-pic.svg";
 import logo from "./markaz-img.png";
 import "./signin.css";
 import { useAuth } from "../Hook/UseAuth";
-import instance from "../Api/Axios";
+import axios from "axios";
 
 const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -22,7 +22,7 @@ export const SignIn = () => {
 
         var { phone, password } = document.forms[0];
 
-        instance
+        axios
             .post(`${REACT_APP_BASE_URL}/api/auth/login`, {
                 number: phone.value,
                 password: password.value,
@@ -40,6 +40,7 @@ export const SignIn = () => {
     };
 
     useEffect(() => {
+        // sessionStorage.removeItem("math-test-app", token);
         if (user) {
             navigate("/");
         }

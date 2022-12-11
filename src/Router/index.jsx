@@ -13,6 +13,7 @@ import ExamsComp from "../Pages/Others/Exams";
 import CondidateWithExamId from "../Pages/Others/CondidateWithExamId";
 import Exams from "../Pages/Exams";
 import CondidateExams from "../Pages/Others/CondidateExams";
+import Direction from "../Pages/Others/Direction";
 
 const RoutesPage = () => {
     const { userLoading } = useAuth();
@@ -62,6 +63,14 @@ const RoutesPage = () => {
                     element={
                         <RequireAuth>
                             <ExamsComp />
+                        </RequireAuth>
+                    }
+                />
+                <Route
+                    path="others/direction"
+                    element={
+                        <RequireAuth>
+                            <Direction />
                         </RequireAuth>
                     }
                 />

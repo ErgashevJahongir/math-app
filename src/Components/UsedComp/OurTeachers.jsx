@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Keyboard, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
-// import "./styles.css";
+
 const cardVariants = {
     offscreen: {
         opacity: 0,
@@ -28,7 +28,7 @@ const OurTeachers = () => {
             <div className="container">
                 <h2 className="future-heading">Bizning O'qituvchilar</h2>
                 <Swiper
-                    slidesPerView={3}
+                    slidesPerView={1}
                     spaceBetween={30}
                     loop={true}
                     pagination={{
@@ -45,10 +45,6 @@ const OurTeachers = () => {
                         640: {
                             slidesPerView: 2,
                             spaceBetween: 20,
-                        },
-                        768: {
-                            slidesPerView: 2,
-                            spaceBetween: 40,
                         },
                         1024: {
                             slidesPerView: 3,

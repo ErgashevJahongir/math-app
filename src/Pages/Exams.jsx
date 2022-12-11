@@ -28,6 +28,7 @@ const Exams = () => {
                                         padding: "20px 20px 30px 20px",
                                         borderRadius: 12,
                                     }}
+                                    className="examCard"
                                 >
                                     <img
                                         src="https://validthemes.tech/templatebucket/lasson/lasson/assets/img/course/course-2.jpg"

@@ -5,31 +5,32 @@ import { message } from "antd";
 import CustomTable from "../../Module/Table/Table";
 import { useData } from "../../Hook/UseData";
 
-const Subjects = () => {
+const Direction = () => {
     const [pageData, setPageData] = useState({
-        subjects: [],
+        direction: [],
         loading: true,
         current: 1,
         pageSize: 10,
     });
-    const { getSubjectsData } = useData();
+    const { getDirectionData } = useData();
     const navigate = useNavigate();
 
-    const getSubjects = () => {
+    const getDirection = (current, pageSize) => {
         setPageData((prev) => ({ ...prev, loading: true }));
         instance
-            .get("/api/subject/list")
+            .get(`/api/direction/list?page=0&size=10`)
             .then((data) => {
+                console.log(data);
                 setPageData((prev) => ({
                     ...prev,
-                    subjects: data.data?.data,
+                    direction: data.data?.data,
                 }));
-                getSubjectsData();
+                // getDirectionData();
             })
             .catch((error) => {
                 console.error(error);
                 if (error.response?.status === 500) navigate("/server-error");
-                message.error("Fanlarni yuklashda muammo bo'ldi");
+                message.error("Yo'nalishlarni yuklashda muammo bo'ldi");
             })
             .finally(() =>
                 setPageData((prev) => ({ ...prev, loading: false }))
@@ -39,18 +40,18 @@ const Subjects = () => {
     const onCreate = (values) => {
         setPageData((prev) => ({ ...prev, loading: true }));
         instance
-            .post("/api/subject/createOrUpdate", { ...values })
+            .post("/api/district/createOrUpdate", { ...values })
             .then(function (response) {
                 response.data?.code === 211 &&
                     message.error(response.data?.message);
                 response.data?.code === 200 &&
-                    message.success("Fan muvaffaqiyatli qo'shildi");
-                getSubjects(pageData.current - 1, pageData.pageSize);
+                    message.success("Yo'nalish muvaffaqiyatli qo'shildi");
+                getDirection(pageData.current - 1, pageData.pageSize);
             })
             .catch(function (error) {
                 console.error(error);
                 if (error.response?.status === 500) navigate("/server-error");
-                message.error("Fanni qo'shishda muammo bo'ldi");
+                message.error("Yo'nalishni qo'shishda muammo bo'ldi");
             })
             .finally(() => {
                 setPageData((prev) => ({ ...prev, loading: false }));
@@ -60,20 +61,20 @@ const Subjects = () => {
     const onEdit = (values, initial) => {
         setPageData((prev) => ({ ...prev, loading: true }));
         instance
-            .post("/api/subject/createOrUpdate", {
+            .post(`/api/district/createOrUpdate`, {
                 ...values,
                 id: initial.id,
             })
             .then((res) => {
-                res.data?.code === 211 && message.error(res.data?.message);
-                res.data?.code === 200 &&
-                    message.success("Fan muvaffaqiyatli taxrirlandi");
-                getSubjects(pageData.current - 1, pageData.pageSize);
+                res.data.code === 211 && message.error(res.data?.message);
+                res.data.code === 200 &&
+                    message.success("Yo'nalish muvaffaqiyatli taxrirlandi");
+                getDirection(pageData.current - 1, pageData.pageSize);
             })
             .catch(function (error) {
                 console.error("Error in edit: ", error);
                 if (error.response?.status === 500) navigate("/server-error");
-                message.error("Fanni taxrirlashda muammo bo'ldi");
+                message.error("Yo'nalishni taxrirlashda muammo bo'ldi");
             })
             .finally(() => {
                 setPageData((prev) => ({ ...prev, loading: false }));
@@ -84,16 +85,16 @@ const Subjects = () => {
         setPageData((prev) => ({ ...prev, loading: true }));
         arr.map((item) => {
             instance
-                .delete(`/api/subject/${item}`)
+                .delete(`/api/district/delete/${item}`)
                 .then((data) => {
-                    getSubjects(pageData.current - 1, pageData.pageSize);
-                    message.success("Fan muvaffaqiyatli o'chirildi");
+                    getDirection(pageData.current - 1, pageData.pageSize);
+                    message.success("Yo'nalish muvaffaqiyatli o'chirildi");
                 })
                 .catch((error) => {
                     console.error(error);
                     if (error.response?.status === 500)
                         navigate("/server-error");
-                    message.error("Fanni o'chirishda muammo bo'ldi");
+                    message.error("Yo'nalishni o'chirishda muammo bo'ldi");
                 })
                 .finally(() =>
                     setPageData((prev) => ({ ...prev, loading: false }))
@@ -104,7 +105,7 @@ const Subjects = () => {
 
     const columns = [
         {
-            title: "Fan nomi",
+            title: "Yo'nalish nomi",
             dataIndex: "name",
             key: "name",
             width: "99%",
@@ -123,11 +124,11 @@ const Subjects = () => {
 
     return (
         <div className="container" style={{ marginTop: 30 }}>
-            <h3>Fanlari</h3>
+            <h3>Yo'nalishlar</h3>
             <CustomTable
                 columns={columns}
                 pageSizeOptions={[10, 20]}
-                getData={getSubjects}
+                getData={getDirection}
                 onDelete={handleDelete}
                 onCreate={onCreate}
                 onEdit={onEdit}
@@ -139,7 +140,7 @@ const Subjects = () => {
                 setPageSize={(newProp) =>
                     setPageData((prev) => ({ ...prev, pageSize: newProp }))
                 }
-                tableData={pageData.subjects}
+                tableData={pageData.direction}
                 loading={pageData.loading}
                 setLoading={(newProp) =>
                     setPageData((prev) => ({ ...prev, loading: newProp }))
@@ -149,4 +150,4 @@ const Subjects = () => {
     );
 };
 
-export default Subjects;
+export default Direction;

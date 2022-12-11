@@ -33,6 +33,7 @@ const CondidateExams = () => {
                                     borderRadius: 12,
                                     cursor: "pointer",
                                 }}
+                                className="examCard"
                             >
                                 <h3
                                     style={{

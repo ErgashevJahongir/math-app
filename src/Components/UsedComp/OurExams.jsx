@@ -1,51 +1,34 @@
 import { Col, Row, Space } from "antd";
-// import { useState } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import "./userComp.css";
 import { useNavigate } from "react-router-dom";
 import CondidateRegister from "./CondidateRegister";
 import { useData } from "../../Hook/UseData";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Keyboard, Pagination } from "swiper";
+import { motion } from "framer-motion";
 import moment from "moment";
+import "swiper/css";
+import "swiper/css/pagination";
+import "./userComp.css";
+
+const cardVariants = {
+    offscreen: {
+        opacity: 0,
+        scale: 0.8,
+    },
+    onscreen: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+            type: "spring",
+            bounce: 0.2,
+            duration: 0.1,
+        },
+    },
+};
 
 const OurExams = () => {
     const { examsData } = useData();
     const navigate = useNavigate();
-
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 1000,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 4000,
-        pauseOnHover: true,
-        responsive: [
-            {
-                breakpoint: 1124,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 700,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
-    };
 
     return (
         <section className="textAlignCenter sectionCont">
@@ -57,7 +40,7 @@ const OurExams = () => {
                             return (
                                 <Col
                                     xs={24}
-                                    sm={12}
+                                    sm={24}
                                     md={12}
                                     lg={8}
                                     xl={8}
@@ -69,6 +52,7 @@ const OurExams = () => {
                                             padding: "20px 20px 30px 20px",
                                             borderRadius: 12,
                                         }}
+                                        className="examCard"
                                     >
                                         <img
                                             src="https://validthemes.tech/templatebucket/lasson/lasson/assets/img/course/course-2.jpg"
@@ -115,75 +99,138 @@ const OurExams = () => {
                 ) : (
                     <div>
                         <div style={{ marginBottom: 55 }}>
-                            <Slider {...settings}>
+                            <Swiper
+                                slidesPerView={1}
+                                spaceBetween={30}
+                                loop={true}
+                                pagination={{
+                                    clickable: true,
+                                }}
+                                autoplay={{
+                                    delay: 2500,
+                                    disableOnInteraction: true,
+                                }}
+                                keyboard={{
+                                    enabled: true,
+                                }}
+                                breakpoints={{
+                                    768: {
+                                        slidesPerView: 2,
+                                        spaceBetween: 40,
+                                    },
+                                    1024: {
+                                        slidesPerView: 3,
+                                        spaceBetween: 50,
+                                    },
+                                }}
+                                modules={[Autoplay, Keyboard, Pagination]}
+                                className="teachersSwipwr"
+                            >
                                 {examsData.map((item, key) => {
                                     return (
-                                        <Col key={key}>
-                                            <div
-                                                style={{
-                                                    backgroundColor:
-                                                        "#3497D935",
-                                                    padding:
-                                                        "20px 20px 30px 20px",
-                                                    borderRadius: 12,
-                                                    margin: "0 10px",
-                                                }}
-                                            >
-                                                <img
-                                                    src="https://validthemes.tech/templatebucket/lasson/lasson/assets/img/course/course-2.jpg"
-                                                    alt="sratistic"
-                                                    style={{
-                                                        display: "inline-block",
-                                                        width: "100%",
-                                                        height: "auto",
-                                                        marginBottom: 10,
-                                                    }}
-                                                />
-                                                <h3 className="itemTitleH3">
-                                                    {item.title}
-                                                </h3>
-                                                <Space
-                                                    style={{ marginBottom: 10 }}
-                                                >
-                                                    <span>Bo'lish vaqti:</span>
-                                                    <span>
-                                                        {moment(
-                                                            item.startedDate
-                                                        ).format(
-                                                            "YYYY-MM-DD hh:mm"
-                                                        )}
-                                                    </span>
-                                                </Space>
-                                                <div
-                                                    style={{
-                                                        display: "flex",
-                                                        justifyContent:
-                                                            "space-between",
-                                                        alignItems: "center",
+                                        <SwiperSlide key={key}>
+                                            <Col>
+                                                <motion.div
+                                                    className="card-container"
+                                                    initial="offscreen"
+                                                    whileInView="onscreen"
+                                                    viewport={{
+                                                        once: false,
+                                                        amount: 0.8,
                                                     }}
                                                 >
-                                                    <p
-                                                        style={{
-                                                            lineHeight: 1.5,
-                                                            fontWeight: 600,
-                                                            fontFamily:
-                                                                "Poppins, sans-serif",
-                                                            fontSize: 16,
-                                                            color: "rgb(49, 70, 89)",
+                                                    <motion.div
+                                                        className="card"
+                                                        variants={cardVariants}
+                                                        whileHover={{
+                                                            scale: [1, 1.03],
+                                                        }}
+                                                        transition={{
+                                                            duration: 0.2,
                                                         }}
                                                     >
-                                                        Narxi: {item.price} So'm
-                                                    </p>
-                                                    <CondidateRegister
-                                                        examId={item.id}
-                                                        amaunt={item.price}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </Col>
+                                                        <div
+                                                            style={{
+                                                                backgroundColor:
+                                                                    "#3497D935",
+                                                                padding:
+                                                                    "20px 20px 30px 20px",
+                                                                borderRadius: 12,
+                                                                margin: "0 10px",
+                                                            }}
+                                                        >
+                                                            <img
+                                                                src="https://validthemes.tech/templatebucket/lasson/lasson/assets/img/course/course-2.jpg"
+                                                                alt="sratistic"
+                                                                style={{
+                                                                    display:
+                                                                        "inline-block",
+                                                                    width: "100%",
+                                                                    height: "auto",
+                                                                    marginBottom: 10,
+                                                                }}
+                                                            />
+                                                            <h3 className="itemTitleH3">
+                                                                {item.title}
+                                                            </h3>
+                                                            <Space
+                                                                style={{
+                                                                    marginBottom: 10,
+                                                                }}
+                                                            >
+                                                                <span>
+                                                                    Bo'lish
+                                                                    vaqti:
+                                                                </span>
+                                                                <span>
+                                                                    {moment(
+                                                                        item.startedDate
+                                                                    ).format(
+                                                                        "YYYY-MM-DD hh:mm"
+                                                                    )}
+                                                                </span>
+                                                            </Space>
+                                                            <div
+                                                                style={{
+                                                                    display:
+                                                                        "flex",
+                                                                    justifyContent:
+                                                                        "space-between",
+                                                                    alignItems:
+                                                                        "center",
+                                                                }}
+                                                            >
+                                                                <p
+                                                                    style={{
+                                                                        lineHeight: 1.5,
+                                                                        fontWeight: 600,
+                                                                        fontFamily:
+                                                                            "Poppins, sans-serif",
+                                                                        fontSize: 16,
+                                                                        color: "rgb(49, 70, 89)",
+                                                                    }}
+                                                                >
+                                                                    Narxi:{" "}
+                                                                    {item.price}{" "}
+                                                                    So'm
+                                                                </p>
+                                                                <CondidateRegister
+                                                                    examId={
+                                                                        item.id
+                                                                    }
+                                                                    amaunt={
+                                                                        item.price
+                                                                    }
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </motion.div>
+                                                </motion.div>
+                                            </Col>
+                                        </SwiperSlide>
                                     );
                                 })}
-                            </Slider>
+                            </Swiper>
                         </div>
                         <button
                             className="subscribe"
