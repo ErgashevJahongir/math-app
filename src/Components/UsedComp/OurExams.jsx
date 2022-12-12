@@ -46,59 +46,83 @@ const OurExams = () => {
                                     xl={8}
                                     key={key}
                                 >
-                                    <div
-                                        style={{
-                                            backgroundColor: "#3497D935",
-                                            padding: "20px 20px 30px 20px",
-                                            borderRadius: 12,
+                                    <motion.div
+                                        className="card-container"
+                                        initial="offscreen"
+                                        whileInView="onscreen"
+                                        viewport={{
+                                            once: true,
+                                            amount: 0.8,
                                         }}
-                                        className="examCard"
                                     >
-                                        <img
-                                            src="https://validthemes.tech/templatebucket/lasson/lasson/assets/img/course/course-2.jpg"
-                                            alt="sratistic"
-                                            style={{
-                                                display: "inline-block",
-                                                width: "100%",
-                                                height: "auto",
-                                                marginBottom: 10,
+                                        <motion.div
+                                            className="card"
+                                            variants={cardVariants}
+                                            whileHover={{
+                                                scale: [1, 1.01],
                                             }}
-                                        />
-                                        <h3 className="itemTitleH3">
-                                            {item.title}
-                                        </h3>
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                                justifyContent: "space-between",
-                                                alignItems: "center",
+                                            transition={{
+                                                duration: 0.2,
                                             }}
                                         >
-                                            <p
+                                            <div
                                                 style={{
-                                                    lineHeight: 1.5,
-                                                    fontWeight: 600,
-                                                    fontFamily:
-                                                        "Poppins, sans-serif",
-                                                    fontSize: 16,
-                                                    color: "rgb(49, 70, 89)",
+                                                    backgroundColor:
+                                                        "#3497D935",
+                                                    padding:
+                                                        "20px 20px 30px 20px",
+                                                    borderRadius: 12,
                                                 }}
+                                                className="examCard"
                                             >
-                                                Narxi: {item.price} So'm
-                                            </p>
-                                            <CondidateRegister
-                                                examId={item.id}
-                                                amaunt={item.price}
-                                            />
-                                        </div>
-                                    </div>
+                                                <img
+                                                    src="https://validthemes.tech/templatebucket/lasson/lasson/assets/img/course/course-2.jpg"
+                                                    alt="sratistic"
+                                                    style={{
+                                                        display: "inline-block",
+                                                        width: "100%",
+                                                        height: "auto",
+                                                        marginBottom: 10,
+                                                    }}
+                                                />
+                                                <h3 className="itemTitleH3">
+                                                    {item.title}
+                                                </h3>
+                                                <div
+                                                    style={{
+                                                        display: "flex",
+                                                        justifyContent:
+                                                            "space-between",
+                                                        alignItems: "center",
+                                                    }}
+                                                >
+                                                    <p
+                                                        style={{
+                                                            lineHeight: 1.5,
+                                                            fontWeight: 600,
+                                                            fontFamily:
+                                                                "Poppins, sans-serif",
+                                                            fontSize: 16,
+                                                            color: "rgb(49, 70, 89)",
+                                                        }}
+                                                    >
+                                                        Narxi: {item.price} So'm
+                                                    </p>
+                                                    <CondidateRegister
+                                                        examId={item.id}
+                                                        amaunt={item.price}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    </motion.div>
                                 </Col>
                             );
                         })}
                     </Row>
                 ) : (
                     <div>
-                        <div style={{ marginBottom: 55 }}>
+                        <div style={{ marginBottom: 15 }}>
                             <Swiper
                                 slidesPerView={1}
                                 spaceBetween={30}
@@ -124,7 +148,7 @@ const OurExams = () => {
                                     },
                                 }}
                                 modules={[Autoplay, Keyboard, Pagination]}
-                                className="teachersSwipwr"
+                                className="examsSwipwr"
                             >
                                 {examsData.map((item, key) => {
                                     return (
@@ -135,7 +159,7 @@ const OurExams = () => {
                                                     initial="offscreen"
                                                     whileInView="onscreen"
                                                     viewport={{
-                                                        once: false,
+                                                        once: true,
                                                         amount: 0.8,
                                                     }}
                                                 >
@@ -143,7 +167,7 @@ const OurExams = () => {
                                                         className="card"
                                                         variants={cardVariants}
                                                         whileHover={{
-                                                            scale: [1, 1.03],
+                                                            scale: [1, 1.01],
                                                         }}
                                                         transition={{
                                                             duration: 0.2,

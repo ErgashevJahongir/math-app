@@ -337,7 +337,7 @@ const CondidateRegister = ({ examId, amaunt }) => {
                     <Col span={12}>
                         <Form.Item
                             name="expire"
-                            label="Amal qilish muddati(misol: 04/25)"
+                            label="Muddati(misol: 04/25)"
                             rules={[
                                 {
                                     required: true,
@@ -383,6 +383,14 @@ const CondidateRegister = ({ examId, amaunt }) => {
     const CodeVerifyInfo = ({ user, onClose }) => {
         const [form] = Form.useForm();
         const navigate = useNavigate();
+        const downloadFunc = (id) => {
+            const link = document.createElement("a");
+            link.href = `${REACT_APP_BASE_URL}/api/candidate/ticket-file/${id}`;
+            link.setAttribute("download", `Imtihon.pdf`);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+        };
 
         const onFinish = (values) => {
             instance
@@ -395,13 +403,14 @@ const CondidateRegister = ({ examId, amaunt }) => {
                     data.data.code === 230 && message.error(data.data.message);
                     data?.data?.code === 200 &&
                         message.success("Abuturient muvaffaqiyatli qo'shildi");
+                    data?.data?.code === 200 && downloadFunc(user.id);
                     data?.data?.code === 200 && onClose();
                 })
                 .catch(function (error) {
                     console.error(error);
                     if (error.response?.status === 500)
                         navigate("/server-error");
-                    message.error("Imtixonni qo'shishda muammo bo'ldi");
+                    message.error("Abuturient qo'shishda xatolik bo'ldi ");
                 });
         };
 

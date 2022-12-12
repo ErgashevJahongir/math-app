@@ -1,5 +1,6 @@
 import { Col, Row } from "antd";
 import { motion } from "framer-motion";
+import Typewriter from "typewriter-effect";
 
 const cardVariants = {
     offscreen: {
@@ -63,8 +64,17 @@ const Taklif = () => {
     return (
         <section className="textAlignCenter sectionCont">
             <div className="container">
-                <h2 className="future-heading">
-                    Navoiy Qorako'l o'quv markazi sizga nima takif qilamiz
+                <h2 style={{ marginBottom: 20 }}>
+                    <Typewriter
+                        onInit={(typewriter) => {
+                            typewriter
+                                .typeString("Navoiy Qorako'l o'quv markazi")
+                                .start();
+                        }}
+                        options={{
+                            delay: 70,
+                        }}
+                    />
                 </h2>
                 <Row>
                     <Col
@@ -98,16 +108,6 @@ const Taklif = () => {
                                     }}
                                 />
                                 <h3 className="itemTitleH3">Arzon narxlar</h3>
-                                <p
-                                    style={{
-                                        lineHeight: 1.5,
-                                        fontSize: 16,
-                                        color: "rgb(49, 70, 89)",
-                                    }}
-                                >
-                                    Sem integer vitae justo eget magna fermentum
-                                    iaculis
-                                </p>
                             </motion.div>
                         </motion.div>
                     </Col>
@@ -142,17 +142,6 @@ const Taklif = () => {
                                 <h3 className="itemTitleH3">
                                     Qiyinlashtirilgan testlar
                                 </h3>
-                                <p
-                                    style={{
-                                        lineHeight: 1.5,
-                                        fontSize: 16,
-                                        color: "rgb(49, 70, 89)",
-                                    }}
-                                >
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit, incididunt ut labore et
-                                    dolore magna aliqua.
-                                </p>
                             </motion.div>
                         </motion.div>
                     </Col>
@@ -187,16 +176,6 @@ const Taklif = () => {
                                 <h3 className="itemTitleH3">
                                     Bilim darajangizni oshirish
                                 </h3>
-                                <p
-                                    style={{
-                                        lineHeight: 1.5,
-                                        fontSize: 16,
-                                        color: "rgb(49, 70, 89)",
-                                    }}
-                                >
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit
-                                </p>
                             </motion.div>
                         </motion.div>
                     </Col>

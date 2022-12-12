@@ -38,9 +38,8 @@ export const DataProvider = ({ children }) => {
 
     const getDirectionData = () => {
         instance
-            .get("/api/direction/list?page=0&size=10")
+            .get("/api/direction/list?page=0&size=100")
             .then((data) => {
-                console.log(data);
                 setDirectionsData(data.data.data);
             })
             .catch((err) => console.error(err));

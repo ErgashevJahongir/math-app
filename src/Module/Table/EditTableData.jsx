@@ -91,9 +91,7 @@ const EditData = ({
                                         label={data.label}
                                         rules={[
                                             {
-                                                required: data.required
-                                                    ? data.required
-                                                    : true,
+                                                required: data.required,
                                                 message: `${data.label}ni kiriting`,
                                             },
                                         ]}

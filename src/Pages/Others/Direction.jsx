@@ -20,12 +20,22 @@ const Direction = () => {
         instance
             .get(`/api/direction/list?page=0&size=10`)
             .then((data) => {
-                console.log(data);
                 setPageData((prev) => ({
                     ...prev,
-                    direction: data.data?.data,
+                    direction: data.data?.data.map((item) => {
+                        const subject = item.subjectList.map(
+                            (qism) => `${qism.name}, `
+                        );
+                        return {
+                            ...item,
+                            subject: subject,
+                            addSubjectList: item.subjectList.map(
+                                (qism) => qism.id
+                            ),
+                        };
+                    }),
                 }));
-                // getDirectionData();
+                getDirectionData();
             })
             .catch((error) => {
                 console.error(error);
@@ -40,7 +50,7 @@ const Direction = () => {
     const onCreate = (values) => {
         setPageData((prev) => ({ ...prev, loading: true }));
         instance
-            .post("/api/district/createOrUpdate", { ...values })
+            .post("/api/direction/create", { ...values })
             .then(function (response) {
                 response.data?.code === 211 &&
                     message.error(response.data?.message);
@@ -60,10 +70,23 @@ const Direction = () => {
 
     const onEdit = (values, initial) => {
         setPageData((prev) => ({ ...prev, loading: true }));
+        console.log(values, initial);
+        const addSubjectList = values?.addSubjectList?.filter(
+            (item) => !initial?.addSubjectList?.includes(item)
+        );
+        const removeSubjectList1 = initial?.addSubjectList?.filter((item) =>
+            values?.addSubjectList?.includes(item)
+        );
+        const removeSubjectList = initial?.addSubjectList?.filter(
+            (item) => !removeSubjectList1?.includes(item)
+        );
+
+        console.log(addSubjectList, removeSubjectList);
         instance
-            .post(`/api/district/createOrUpdate`, {
+            .post(`/api/direction/update/${initial.id}`, {
                 ...values,
-                id: initial.id,
+                addSubjectList: addSubjectList,
+                removeSubjectList: removeSubjectList,
             })
             .then((res) => {
                 res.data.code === 211 && message.error(res.data?.message);
@@ -85,7 +108,7 @@ const Direction = () => {
         setPageData((prev) => ({ ...prev, loading: true }));
         arr.map((item) => {
             instance
-                .delete(`/api/district/delete/${item}`)
+                .delete(`/api/direction/delete/${item}`)
                 .then((data) => {
                     getDirection(pageData.current - 1, pageData.pageSize);
                     message.success("Yo'nalish muvaffaqiyatli o'chirildi");
@@ -108,7 +131,7 @@ const Direction = () => {
             title: "Yo'nalish nomi",
             dataIndex: "name",
             key: "name",
-            width: "99%",
+            width: "49%",
             search: true,
             sorter: (a, b) => {
                 if (a.name < b.name) {
@@ -119,6 +142,13 @@ const Direction = () => {
                 }
                 return 0;
             },
+        },
+        {
+            title: "Fan nomlari",
+            dataIndex: "subject",
+            key: "subject",
+            width: "50%",
+            search: true,
         },
     ];
 

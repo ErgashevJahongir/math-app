@@ -158,6 +158,11 @@ li {
     z-index: 0;
 }
 
+.examsSwipwr {
+    padding-bottom: 50px;
+    z-index: 0;
+}
+
 .ant-modal.seenCont .ant-list-item {
     padding: 8px 10px;
 }
@@ -192,6 +197,23 @@ li {
 
 .uchdan-bir {
     width: 100%;
+}
+
+.Typewriter__wrapper {
+    background: -webkit-linear-gradient(19deg, #7ab1cd 0%, #001529 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 32px;
+    font-weight: 600;
+    color: rgb(49, 70, 89);
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+
+.Typewriter__cursor {
+    font-size: 32px;
+    line-height: 1.2;
+    vertical-align: text-bottom;
 }
 
 @media screen and (max-width: 1440px) {
@@ -253,6 +275,15 @@ li {
     .future-heading {
         font-size: 26px;
         margin-bottom: 20px;
+    }
+
+    .Typewriter__wrapper {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .Typewriter__cursor {
+        font-size: 26px;
     }
 
     .itemTitleH3 {

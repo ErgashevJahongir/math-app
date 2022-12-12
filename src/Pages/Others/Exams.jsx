@@ -5,6 +5,7 @@ import moment from "moment";
 import instance from "../../Api/Axios";
 import CustomTable from "../../Module/Table/Table";
 import { useData } from "../../Hook/UseData";
+import { useTable } from "../../Hook/UseTable";
 
 const ExamsComp = () => {
     const [pageData, setPageData] = useState({
@@ -13,7 +14,8 @@ const ExamsComp = () => {
         current: 1,
         pageSize: 10,
     });
-    const { subjectsData, getExamsData } = useData();
+    const { subjectsData, getExamsData, directionsData } = useData();
+    const { setExamtableData } = useTable();
     const navigate = useNavigate();
 
     const getExams = (current, pageSize) => {
@@ -21,10 +23,13 @@ const ExamsComp = () => {
         instance
             .get(`/api/exam/list?page=${current}&size=${pageSize}`)
             .then((data) => {
+                console.log(data);
                 setPageData((prev) => ({
                     ...prev,
                     exams: data.data?.data.map((item) => ({
                         ...item,
+                        directionId: item?.directionId?.id,
+                        subjectId: item?.subjectId?.id,
                         startedDate: moment(item?.startedDate).format(
                             "YYYY-MM-DD hh:mm"
                         ),
@@ -64,6 +69,10 @@ const ExamsComp = () => {
             })
             .finally(() => {
                 setPageData((prev) => ({ ...prev, loading: false }));
+                setExamtableData({
+                    directionId: false,
+                    subjectId: false,
+                });
             });
     };
 
@@ -94,6 +103,10 @@ const ExamsComp = () => {
             })
             .finally(() => {
                 setPageData((prev) => ({ ...prev, loading: false }));
+                setExamtableData({
+                    directionId: false,
+                    subjectId: false,
+                });
             });
     };
 
@@ -119,12 +132,14 @@ const ExamsComp = () => {
         });
     };
 
+    console.log(directionsData);
+
     const columns = [
         {
             title: "Fan nomi",
             dataIndex: "subjectId",
             key: "subjectId",
-            width: "15%",
+            width: "12%",
             search: false,
             sorter: (a, b) => {
                 if (a.subjectId < b.subjectId) {
@@ -141,10 +156,32 @@ const ExamsComp = () => {
             },
         },
         {
+            title: "Yo'nalish nomi",
+            dataIndex: "directionId",
+            key: "directionId",
+            width: "12%",
+            search: false,
+            sorter: (a, b) => {
+                if (a.directionId < b.directionId) {
+                    return -1;
+                }
+                if (a.directionId > b.directionId) {
+                    return 1;
+                }
+                return 0;
+            },
+            render: (record) => {
+                const data = directionsData?.filter(
+                    (item) => item.id === record
+                );
+                return data[0]?.name;
+            },
+        },
+        {
             title: "Ma'lumot",
             dataIndex: "title",
             key: "title",
-            width: "30%",
+            width: "25%",
             search: true,
         },
         {
@@ -183,7 +220,7 @@ const ExamsComp = () => {
             title: "Imtixon narxi",
             dataIndex: "price",
             key: "price",
-            width: "15%",
+            width: "10%",
             search: true,
             sorter: (a, b) => {
                 if (a.price < b.price) {
