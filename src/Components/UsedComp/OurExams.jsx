@@ -65,16 +65,7 @@ const OurExams = () => {
                                                 duration: 0.2,
                                             }}
                                         >
-                                            <div
-                                                style={{
-                                                    backgroundColor:
-                                                        "#3497D935",
-                                                    padding:
-                                                        "20px 20px 30px 20px",
-                                                    borderRadius: 12,
-                                                }}
-                                                className="examCard"
-                                            >
+                                            <div className="examCard">
                                                 <img
                                                     src="https://validthemes.tech/templatebucket/lasson/lasson/assets/img/course/course-2.jpg"
                                                     alt="sratistic"
@@ -96,17 +87,8 @@ const OurExams = () => {
                                                         alignItems: "center",
                                                     }}
                                                 >
-                                                    <p
-                                                        style={{
-                                                            lineHeight: 1.5,
-                                                            fontWeight: 600,
-                                                            fontFamily:
-                                                                "Poppins, sans-serif",
-                                                            fontSize: 16,
-                                                            color: "rgb(49, 70, 89)",
-                                                        }}
-                                                    >
-                                                        Narxi: {item.price} So'm
+                                                    <p className="exam-text">
+                                                        Narxi: {item.price} so'm
                                                     </p>
                                                     <CondidateRegister
                                                         examId={item.id}
@@ -125,7 +107,7 @@ const OurExams = () => {
                         <div style={{ marginBottom: 15 }}>
                             <Swiper
                                 slidesPerView={1}
-                                spaceBetween={30}
+                                spaceBetween={10}
                                 loop={true}
                                 pagination={{
                                     clickable: true,
@@ -138,7 +120,7 @@ const OurExams = () => {
                                     enabled: true,
                                 }}
                                 breakpoints={{
-                                    768: {
+                                    700: {
                                         slidesPerView: 2,
                                         spaceBetween: 40,
                                     },
@@ -173,16 +155,7 @@ const OurExams = () => {
                                                             duration: 0.2,
                                                         }}
                                                     >
-                                                        <div
-                                                            style={{
-                                                                backgroundColor:
-                                                                    "#3497D935",
-                                                                padding:
-                                                                    "20px 20px 30px 20px",
-                                                                borderRadius: 12,
-                                                                margin: "0 10px",
-                                                            }}
-                                                        >
+                                                        <div className="examCard">
                                                             <img
                                                                 src="https://validthemes.tech/templatebucket/lasson/lasson/assets/img/course/course-2.jpg"
                                                                 alt="sratistic"
@@ -224,19 +197,10 @@ const OurExams = () => {
                                                                         "center",
                                                                 }}
                                                             >
-                                                                <p
-                                                                    style={{
-                                                                        lineHeight: 1.5,
-                                                                        fontWeight: 600,
-                                                                        fontFamily:
-                                                                            "Poppins, sans-serif",
-                                                                        fontSize: 16,
-                                                                        color: "rgb(49, 70, 89)",
-                                                                    }}
-                                                                >
+                                                                <p className="exam-text">
                                                                     Narxi:{" "}
                                                                     {item.price}{" "}
-                                                                    So'm
+                                                                    so'm
                                                                 </p>
                                                                 <CondidateRegister
                                                                     examId={

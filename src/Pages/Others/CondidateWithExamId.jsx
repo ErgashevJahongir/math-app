@@ -11,8 +11,9 @@ const CondidateWithExamId = () => {
         loading: true,
         current: 1,
         pageSize: 10,
+        totalItems: 1,
     });
-    const { subjectsData, examsData } = useData();
+    const { subjectsData, examsData, directionsData } = useData();
     const { examIdWith } = useParams();
     const navigate = useNavigate();
     const exam = examsData?.filter((item) => item?.id == examIdWith);
@@ -24,12 +25,18 @@ const CondidateWithExamId = () => {
                 `/api/candidate/list/${examIdWith}?page=${current}&size=${pageSize}`
             )
             .then((data) => {
+                console.log(data);
                 setPageData((prev) => ({
                     ...prev,
                     condidateWithExamId: data?.data?.data?.map((item) => ({
                         ...item,
-                        subjectId: item?.exam?.subjectId,
+                        subjectId: item?.exam?.subjectId?.id,
+                        directionId: item?.exam?.directionId?.id,
                     })),
+                }));
+                setPageData((prev) => ({
+                    ...prev,
+                    totalItems: data.data?.pageable?.count,
                 }));
             })
             .catch((error) => {
@@ -65,7 +72,7 @@ const CondidateWithExamId = () => {
             title: "Ismi",
             dataIndex: "firstName",
             key: "firstName",
-            width: "15%",
+            width: "13%",
             search: true,
             sorter: (a, b) => {
                 if (a.firstName < b.firstName) {
@@ -81,7 +88,7 @@ const CondidateWithExamId = () => {
             title: "Familiyasi",
             dataIndex: "lastName",
             key: "lastName",
-            width: "15%",
+            width: "13%",
             search: true,
             sorter: (a, b) => {
                 if (a.lastName < b.lastName) {
@@ -145,7 +152,7 @@ const CondidateWithExamId = () => {
             title: "Imtihon fani",
             dataIndex: "subjectId",
             key: "subjectId",
-            width: "15%",
+            width: "12%",
             search: false,
             sorter: (a, b) => {
                 if (a.subjectId < b.subjectId) {
@@ -162,10 +169,32 @@ const CondidateWithExamId = () => {
             },
         },
         {
-            title: "To'lov qilinganligi",
+            title: "Yo'naish",
+            dataIndex: "directionId",
+            key: "directionId",
+            width: "12%",
+            search: false,
+            sorter: (a, b) => {
+                if (a.directionId < b.directionId) {
+                    return -1;
+                }
+                if (a.directionId > b.directionId) {
+                    return 1;
+                }
+                return 0;
+            },
+            render: (record) => {
+                const data = directionsData?.filter(
+                    (item) => item.id === record
+                );
+                return data[0]?.name;
+            },
+        },
+        {
+            title: "To'lov ",
             dataIndex: "paid",
             key: "paid",
-            width: "15%",
+            width: "10%",
             search: false,
             sorter: (a, b) => {
                 if (a.paid < b.paid) {
@@ -192,6 +221,7 @@ const CondidateWithExamId = () => {
                 pageSizeOptions={[10, 20]}
                 getData={getCondifateWithId}
                 onCreate={onCreate}
+                totalItems={pageData.totalItems}
                 current={pageData.current}
                 pageSize={pageData.pageSize}
                 setCurrent={(newProp) =>

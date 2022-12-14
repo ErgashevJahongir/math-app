@@ -1,0 +1,166 @@
+.showcontent {
+    min-height: 100%;
+    margin: 30px 0;
+}
+
+.showwrapper {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.showcontent__textcontent h1 {
+    color: #0c0d24;
+    font-weight: 900;
+    line-height: 1.4em;
+    margin-bottom: 35px;
+    font-size: 50px;
+}
+
+.showcontent__textcontent .text p {
+    position: relative;
+    color: #0c0d24;
+    font-size: 20px;
+    opacity: 0.9;
+    line-height: 1.6em;
+    margin-bottom: 40px;
+}
+
+.register-btn {
+    position: relative;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 30px;
+    color: #ffffff;
+    padding: 17px 56px;
+    font-weight: 500;
+    overflow: hidden;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: #2b5390;
+    text-transform: uppercase;
+    height: 70px;
+    font-family: "Noto Sans TC", sans-serif;
+}
+
+.register-btn:hover {
+    color: #ffffff;
+}
+
+.call-phone {
+    margin-left: 25px;
+    position: relative;
+}
+
+div.phone {
+    z-index: 2;
+    background-color: #f50057;
+    animation: phone 1 cubic-bezier(0.12, 0.7, 0.74, 0.71) infinite
+        alternate-reverse;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    border: 0.5px white solid;
+    -webkit-animation: phone 1 cubic-bezier(0.12, 0.7, 0.74, 0.71) infinite
+        alternate-reverse;
+}
+
+.material-icons {
+    color: white;
+}
+
+.call-phone .phone {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: #2b5390;
+    position: absolute;
+    top: 5px;
+}
+
+.call-phone .circle1 {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: #2b5390;
+    position: absolute;
+    top: 5px;
+    animation: scaling 1.5s cubic-bezier(0.12, 0.7, 0.74, 0.71) infinite;
+    -webkit-animation: scaling 1.5s cubic-bezier(0.12, 0.7, 0.74, 0.71) infinite;
+}
+
+.call-phone .circle2 {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: #2b5390;
+    position: absolute;
+    top: 5px;
+    animation: scaling 1.5s cubic-bezier(0.12, 0.7, 0.74, 0.71) infinite;
+    -webkit-animation: scaling 1.5s cubic-bezier(0.12, 0.7, 0.74, 0.71) infinite;
+}
+
+@keyframes scaling {
+    0% {
+        transform: scale(1.5);
+        background-color: #2b5390;
+        -webkit-transform: scale(1.5);
+        -moz-transform: scale(1.5);
+        -ms-transform: scale(1.5);
+        -o-transform: scale(1.5);
+    }
+    100% {
+        transform: scale(3);
+        background-color: #2b539020;
+        -webkit-transform: scale(3);
+        -moz-transform: scale(3);
+        -ms-transform: scale(3);
+        -o-transform: scale(3);
+    }
+}
+
+.call-phone .circle1 {
+    animation-delay: 0s;
+}
+
+.call-phone .circle2 {
+    animation-delay: 0.5s;
+}
+
+@media screen and (max-width: 1020px) {
+    .showcontent__textcontent h1 {
+        margin-bottom: 25px;
+        font-size: 40px;
+    }
+
+    .showcontent__textcontent .text p {
+        font-size: 18px;
+        margin-bottom: 35px;
+        line-height: 25px;
+    }
+
+    .register-btn {
+        padding: 10px 50px;
+        height: 55px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .showcontent__textcontent h1 {
+        margin-bottom: 15px;
+        font-size: 30px;
+    }
+
+    .showcontent__textcontent .text p {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+
+    .register-btn {
+        padding: 8px 25px;
+        height: 45px;
+        font-size: 14px;
+        line-height: 20px;
+    }
+}

@@ -15,6 +15,10 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 html:focus-within {
     scroll-behavior: smooth;
 }
@@ -191,6 +195,13 @@ li {
     margin-bottom: 6px;
 }
 
+.exam-text {
+    line-height: 1.5;
+    font-weight: 600;
+    font-size: 16px;
+    color: rgb(49, 70, 89);
+}
+
 .logout-btn {
     padding: 0;
 }
@@ -216,6 +227,17 @@ li {
     vertical-align: text-bottom;
 }
 
+.examCard {
+    background-color: #3497d935;
+    padding: 20px 20px 30px 20px;
+    border-radius: 12px;
+    margin: 0 10px;
+    -webkit-border-radius: 12;
+    -moz-border-radius: 12;
+    -ms-border-radius: 12;
+    -o-border-radius: 12;
+}
+
 @media screen and (max-width: 1440px) {
     .container {
         width: 1020px;
@@ -224,15 +246,15 @@ li {
 
 @media screen and (max-width: 1020px) {
     .container {
-        width: 768px;
-        padding: 0;
+        width: 760px;
+        padding: 0 10px;
     }
 }
 
 @media screen and (max-width: 767px) {
     .container {
         width: 100%;
-        padding: 0 25px;
+        padding: 0 15px;
     }
 
     .burger-menu {
@@ -287,11 +309,22 @@ li {
     }
 
     .itemTitleH3 {
-        font-size: 20px;
-        line-height: 26px;
+        font-size: 18px;
+        line-height: 24px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .exam-text {
+        font-size: 14px;
     }
 
     .examCard {
-        margin: 0 20px;
+        margin: 0 8px;
+        padding: 8px 8px 15px;
+    }
+
+    .examCard .ant-space-item {
+        font-size: 13px;
     }
 }

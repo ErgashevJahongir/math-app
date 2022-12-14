@@ -398,6 +398,11 @@ const CustomTable = (props) => {
                 }}
                 pagination={{
                     showSizeChanger: true,
+                    showTotal: (total) => (
+                        <span style={{ fontSize: 14, fontWeight: 600 }}>
+                            Jami: {total}
+                        </span>
+                    ),
                     total: totalItems,
                     pageSize: pageSize,
                     current: current,

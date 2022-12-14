@@ -4,7 +4,7 @@ import "./Contact.css";
 
 const Contacts = () => {
     return (
-        <section className="contact">
+        <section className="contact" id="contact">
             <div className="container">
                 <h2>Kontaktlar</h2>
                 <Row gutter={20} className="contact-Cont">

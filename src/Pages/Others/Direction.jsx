@@ -11,6 +11,7 @@ const Direction = () => {
         loading: true,
         current: 1,
         pageSize: 10,
+        totalItems: 1,
     });
     const { getDirectionData } = useData();
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Direction = () => {
     const getDirection = (current, pageSize) => {
         setPageData((prev) => ({ ...prev, loading: true }));
         instance
-            .get(`/api/direction/list?page=0&size=10`)
+            .get(`/api/direction/list?page=${current}&size=${pageSize}`)
             .then((data) => {
                 setPageData((prev) => ({
                     ...prev,
@@ -36,6 +37,10 @@ const Direction = () => {
                     }),
                 }));
                 getDirectionData();
+                setPageData((prev) => ({
+                    ...prev,
+                    totalItems: data.data?.pageable?.count,
+                }));
             })
             .catch((error) => {
                 console.error(error);
@@ -162,6 +167,7 @@ const Direction = () => {
                 onDelete={handleDelete}
                 onCreate={onCreate}
                 onEdit={onEdit}
+                totalItems={pageData.totalItems}
                 current={pageData.current}
                 pageSize={pageData.pageSize}
                 setCurrent={(newProp) =>

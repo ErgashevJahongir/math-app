@@ -11,6 +11,7 @@ const Subjects = () => {
         loading: true,
         current: 1,
         pageSize: 10,
+        totalItems: 1,
     });
     const { getSubjectsData } = useData();
     const navigate = useNavigate();

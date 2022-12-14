@@ -74,6 +74,13 @@ const EditData = ({
                 <Form form={form} layout="vertical" name="form_in_modal">
                     <Row gutter={12}>
                         {editData?.map((data) => {
+                            let valuePropName =
+                                data?.name === "active"
+                                    ? {
+                                          name: data?.name,
+                                          valuePropName: data?.name,
+                                      }
+                                    : { name: data?.name };
                             return (
                                 <Col
                                     span={
@@ -86,7 +93,7 @@ const EditData = ({
                                     key={data.name}
                                 >
                                     <Form.Item
-                                        name={data.name}
+                                        // name={data.name}
                                         key={data.name}
                                         label={data.label}
                                         rules={[
@@ -95,6 +102,7 @@ const EditData = ({
                                                 message: `${data.label}ni kiriting`,
                                             },
                                         ]}
+                                        {...valuePropName}
                                     >
                                         {data.hasOwnProperty("input")
                                             ? data.input

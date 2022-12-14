@@ -13,6 +13,7 @@ const ExamsComp = () => {
         loading: true,
         current: 1,
         pageSize: 10,
+        totalItems: 1,
     });
     const { subjectsData, getExamsData, directionsData } = useData();
     const { setExamtableData } = useTable();
@@ -39,6 +40,10 @@ const ExamsComp = () => {
                     })),
                 }));
                 getExamsData();
+                setPageData((prev) => ({
+                    ...prev,
+                    totalItems: data.data?.pageable?.count,
+                }));
             })
             .catch((error) => {
                 console.error(error);
@@ -248,7 +253,7 @@ const ExamsComp = () => {
                 return 0;
             },
             render: (record) => {
-                return record ? "Bor" : "Yo'q";
+                return record ? "Ha" : "Yo'q";
             },
         },
     ];
@@ -263,6 +268,7 @@ const ExamsComp = () => {
                 onDelete={handleDelete}
                 onCreate={onCreate}
                 onEdit={onEdit}
+                totalItems={pageData.totalItems}
                 tableData={pageData.exams}
                 current={pageData.current}
                 pageSize={pageData.pageSize}
