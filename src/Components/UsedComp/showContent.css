@@ -44,8 +44,34 @@
     font-family: "Noto Sans TC", sans-serif;
 }
 
-.register-btn:hover {
-    color: #ffffff;
+.showcontent__textcontent .ant-btn-default:hover {
+    color: #000;
+}
+
+.showcontent__textcontent .ant-btn-default:hover span {
+    position: relative;
+    z-index: 1;
+}
+
+.showcontent__textcontent .ant-btn-default:hover::before {
+    left: -10%;
+}
+
+.showcontent__textcontent .ant-btn-default::before {
+    position: absolute;
+    content: "";
+    left: 110%;
+    top: 0px;
+    width: 120%;
+    height: 100%;
+    z-index: 0;
+    opacity: 1;
+    background-color: #ff0;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    transition: all 0.4s;
+    transform: skewX(-25deg);
 }
 
 .call-phone {
