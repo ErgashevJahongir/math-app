@@ -1,0 +1,76 @@
+.about {
+    margin: 30px 0;
+}
+
+.sec-title {
+    margin-bottom: 55px;
+}
+
+.sec-title h2 {
+    color: #000;
+    font-weight: 700;
+    line-height: 1.2em;
+    margin-top: 18px;
+    font-size: 40px;
+}
+
+.sec-title .text {
+    font-weight: 400;
+    line-height: 1.7em;
+    margin-top: 25px;
+    font-size: 20px;
+    color: #000;
+}
+
+.count {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.counter-number {
+    font-weight: 800;
+    color: #06092d;
+    font-size: 65px;
+    line-height: 1em;
+    text-transform: uppercase;
+}
+
+.counter-number .number-son {
+    font-weight: 800;
+    color: #06092d;
+    font-size: 65px;
+    line-height: 1em;
+    text-transform: uppercase;
+}
+
+.counter-title {
+    font-size: 19px;
+    font-weight: 700;
+    margin-top: 14px;
+    color: #06092d;
+    line-height: 1.6em;
+}
+
+@media screen and (max-width: 767px) {
+    .sec-title h2 {
+        font-size: 30px;
+        margin-top: 10px;
+    }
+    .sec-title .text {
+        margin-top: 20px;
+        font-size: 17px;
+    }
+    .count {
+        gap: 30px;
+    }
+    .counter-number {
+        font-size: 50px;
+    }
+    .counter-number .number-son {
+        font-size: 50px;
+    }
+    .counter-title {
+        font-size: 18px;
+    }
+}

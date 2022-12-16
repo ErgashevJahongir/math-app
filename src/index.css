@@ -28,6 +28,7 @@ body {
     color: #232323;
     line-height: 1;
     background-color: #f8f8f8 !important;
+    position: relative;
     -webkit-text-size-adjust: 100%;
 }
 
@@ -177,18 +178,15 @@ li {
 }
 
 .future-heading {
-    background: -webkit-linear-gradient(19deg, #7ab1cd 0%, #001529 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     font-size: 32px;
     font-weight: 600;
-    color: rgb(49, 70, 89);
+    color: #0c0d24;
     line-height: 1.5;
     margin-bottom: 30px;
 }
 
 .itemTitleH3 {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 600;
     color: rgb(49, 70, 89);
     line-height: 32px;
@@ -210,15 +208,22 @@ li {
     width: 100%;
 }
 
+.teachersCont .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .Typewriter__wrapper {
-    background: -webkit-linear-gradient(19deg, #7ab1cd 0%, #001529 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     font-size: 32px;
     font-weight: 600;
-    color: rgb(49, 70, 89);
+    color: #0c0d24;
     line-height: 1.5;
     margin-bottom: 30px;
+}
+
+.taklif-heading {
+    margin-bottom: 50px;
 }
 
 .Typewriter__cursor {
@@ -228,14 +233,51 @@ li {
 }
 
 .examCard {
-    background-color: #3497d935;
-    padding: 20px 20px 30px 20px;
+    background-color: #fff;
+    padding: 15px 20px 20px 20px;
     border-radius: 12px;
-    margin: 0 10px;
+    margin: 10px 10px;
+    box-shadow: 0 0px 10px #ccc;
     -webkit-border-radius: 12;
     -moz-border-radius: 12;
     -ms-border-radius: 12;
     -o-border-radius: 12;
+}
+
+.courses-title {
+    font-weight: 400;
+    line-height: 1.7em;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.courses .future-heading {
+    margin-bottom: 10px;
+}
+
+.courses .swiper-wrapper {
+    margin-bottom: 20px;
+}
+
+.courses__card {
+    max-width: 350px;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0px 10px #ccc;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.courses__card img {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.courses__card-title {
+    padding: 10px 10px 20px;
 }
 
 @media screen and (max-width: 1440px) {
@@ -288,10 +330,6 @@ li {
 
     .ant-layout .ant-layout-header {
         padding-inline: 10px;
-    }
-
-    .contact-Cont {
-        flex-direction: column-reverse;
     }
 
     .future-heading {

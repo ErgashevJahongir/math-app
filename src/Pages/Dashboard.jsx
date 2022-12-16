@@ -1,19 +1,17 @@
+import About from "../Components/UsedComp/About";
 import Contacts from "../Components/UsedComp/Contacts";
-import OurExams from "../Components/UsedComp/OurExams";
+import Courses from "../Components/UsedComp/Courses";
 import OurTeachers from "../Components/UsedComp/OurTeachers";
 import ShowContent from "../Components/UsedComp/ShowContent";
-import SocialsAndSubscribe from "../Components/UsedComp/SocialsAndSubscribe";
-import Taklif from "../Components/UsedComp/Taklif";
 
 const Dashboard = () => {
     return (
         <div>
             <ShowContent />
-            <Taklif />
-            <OurExams />
+            <About />
+            <Courses />
             <OurTeachers />
             <Contacts />
-            <SocialsAndSubscribe />
         </div>
     );
 };

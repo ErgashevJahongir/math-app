@@ -4,6 +4,8 @@ import moment from "moment";
 import CondidateRegister from "../Components/UsedComp/CondidateRegister";
 import "../Components/UsedComp/userComp.css";
 import { useData } from "../Hook/UseData";
+import pana from "../Assets/Images/Editing-body-text-rafiki.svg";
+import rfiki from "../Assets/Images/Online-test-rafiki.svg";
 
 const cardVariants = {
     offscreen: {
@@ -37,6 +39,7 @@ const Exams = () => {
                                 md={12}
                                 lg={8}
                                 xl={8}
+                                xxl={6}
                                 key={key}
                             >
                                 <motion.div
@@ -58,16 +61,11 @@ const Exams = () => {
                                             duration: 0.2,
                                         }}
                                     >
-                                        <div
-                                            style={{
-                                                backgroundColor: "#3497D935",
-                                                padding: "20px 20px 30px 20px",
-                                                borderRadius: 12,
-                                            }}
-                                            className="examCard"
-                                        >
+                                        <div className="examCard">
                                             <img
-                                                src="https://validthemes.tech/templatebucket/lasson/lasson/assets/img/course/course-2.jpg"
+                                                src={
+                                                    key % 2 === 1 ? rfiki : pana
+                                                }
                                                 alt="sratistic"
                                                 style={{
                                                     display: "inline-block",
@@ -101,8 +99,6 @@ const Exams = () => {
                                                     style={{
                                                         lineHeight: 1.5,
                                                         fontWeight: 600,
-                                                        fontFamily:
-                                                            "Poppins, sans-serif",
                                                         fontSize: 16,
                                                         color: "rgb(49, 70, 89)",
                                                     }}

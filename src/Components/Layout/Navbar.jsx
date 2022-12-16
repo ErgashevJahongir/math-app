@@ -16,7 +16,7 @@ import {
     ProfileOutlined,
     OrderedListOutlined,
 } from "@ant-design/icons";
-import logoSvg from "./logo-math.svg";
+import logoSvg from "../../Assets/Images/logo-math.svg";
 
 const { Header } = Layout;
 
@@ -83,7 +83,7 @@ function Navbar() {
                 alignItems: "center",
                 position: "sticky",
                 top: 0,
-                zIndex: 1,
+                zIndex: 2,
             }}
         >
             <div

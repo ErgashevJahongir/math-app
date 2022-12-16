@@ -1,116 +1,252 @@
 import { Col, Row } from "antd";
 import { PhoneOutlined, MailOutlined } from "@ant-design/icons";
+import SocialsAndSubscribe from "./SocialsAndSubscribe";
+import logoSvg from "../../Assets/Images/logo-math.svg";
 import "./Contact.css";
+import { useCallback } from "react";
+import Particles from "react-particles";
+import { loadFull } from "tsparticles";
+
+const AppDir = () => {
+    const particlesInit = useCallback(async (engine) => {
+        console.log(engine);
+        // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
+        // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
+        // starting from v2 you can add only the features you need reducing the bundle size
+        await loadFull(engine);
+    }, []);
+
+    const particlesLoaded = useCallback(async (container) => {
+        await console.log(container);
+    }, []);
+
+    return (
+        <Particles
+            id="tsparticles"
+            init={particlesInit}
+            loaded={particlesLoaded}
+            height="100px"
+            options={{
+                fullScreen: {
+                    zIndex: 0,
+                    enable: true,
+                },
+                style: {
+                    position: "absolute",
+                },
+                particles: {
+                    number: {
+                        value: 90,
+                        density: {
+                            enable: true,
+                            area: 600,
+                        },
+                    },
+                    color: {
+                        value: "#ff0000",
+                        animation: {
+                            enable: true,
+                            speed: 20,
+                            sync: true,
+                        },
+                    },
+                    opacity: {
+                        value: 0.5,
+                    },
+                    size: {
+                        value: {
+                            min: 0.5,
+                            max: 3,
+                        },
+                    },
+                    links: {
+                        enable: true,
+                        distance: 100,
+                        color: "#ffffff",
+                        opacity: 0.5,
+                        width: 2,
+                    },
+                    move: {
+                        enable: true,
+                        speed: 5,
+                        direction: "none",
+                        outModes: {
+                            default: "out",
+                        },
+                    },
+                },
+                interactivity: {
+                    events: {
+                        onHover: {
+                            enable: true,
+                            mode: "repulse",
+                        },
+                        onClick: {
+                            enable: true,
+                            mode: "push",
+                        },
+                    },
+                    modes: {
+                        repulse: {
+                            distance: 150,
+                        },
+                        push: {
+                            quantity: 10,
+                        },
+                    },
+                },
+            }}
+        />
+    );
+};
+
+// {
+//                 // fullScreen: {
+//                 //     zIndex: 0,
+//                 //     enable: true,
+//                 // },
+//                 particles: {
+//                     number: {
+//                         value: 80,
+//                         density: {
+//                             enable: true,
+//                             area: 700,
+//                         },
+//                     },
+//                     color: {
+//                         value: "#ff0000",
+//                         animation: {
+//                             enable: true,
+//                             speed: 20,
+//                             sync: true,
+//                         },
+//                     },
+//                     opacity: {
+//                         value: 0.5,
+//                     },
+//                     size: {
+//                         value: {
+//                             min: 0.1,
+//                             max: 3,
+//                         },
+//                     },
+//                     links: {
+//                         enable: true,
+//                         distance: 100,
+//                         color: "#ffffff",
+//                         opacity: 0.4,
+//                         width: 1,
+//                     },
+//                     move: {
+//                         enable: true,
+//                         speed: 6,
+//                         direction: "none",
+//                         outModes: {
+//                             default: "out",
+//                         },
+//                     },
+//                 },
+//                 interactivity: {
+//                     events: {
+//                         onHover: {
+//                             enable: true,
+//                             mode: "repulse",
+//                         },
+//                         onClick: {
+//                             enable: true,
+//                             mode: "push",
+//                         },
+//                     },
+//                     modes: {
+//                         repulse: {
+//                             distance: 200,
+//                         },
+//                         push: {
+//                             quantity: 4,
+//                         },
+//                     },
+//                 },
+//                 background: {
+//                     color: "#000000",
+//                 },
+//             }
 
 const Contacts = () => {
     return (
         <section className="contact" id="contact">
+            <AppDir />
             <div className="container">
                 <h2>Kontaktlar</h2>
-                <Row gutter={20} className="contact-Cont">
-                    <Col
-                        xs={24}
-                        sm={24}
-                        md={8}
-                        lg={6}
-                        xl={6}
-                        style={{ marginBottom: 20 }}
-                    >
-                        <h3 style={{}}>Manzilimiz</h3>
-                        <p
-                            style={{
-                                lineHeight: 1.5,
-                                fontSize: 16,
-                                color: "#fff",
-                                marginBottom: 20,
-                            }}
-                        >
-                            O'zbekiston, TOSHKENT, Mirzo-Ulug'bek BUYUK IPAK
-                            YO'LI ko'chasi, 115 uy
-                        </p>
-                        <h3>Telefon nomerlarimiz</h3>
-                        <div
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                marginBottom: 5,
-                            }}
-                        >
-                            <PhoneOutlined style={{ fontSize: "18px" }} />
-                            <p
+                <img
+                    src={logoSvg}
+                    alt="logo Qorako'l Navoiy o'quv markazi"
+                    width={250}
+                />
+                <Row gutter={[20, 15]} className="contact-Cont">
+                    <Col span={24}>
+                        <a href="tel:+998903778990">
+                            <div
                                 style={{
-                                    lineHeight: 1.5,
-                                    fontSize: 16,
-                                    color: "#fff",
-                                    marginLeft: 10,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
                                 }}
                             >
-                                +998911236353
-                            </p>
-                        </div>
-                        <div
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                marginBottom: 20,
-                            }}
-                        >
-                            <PhoneOutlined style={{ fontSize: "18px" }} />
-                            <p
-                                style={{
-                                    lineHeight: 1.5,
-                                    fontSize: 16,
-                                    color: "#fff",
-                                    marginLeft: 10,
-                                }}
-                            >
-                                +998911236353
-                            </p>
-                        </div>
-                        <h3>Elektron manzilimiz</h3>
-                        <div
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                marginBottom: 5,
-                            }}
-                        >
-                            <MailOutlined style={{ fontSize: "18px" }} />
-                            <p
-                                style={{
-                                    lineHeight: 1.5,
-                                    fontSize: 16,
-                                    color: "#fff",
-                                    marginLeft: 10,
-                                }}
-                            >
-                                new-centername@mail.ru
-                            </p>
-                        </div>
+                                <h3>Telefon nomerimiz: </h3>
+                                <p
+                                    style={{
+                                        lineHeight: 1.2,
+                                        fontSize: 16,
+                                        color: "#ccc",
+                                        marginLeft: 10,
+                                    }}
+                                >
+                                    +998911236353
+                                </p>
+                            </div>
+                        </a>
                     </Col>
-                    <Col
-                        xs={24}
-                        sm={24}
-                        md={16}
-                        lg={18}
-                        xl={18}
-                        style={{ marginBottom: 20 }}
-                    >
-                        <iframe
-                            title="Bizning manzil"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1827.629984716106!2d65.37459509943395!3d40.10704417012549!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f51c70627169851%3A0x6ebac45bbfcc24d5!2s%22Elegant%22%20o&#39;quv%20markazi!5e0!3m2!1suz!2s!4v1670030850357!5m2!1suz!2s"
-                            width="100%"
-                            height="350"
-                            style={{ border: 0 }}
-                            allowFullScreen=""
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                        ></iframe>
+                    <Col span={24}>
+                        <a href="mailto:new-centername@mail.ru">
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <h3>Elektron manzilimiz: </h3>
+                                <p
+                                    style={{
+                                        lineHeight: 1.5,
+                                        fontSize: 16,
+                                        color: "#ccc",
+                                        marginLeft: 10,
+                                    }}
+                                >
+                                    new-centername@mail.ru
+                                </p>
+                            </div>
+                        </a>
+                    </Col>
+                    <Col span={24} className="address">
+                        <a href="https://www.google.com/maps/place/Navoiy+Qorako%CA%BBl+o%CA%BBquv+markazi/@40.1115981,65.3780068,17z/data=!3m1!4b1!4m5!3m4!1s0x3f51c7fda5b0ffa9:0x27ceff65df53e90a!8m2!3d40.1114767!4d65.3802495">
+                            <h3>Manzilimiz: </h3>
+                            <p
+                                style={{
+                                    lineHeight: 1.5,
+                                    fontSize: 16,
+                                    color: "#ccc",
+                                    marginBottom: 20,
+                                }}
+                            >
+                                O'zbekiston, Navoiy, Navoiy shahar Navoiy
+                                Qorako'l o'quv markazi
+                            </p>
+                        </a>
                     </Col>
                 </Row>
+                <SocialsAndSubscribe />
             </div>
         </section>
     );

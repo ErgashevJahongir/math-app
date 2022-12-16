@@ -65,7 +65,6 @@ const OurTeachers = () => {
                                 <motion.div
                                     className="card"
                                     variants={cardVariants}
-                                    whileHover={{ scale: [1, 1.03] }}
                                     transition={{ duration: 0.2 }}
                                 >
                                     <img
@@ -105,7 +104,6 @@ const OurTeachers = () => {
                                 <motion.div
                                     className="card"
                                     variants={cardVariants}
-                                    whileHover={{ scale: [1, 1.03] }}
                                     transition={{ duration: 0.2 }}
                                 >
                                     <img
@@ -145,7 +143,6 @@ const OurTeachers = () => {
                                 <motion.div
                                     className="card"
                                     variants={cardVariants}
-                                    whileHover={{ scale: [1, 1.03] }}
                                     transition={{ duration: 0.2 }}
                                 >
                                     <img
@@ -185,7 +182,6 @@ const OurTeachers = () => {
                                 <motion.div
                                     className="card"
                                     variants={cardVariants}
-                                    whileHover={{ scale: [1, 1.03] }}
                                     transition={{ duration: 0.2 }}
                                 >
                                     <img
@@ -225,7 +221,6 @@ const OurTeachers = () => {
                                 <motion.div
                                     className="card"
                                     variants={cardVariants}
-                                    whileHover={{ scale: [1, 1.03] }}
                                     transition={{ duration: 0.2 }}
                                 >
                                     <img
@@ -265,7 +260,6 @@ const OurTeachers = () => {
                                 <motion.div
                                     className="card"
                                     variants={cardVariants}
-                                    whileHover={{ scale: [1, 1.03] }}
                                     transition={{ duration: 0.2 }}
                                 >
                                     <img
@@ -305,7 +299,6 @@ const OurTeachers = () => {
                                 <motion.div
                                     className="card"
                                     variants={cardVariants}
-                                    whileHover={{ scale: [1, 1.03] }}
                                     transition={{ duration: 0.2 }}
                                 >
                                     <img
@@ -345,7 +338,6 @@ const OurTeachers = () => {
                                 <motion.div
                                     className="card"
                                     variants={cardVariants}
-                                    whileHover={{ scale: [1, 1.03] }}
                                     transition={{ duration: 0.2 }}
                                 >
                                     <img
@@ -385,7 +377,6 @@ const OurTeachers = () => {
                                 <motion.div
                                     className="card"
                                     variants={cardVariants}
-                                    whileHover={{ scale: [1, 1.03] }}
                                     transition={{ duration: 0.2 }}
                                 >
                                     <img
