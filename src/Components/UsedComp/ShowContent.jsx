@@ -81,8 +81,8 @@ const ShowContent = () => {
                                     </a>
                                     <div className="call-phone">
                                         <div className="phone">
-                                            <a href="tel:+998903778990">
-                                                <span class="material-icons">
+                                            <a href="tel:+998919230497">
+                                                <span className="material-icons">
                                                     <PhoneOutlined
                                                         style={{
                                                             color: "#fff",

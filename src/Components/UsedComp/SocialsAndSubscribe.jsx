@@ -11,9 +11,9 @@ const SocialsAndSubscribe = () => {
                     <ul className="location_icon">
                         <li>
                             {" "}
-                            <Link href="#">
+                            <a href="https://t.me/super_matematika">
                                 <FaTelegram />
-                            </Link>
+                            </a>
                         </li>
                         <li>
                             {" "}
@@ -42,7 +42,7 @@ const SocialsAndSubscribe = () => {
                     href="https://t.me/muhammadqodir_0612"
                     style={{ textDecoration: "underline" }}
                 >
-                    Muhammadqadir
+                    Muhammadqodir
                 </a>
             </p>
         </div>

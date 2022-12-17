@@ -56,14 +56,18 @@ const CondidateRegister = ({ examId, amaunt }) => {
                         }));
                     };
                     data?.data?.code === 211 && getError(data.data);
-                    data?.data?.code === 200 && setUser(data.data?.data);
+                    data?.data?.code === 200 &&
+                        setUser({
+                            ...data.data?.data,
+                            districtId: values.districtId,
+                        });
                     data?.data?.code === 200 && setCurrent(1);
                 })
                 .catch(function (error) {
                     console.error(error);
                     if (error.response?.status === 500)
                         navigate("/server-error");
-                    message.error("Imtixonni qo'shishda muammo bo'ldi");
+                    message.error("Kandidateni qo'shishda muammo bo'ldi");
                 });
         };
 
@@ -75,13 +79,19 @@ const CondidateRegister = ({ examId, amaunt }) => {
             form.resetFields();
         };
 
+        console.log(user);
+
         return (
             <Form
                 layout="vertical"
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 form={form}
-                initialValues={{ examId: examId }}
+                initialValues={{
+                    examId: examId,
+                    ...user,
+                    phoneNumber: user.phoneNumber.slice(4, 13),
+                }}
             >
                 <Row gutter={16}>
                     <Col span={24}>
@@ -191,6 +201,7 @@ const CondidateRegister = ({ examId, amaunt }) => {
                             <CustomSelect
                                 selectData={districtsData}
                                 placeholder="Tumanni tanlang"
+                                DValue={user?.districtId}
                             />
                         </Form.Item>
                     </Col>
@@ -267,6 +278,10 @@ const CondidateRegister = ({ examId, amaunt }) => {
 
         const onFinishFailed = (errorInfo) => {
             console.error("Failed:", errorInfo);
+        };
+
+        const onPrev = () => {
+            setCurrent((prev) => prev - 1);
         };
 
         const onReset = () => {
@@ -367,6 +382,9 @@ const CondidateRegister = ({ examId, amaunt }) => {
                         }}
                     >
                         <Space>
+                            <Button htmlType="button" onClick={onPrev}>
+                                Orqaga
+                            </Button>
                             <Button htmlType="button" onClick={onReset}>
                                 Tozalash
                             </Button>
@@ -405,6 +423,8 @@ const CondidateRegister = ({ examId, amaunt }) => {
                         message.success("Abuturient muvaffaqiyatli qo'shildi");
                     data?.data?.code === 200 && downloadFunc(user.id);
                     data?.data?.code === 200 && onClose();
+                    data?.data?.code === 200 && setUser({});
+                    data?.data?.code === 200 && setCurrent(0);
                 })
                 .catch(function (error) {
                     console.error(error);
@@ -420,6 +440,10 @@ const CondidateRegister = ({ examId, amaunt }) => {
 
         const onReset = () => {
             form.resetFields();
+        };
+
+        const onPrev = () => {
+            setCurrent((prev) => prev - 1);
         };
 
         return (
@@ -479,6 +503,9 @@ const CondidateRegister = ({ examId, amaunt }) => {
                         }}
                     >
                         <Space>
+                            <Button htmlType="button" onClick={onPrev}>
+                                Orqaga
+                            </Button>
                             <Button htmlType="button" onClick={onReset}>
                                 Tozalash
                             </Button>
