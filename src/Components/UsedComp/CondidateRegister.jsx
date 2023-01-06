@@ -90,7 +90,7 @@ const CondidateRegister = ({ examId, amaunt }) => {
                 initialValues={{
                     examId: examId,
                     ...user,
-                    phoneNumber: user.phoneNumber.slice(4, 13),
+                    phoneNumber: user?.phoneNumber?.slice(4, 13),
                 }}
             >
                 <Row gutter={16}>

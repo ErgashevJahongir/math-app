@@ -102,6 +102,17 @@ function DrapdownMenu({ onClose, isVisible }) {
                                       ),
                                   },
                                   {
+                                      label: "O'qituvchilar",
+                                      key: "/others/teachers",
+                                      icon: (
+                                          <OrderedListOutlined
+                                              style={{
+                                                  fontSize: "18px",
+                                              }}
+                                          />
+                                      ),
+                                  },
+                                  {
                                       label: "Yo'nalishlar",
                                       key: "/others/direction",
                                       icon: (
@@ -126,6 +137,24 @@ function DrapdownMenu({ onClose, isVisible }) {
                                   {
                                       label: "Qatnashchilar",
                                       key: "/others/candidate",
+                                      icon: (
+                                          <UserOutlined
+                                              style={{ fontSize: "18px" }}
+                                          />
+                                      ),
+                                  },
+                                  {
+                                      label: "Savollar",
+                                      key: "/others/questions",
+                                      icon: (
+                                          <UserOutlined
+                                              style={{ fontSize: "18px" }}
+                                          />
+                                      ),
+                                  },
+                                  {
+                                      label: "Kontakt ma'lumotlari",
+                                      key: "/others/contacts",
                                       icon: (
                                           <UserOutlined
                                               style={{ fontSize: "18px" }}

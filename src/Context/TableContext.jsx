@@ -1,10 +1,13 @@
-import { DatePicker, Input, InputNumber, Radio } from "antd";
+import { Button, DatePicker, Input, InputNumber, Radio, Upload } from "antd";
+import { useToken } from "antd/es/theme";
 import moment from "moment";
 import { createContext, useState } from "react";
 import { useLocation } from "react-router-dom";
+import instance from "../Api/Axios";
 import { useData } from "../Hook/UseData";
 import CustomMultiplateSelect from "../Module/Select/MultiplateSelect";
 import CustomSelect from "../Module/Select/Select";
+import { UploadOutlined } from "@ant-design/icons";
 
 const disabledDate = (current) => {
     return current && current < moment().endOf("day");
@@ -21,6 +24,28 @@ export const TableProvider = ({ children }) => {
     const { subjectsData, districtsData, examsData, directionsData } =
         useData();
     let location = useLocation();
+    const { token } = useToken();
+
+    const uploadImage = async (options) => {
+        const { onSuccess, onError, file } = options;
+
+        const fmData = new FormData();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "content-type": "multipart/form-data",
+            },
+        };
+        fmData.append("file", file);
+        try {
+            const res = await instance.post("/api/file/upload", fmData, config);
+            console.log(res, file);
+            res.data.code === 200 && onSuccess(res.data.data);
+        } catch (err) {
+            console.log("Eroor: ", err);
+            onError({ err });
+        }
+    };
 
     const othersFormData = [
         {
@@ -31,12 +56,40 @@ export const TableProvider = ({ children }) => {
         },
     ];
 
+    const questionsFormData = [
+        {
+            name: "text",
+            label: "Savolni kiriting",
+            required: true,
+            input: <Input.TextArea placeholder="Savolni kiriting" />,
+        },
+    ];
+
     const subjectsFormData = [
         {
             name: "name",
             label: "Fan nomi",
             required: true,
             input: <Input placeholder="Fan nomini kiriting" />,
+        },
+        {
+            name: "photoPath",
+            label: "Rasmi",
+            required: false,
+            input: (
+                <Upload
+                    customRequest={uploadImage}
+                    listType="picture"
+                    multiple={false}
+                    maxCount={1}
+                    accept="image/*"
+                    style={{ width: "100%" }}
+                >
+                    <Button style={{ width: "100%" }} icon={<UploadOutlined />}>
+                        Yuklash
+                    </Button>
+                </Upload>
+            ),
         },
     ];
 
@@ -131,12 +184,6 @@ export const TableProvider = ({ children }) => {
             label: "Fan nomi",
             required: false,
             inputSelect: (initial) => {
-                // if (initial) {
-                //     setExamtableData((prev) => {
-                //         return { ...prev, directionId: true };
-                //     });
-                // }
-
                 return (
                     <CustomSelect
                         selectData={subjectsData}
@@ -159,11 +206,6 @@ export const TableProvider = ({ children }) => {
             label: "Yo'nalish nomi",
             required: false,
             inputSelect: (initial) => {
-                // if (initial) {
-                //     setExamtableData((prev) => {
-                //         return { ...prev, subjectId: true };
-                //     });
-                // }
                 return (
                     <CustomSelect
                         selectData={directionsData}
@@ -310,6 +352,84 @@ export const TableProvider = ({ children }) => {
         },
     ];
 
+    const teachersFormData = [
+        {
+            name: "name",
+            label: "O'qituvchi nomi",
+            required: true,
+            input: <Input placeholder="O'qituvchi nomini kiriting" />,
+        },
+        {
+            name: "subjectId",
+            label: "Fanni tanlang",
+            required: true,
+            input: (
+                <CustomSelect
+                    selectData={subjectsData}
+                    placeholder="Fanni tanlang"
+                />
+            ),
+        },
+        {
+            name: "photoPath",
+            label: "Rasmi",
+            required: false,
+            input: (
+                <Upload
+                    customRequest={uploadImage}
+                    listType="picture"
+                    multiple={false}
+                    maxCount={1}
+                    accept="image/*"
+                    style={{ width: "100%" }}
+                >
+                    <Button style={{ width: "100%" }} icon={<UploadOutlined />}>
+                        Yuklash
+                    </Button>
+                </Upload>
+            ),
+        },
+    ];
+    const editTeachersFormData = [
+        {
+            name: "name",
+            label: "O'qituvchi nomi",
+            required: true,
+            input: <Input placeholder="O'qituvchi nomini kiriting" />,
+        },
+        {
+            name: "subjectId",
+            label: "Fanni tanlang",
+            required: true,
+            inputSelect: (initial) => (
+                <CustomSelect
+                    selectData={subjectsData}
+                    placeholder="Fanni tanlang"
+                    DValue={initial}
+                />
+            ),
+        },
+        {
+            name: "photoPath",
+            label: "Rasmi",
+            required: false,
+            input: (
+                <Upload
+                    customRequest={uploadImage}
+                    listType="picture"
+                    multiple={false}
+                    maxCount={1}
+                    accept="image/*"
+                    style={{ width: "100%" }}
+                >
+                    <Button style={{ width: "100%" }} icon={<UploadOutlined />}>
+                        Yuklash
+                    </Button>
+                </Upload>
+            ),
+        },
+    ];
+
     let formData = {};
 
     switch (location.pathname) {
@@ -358,6 +478,21 @@ export const TableProvider = ({ children }) => {
             };
             break;
         }
+        case "/others/teachers": {
+            formData = {
+                formData: teachersFormData,
+                editFormData: editTeachersFormData,
+                branchData: false,
+                timeFilterInfo: false,
+                deleteInfo: true,
+                createInfo: true,
+                editInfo: true,
+                timelyInfo: false,
+                editModalTitle: "O'qituvchi ma'lumotlarini o'zgartirish",
+                modalTitle: "O'qituvchi qo'shish",
+            };
+            break;
+        }
         case "/others/direction": {
             formData = {
                 formData: directionFormData,
@@ -370,6 +505,21 @@ export const TableProvider = ({ children }) => {
                 timelyInfo: false,
                 editModalTitle: "Yo'nalish ma'lumotlarini o'zgartirish",
                 modalTitle: "Yo'nalish qo'shish",
+            };
+            break;
+        }
+        case "/others/questions": {
+            formData = {
+                formData: questionsFormData,
+                editFormData: questionsFormData,
+                branchData: false,
+                timeFilterInfo: false,
+                deleteInfo: true,
+                createInfo: true,
+                editInfo: true,
+                timelyInfo: false,
+                editModalTitle: "Savol ma'lumotlarini o'zgartirish",
+                modalTitle: "Savol qo'shish",
             };
             break;
         }
