@@ -1,10 +1,12 @@
 import { Col } from "antd";
 import { motion } from "framer-motion";
-import teacher from "./jo5avbdelzqwm6avdw6p-removebg-preview.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Keyboard, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
+import { useData } from "../../Hook/UseData";
+
+const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const cardVariants = {
     offscreen: {
@@ -23,6 +25,7 @@ const cardVariants = {
 };
 
 const OurTeachers = () => {
+    const { teachersData } = useData();
     return (
         <div className="textAlignCenter sectionCont teachersCont">
             <div className="container">
@@ -54,357 +57,49 @@ const OurTeachers = () => {
                     modules={[Autoplay, Keyboard, Pagination]}
                     className="teachersSwipwr"
                 >
-                    <SwiperSlide>
-                        <Col>
-                            <motion.div
-                                className="card-container"
-                                initial="offscreen"
-                                whileInView="onscreen"
-                                viewport={{ once: false, amount: 0.8 }}
-                            >
-                                <motion.div
-                                    className="card"
-                                    variants={cardVariants}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <img
-                                        src={teacher}
-                                        alt="sratistic"
-                                        style={{
-                                            display: "inline-block",
-                                            width: 300,
-                                            height: 300,
-                                            marginBottom: 5,
-                                        }}
-                                    />
-                                    <h3 className="itemTitleH3">
-                                        Azamat Nortojiyev
-                                    </h3>
-                                    <p
-                                        style={{
-                                            lineHeight: 1.5,
-                                            fontSize: 16,
-                                            color: "rgb(49, 70, 89)",
-                                        }}
+                    {teachersData.map((item) => {
+                        return (
+                            <SwiperSlide key={item?.id}>
+                                <Col>
+                                    <motion.div
+                                        className="card-container"
+                                        initial="offscreen"
+                                        whileInView="onscreen"
+                                        viewport={{ once: false, amount: 0.8 }}
                                     >
-                                        Biologiya fani o'qituvchisi
-                                    </p>
-                                </motion.div>
-                            </motion.div>
-                        </Col>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Col>
-                            <motion.div
-                                className="card-container"
-                                initial="offscreen"
-                                whileInView="onscreen"
-                                viewport={{ once: false, amount: 0.8 }}
-                            >
-                                <motion.div
-                                    className="card"
-                                    variants={cardVariants}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <img
-                                        src={teacher}
-                                        alt="sratistic"
-                                        style={{
-                                            display: "inline-block",
-                                            width: 300,
-                                            height: 300,
-                                            marginBottom: 5,
-                                        }}
-                                    />
-                                    <h3 className="itemTitleH3">
-                                        Azamat Nortojiyev
-                                    </h3>
-                                    <p
-                                        style={{
-                                            lineHeight: 1.5,
-                                            fontSize: 16,
-                                            color: "rgb(49, 70, 89)",
-                                        }}
-                                    >
-                                        Biologiya fani o'qituvchisi
-                                    </p>
-                                </motion.div>
-                            </motion.div>
-                        </Col>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Col>
-                            <motion.div
-                                className="card-container"
-                                initial="offscreen"
-                                whileInView="onscreen"
-                                viewport={{ once: false, amount: 0.8 }}
-                            >
-                                <motion.div
-                                    className="card"
-                                    variants={cardVariants}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <img
-                                        src={teacher}
-                                        alt="sratistic"
-                                        style={{
-                                            display: "inline-block",
-                                            width: 300,
-                                            height: 300,
-                                            marginBottom: 5,
-                                        }}
-                                    />
-                                    <h3 className="itemTitleH3">
-                                        Azamat Nortojiyev
-                                    </h3>
-                                    <p
-                                        style={{
-                                            lineHeight: 1.5,
-                                            fontSize: 16,
-                                            color: "rgb(49, 70, 89)",
-                                        }}
-                                    >
-                                        Biologiya fani o'qituvchisi
-                                    </p>
-                                </motion.div>
-                            </motion.div>
-                        </Col>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Col>
-                            <motion.div
-                                className="card-container"
-                                initial="offscreen"
-                                whileInView="onscreen"
-                                viewport={{ once: false, amount: 0.8 }}
-                            >
-                                <motion.div
-                                    className="card"
-                                    variants={cardVariants}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <img
-                                        src={teacher}
-                                        alt="sratistic"
-                                        style={{
-                                            display: "inline-block",
-                                            width: 300,
-                                            height: 300,
-                                            marginBottom: 5,
-                                        }}
-                                    />
-                                    <h3 className="itemTitleH3">
-                                        Azamat Nortojiyev
-                                    </h3>
-                                    <p
-                                        style={{
-                                            lineHeight: 1.5,
-                                            fontSize: 16,
-                                            color: "rgb(49, 70, 89)",
-                                        }}
-                                    >
-                                        Biologiya fani o'qituvchisi
-                                    </p>
-                                </motion.div>
-                            </motion.div>
-                        </Col>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Col>
-                            <motion.div
-                                className="card-container"
-                                initial="offscreen"
-                                whileInView="onscreen"
-                                viewport={{ once: false, amount: 0.8 }}
-                            >
-                                <motion.div
-                                    className="card"
-                                    variants={cardVariants}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <img
-                                        src={teacher}
-                                        alt="sratistic"
-                                        style={{
-                                            display: "inline-block",
-                                            width: 300,
-                                            height: 300,
-                                            marginBottom: 5,
-                                        }}
-                                    />
-                                    <h3 className="itemTitleH3">
-                                        Azamat Nortojiyev
-                                    </h3>
-                                    <p
-                                        style={{
-                                            lineHeight: 1.5,
-                                            fontSize: 16,
-                                            color: "rgb(49, 70, 89)",
-                                        }}
-                                    >
-                                        Biologiya fani o'qituvchisi
-                                    </p>
-                                </motion.div>
-                            </motion.div>
-                        </Col>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Col>
-                            <motion.div
-                                className="card-container"
-                                initial="offscreen"
-                                whileInView="onscreen"
-                                viewport={{ once: false, amount: 0.8 }}
-                            >
-                                <motion.div
-                                    className="card"
-                                    variants={cardVariants}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <img
-                                        src={teacher}
-                                        alt="sratistic"
-                                        style={{
-                                            display: "inline-block",
-                                            width: 300,
-                                            height: 300,
-                                            marginBottom: 5,
-                                        }}
-                                    />
-                                    <h3 className="itemTitleH3">
-                                        Azamat Nortojiyev
-                                    </h3>
-                                    <p
-                                        style={{
-                                            lineHeight: 1.5,
-                                            fontSize: 16,
-                                            color: "rgb(49, 70, 89)",
-                                        }}
-                                    >
-                                        Biologiya fani o'qituvchisi
-                                    </p>
-                                </motion.div>
-                            </motion.div>
-                        </Col>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Col>
-                            <motion.div
-                                className="card-container"
-                                initial="offscreen"
-                                whileInView="onscreen"
-                                viewport={{ once: false, amount: 0.8 }}
-                            >
-                                <motion.div
-                                    className="card"
-                                    variants={cardVariants}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <img
-                                        src={teacher}
-                                        alt="sratistic"
-                                        style={{
-                                            display: "inline-block",
-                                            width: 300,
-                                            height: 300,
-                                            marginBottom: 5,
-                                        }}
-                                    />
-                                    <h3 className="itemTitleH3">
-                                        Azamat Nortojiyev
-                                    </h3>
-                                    <p
-                                        style={{
-                                            lineHeight: 1.5,
-                                            fontSize: 16,
-                                            color: "rgb(49, 70, 89)",
-                                        }}
-                                    >
-                                        Biologiya fani o'qituvchisi
-                                    </p>
-                                </motion.div>
-                            </motion.div>
-                        </Col>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Col>
-                            <motion.div
-                                className="card-container"
-                                initial="offscreen"
-                                whileInView="onscreen"
-                                viewport={{ once: false, amount: 0.8 }}
-                            >
-                                <motion.div
-                                    className="card"
-                                    variants={cardVariants}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <img
-                                        src={teacher}
-                                        alt="sratistic"
-                                        style={{
-                                            display: "inline-block",
-                                            width: 300,
-                                            height: 300,
-                                            marginBottom: 5,
-                                        }}
-                                    />
-                                    <h3 className="itemTitleH3">
-                                        Azamat Nortojiyev
-                                    </h3>
-                                    <p
-                                        style={{
-                                            lineHeight: 1.5,
-                                            fontSize: 16,
-                                            color: "rgb(49, 70, 89)",
-                                        }}
-                                    >
-                                        Biologiya fani o'qituvchisi
-                                    </p>
-                                </motion.div>
-                            </motion.div>
-                        </Col>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Col>
-                            <motion.div
-                                className="card-container"
-                                initial="offscreen"
-                                whileInView="onscreen"
-                                viewport={{ once: false, amount: 0.8 }}
-                            >
-                                <motion.div
-                                    className="card"
-                                    variants={cardVariants}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <img
-                                        src={teacher}
-                                        alt="sratistic"
-                                        style={{
-                                            display: "inline-block",
-                                            width: 300,
-                                            height: 300,
-                                            marginBottom: 5,
-                                        }}
-                                    />
-                                    <h3 className="itemTitleH3">
-                                        Azamat Nortojiyev
-                                    </h3>
-                                    <p
-                                        style={{
-                                            lineHeight: 1.5,
-                                            fontSize: 16,
-                                            color: "rgb(49, 70, 89)",
-                                        }}
-                                    >
-                                        Biologiya fani o'qituvchisi
-                                    </p>
-                                </motion.div>
-                            </motion.div>
-                        </Col>
-                    </SwiperSlide>
+                                        <motion.div
+                                            className="card"
+                                            variants={cardVariants}
+                                            transition={{ duration: 0.2 }}
+                                        >
+                                            <img
+                                                src={`${REACT_APP_BASE_URL}/api/file/downloadFile?fileName=${item?.photoPath}`}
+                                                alt={item?.name}
+                                                style={{
+                                                    display: "inline-block",
+                                                    width: 300,
+                                                    height: 300,
+                                                    marginBottom: 5,
+                                                }}
+                                            />
+                                            <h3 className="itemTitleH3">
+                                                {item?.name}
+                                            </h3>
+                                            <p
+                                                style={{
+                                                    lineHeight: 1.5,
+                                                    fontSize: 16,
+                                                    color: "rgb(49, 70, 89)",
+                                                }}
+                                            >
+                                                {item?.subjectId?.name}
+                                            </p>
+                                        </motion.div>
+                                    </motion.div>
+                                </Col>
+                            </SwiperSlide>
+                        );
+                    })}
                 </Swiper>
             </div>
         </div>

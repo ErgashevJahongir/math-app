@@ -24,7 +24,6 @@ const ExamsComp = () => {
         instance
             .get(`/api/exam/list?page=${current}&size=${pageSize}`)
             .then((data) => {
-                console.log(data);
                 setPageData((prev) => ({
                     ...prev,
                     exams: data.data?.data.map((item) => ({
@@ -83,7 +82,7 @@ const ExamsComp = () => {
 
     const onEdit = (values, initial) => {
         setPageData((prev) => ({ ...prev, loading: true }));
-        const active = values.active === "true" ? true : false;
+        const active = values?.active?.target.value === "true" ? true : false;
         const startedDate = moment(
             values.startedDate,
             "YYYY-MM-DD hh:mm"
@@ -136,8 +135,6 @@ const ExamsComp = () => {
             return null;
         });
     };
-
-    console.log(directionsData);
 
     const columns = [
         {

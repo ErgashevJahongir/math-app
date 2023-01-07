@@ -4,9 +4,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Keyboard, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
+import { useData } from "../../Hook/UseData";
 
-import english from "../../Assets/Images/English-teacher-rafiki.svg";
-import math from "../../Assets/Images/Professor-amico.svg";
+const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const cardVariants = {
     offscreen: {
@@ -25,6 +25,7 @@ const cardVariants = {
 };
 
 const Courses = () => {
+    const { subjectsData } = useData();
     return (
         <section className="courses textAlignCenter" id="courses">
             <div className="container">
@@ -63,96 +64,40 @@ const Courses = () => {
                     modules={[Autoplay, Keyboard, Pagination]}
                     className="teachersSwipwr"
                 >
-                    <SwiperSlide>
-                        <Col className="courses__card">
-                            <motion.div
-                                className="card-container"
-                                initial="offscreen"
-                                whileInView="onscreen"
-                                viewport={{ once: true, amount: 0.8 }}
-                            >
-                                <motion.div
-                                    className="card"
-                                    variants={cardVariants}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <img
-                                        src={math}
-                                        alt="sratistic"
-                                        style={{
-                                            display: "inline-block",
-                                            marginBottom: 5,
-                                        }}
-                                    />
-                                    <div className="courses__card-title">
-                                        <h3 className="itemTitleH3">
-                                            Matematika
-                                        </h3>
-                                    </div>
-                                </motion.div>
-                            </motion.div>
-                        </Col>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Col className="courses__card">
-                            <motion.div
-                                className="card-container"
-                                initial="offscreen"
-                                whileInView="onscreen"
-                                viewport={{ once: true, amount: 0.8 }}
-                            >
-                                <motion.div
-                                    className="card"
-                                    variants={cardVariants}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <img
-                                        src={english}
-                                        alt="sratistic"
-                                        style={{
-                                            display: "inline-block",
-                                            marginBottom: 5,
-                                        }}
-                                    />
-                                    <div className="courses__card-title">
-                                        <h3 className="itemTitleH3">
-                                            Ingliz tili
-                                        </h3>
-                                    </div>
-                                </motion.div>
-                            </motion.div>
-                        </Col>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Col className="courses__card">
-                            <motion.div
-                                className="card-container"
-                                initial="offscreen"
-                                whileInView="onscreen"
-                                viewport={{ once: true, amount: 0.8 }}
-                            >
-                                <motion.div
-                                    className="card"
-                                    variants={cardVariants}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <img
-                                        src={math}
-                                        alt="sratistic"
-                                        style={{
-                                            display: "inline-block",
-                                            marginBottom: 5,
-                                        }}
-                                    />
-                                    <div className="courses__card-title">
-                                        <h3 className="itemTitleH3">
-                                            Matematika
-                                        </h3>
-                                    </div>
-                                </motion.div>
-                            </motion.div>
-                        </Col>
-                    </SwiperSlide>
+                    {subjectsData.map((item) => {
+                        return (
+                            <SwiperSlide key={item.id}>
+                                <Col className="courses__card">
+                                    <motion.div
+                                        className="card-container"
+                                        initial="offscreen"
+                                        whileInView="onscreen"
+                                        viewport={{ once: true, amount: 0.8 }}
+                                    >
+                                        <motion.div
+                                            className="card"
+                                            variants={cardVariants}
+                                            transition={{ duration: 0.2 }}
+                                        >
+                                            <img
+                                                src={`${REACT_APP_BASE_URL}/api/file/downloadFile?fileName=${item?.photoPath}`}
+                                                alt={item.name}
+                                                style={{
+                                                    display: "inline-block",
+                                                    marginBottom: 5,
+                                                }}
+                                            />
+                                            <div className="courses__card-title">
+                                                <h3 className="itemTitleH3">
+                                                    {item.name}
+                                                </h3>
+                                            </div>
+                                        </motion.div>
+                                    </motion.div>
+                                </Col>
+                            </SwiperSlide>
+                        );
+                    })}
                 </Swiper>
             </div>
         </section>

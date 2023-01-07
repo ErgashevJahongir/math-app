@@ -5,6 +5,7 @@ export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
     const [subjectsData, setSubjectsData] = useState([]);
+    const [teachersData, setTeachersData] = useState([]);
     const [districtsData, setDistrictsData] = useState([]);
     const [examsData, setExamsData] = useState([]);
     const [directionsData, setDirectionsData] = useState([]);
@@ -45,11 +46,21 @@ export const DataProvider = ({ children }) => {
             .catch((err) => console.error(err));
     };
 
+    const getTeachersData = () => {
+        instance
+            .get("/api/teacher/list?page=0&size=100")
+            .then((data) => {
+                setTeachersData(data.data.data);
+            })
+            .catch((err) => console.error(err));
+    };
+
     useEffect(() => {
         getSubjectsData();
         getDistrictsData();
         getExamsData();
         getDirectionData();
+        getTeachersData();
     }, []);
 
     const value = {
@@ -61,6 +72,8 @@ export const DataProvider = ({ children }) => {
         examsData,
         getDirectionData,
         directionsData,
+        getTeachersData,
+        teachersData,
     };
 
     return (

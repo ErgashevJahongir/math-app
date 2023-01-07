@@ -15,7 +15,7 @@ const TeachersCompo = () => {
         pageSize: 10,
         totalItems: 1,
     });
-    const { subjectsData } = useData();
+    const { subjectsData, getTeachersData } = useData();
     const navigate = useNavigate();
 
     const getTeachers = (current, pageSize) => {
@@ -23,7 +23,7 @@ const TeachersCompo = () => {
         instance
             .get(`/api/teacher/list?page=${current}&size=${pageSize}`)
             .then((data) => {
-                console.log(data);
+                getTeachersData();
                 setPageData((prev) => ({
                     ...prev,
                     teachers: data.data?.data.map((item) => {
