@@ -2,19 +2,13 @@ import { useState } from "react";
 import { Button, Col, List, Modal } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { useData } from "../../Hook/UseData";
 
 const SeenTableData = ({ selectedRowKeys, editModalTitle }) => {
     const [visible, setVisible] = useState(false);
-    const { subjectsData } = useData();
 
     const onCancel = () => {
         setVisible(false);
     };
-
-    const data = subjectsData?.filter(
-        (item) => item.id === selectedRowKeys?.exam?.subjectId
-    );
 
     return (
         <div>
@@ -75,7 +69,15 @@ const SeenTableData = ({ selectedRowKeys, editModalTitle }) => {
                     </List.Item>
                     <List.Item>
                         <Col span={10}>Imtihon fani: </Col>
-                        <Col span={14}>{data[0]?.name}</Col>
+                        <Col span={14}>
+                            {selectedRowKeys?.exam?.subjectId?.name}
+                        </Col>
+                    </List.Item>
+                    <List.Item>
+                        <Col span={10}>Yo'nalish nomi: </Col>
+                        <Col span={14}>
+                            {selectedRowKeys?.exam?.directionId?.name}
+                        </Col>
                     </List.Item>
                     <List.Item>
                         <Col span={10}>Ma'lumot: </Col>

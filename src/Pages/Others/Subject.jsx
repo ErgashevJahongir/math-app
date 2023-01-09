@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import instance from "../../Api/Axios";
-import { Avatar, message } from "antd";
+import { message } from "antd";
 import CustomTable from "../../Module/Table/Table";
 import { useData } from "../../Hook/UseData";
 
@@ -117,8 +117,10 @@ const Subjects = () => {
             search: false,
             render: (initial) => {
                 return (
-                    <Avatar
+                    <img
                         src={`${REACT_APP_BASE_URL}/api/file/downloadFile?fileName=${initial}`}
+                        alt={initial}
+                        width={100}
                     />
                 );
             },
@@ -143,7 +145,7 @@ const Subjects = () => {
 
     return (
         <div className="container" style={{ marginTop: 30 }}>
-            <h3>Fanlari</h3>
+            <h3>Fanlar</h3>
             <CustomTable
                 columns={columns}
                 pageSizeOptions={[10, 20]}

@@ -2,9 +2,10 @@ import { Col, Row } from "antd";
 import SocialsAndSubscribe from "./SocialsAndSubscribe";
 import logoSvg from "../../Assets/Images/logo-math.svg";
 import "./Contact.css";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Particles from "react-particles";
 import { loadFull } from "tsparticles";
+import instance from "../../Api/Axios";
 
 const AppDir = () => {
     const particlesInit = useCallback(async (engine) => {
@@ -97,6 +98,21 @@ const AppDir = () => {
 };
 
 const Contacts = () => {
+    const [contact, setContact] = useState();
+    const getContacts = () => {
+        instance
+            .get("/api/contact/main-contact")
+            .then((data) => {
+                setContact(data.data.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+    useEffect(() => {
+        getContacts();
+    }, []);
+
     return (
         <section className="contact" id="contact">
             <AppDir />
@@ -111,7 +127,7 @@ const Contacts = () => {
                     <Col span={24}>
                         <a
                             style={{ display: "inline-block" }}
-                            href="tel:+998919230497"
+                            href={`tel:${contact?.phoneNumber}`}
                         >
                             <div
                                 style={{
@@ -129,7 +145,7 @@ const Contacts = () => {
                                         marginLeft: 10,
                                     }}
                                 >
-                                    +998911236353
+                                    {contact?.phoneNumber}
                                 </p>
                             </div>
                         </a>
@@ -137,7 +153,7 @@ const Contacts = () => {
                     <Col span={24}>
                         <a
                             style={{ display: "inline-block" }}
-                            href="mailto:new-centername@mail.ru"
+                            href={`mailto:${contact?.email}`}
                         >
                             <div
                                 style={{
@@ -155,7 +171,7 @@ const Contacts = () => {
                                         marginLeft: 10,
                                     }}
                                 >
-                                    new-centername@mail.ru
+                                    {contact?.email}
                                 </p>
                             </div>
                         </a>
@@ -163,7 +179,7 @@ const Contacts = () => {
                     <Col span={24} className="address">
                         <a
                             style={{ display: "inline-block" }}
-                            href="https://www.google.com/maps/place/Navoiy+Qorako%CA%BBl+o%CA%BBquv+markazi/@40.1115981,65.3780068,17z/data=!3m1!4b1!4m5!3m4!1s0x3f51c7fda5b0ffa9:0x27ceff65df53e90a!8m2!3d40.1114767!4d65.3802495"
+                            href={`https://www.google.com/maps/place/${contact?.address}`}
                         >
                             <h3>Manzil: </h3>
                             <p
@@ -174,13 +190,12 @@ const Contacts = () => {
                                     marginBottom: 20,
                                 }}
                             >
-                                O'zbekiston, Navoiy, Navoiy shahar Navoiy
-                                Qorako'l o'quv markazi
+                                {contact?.address}
                             </p>
                         </a>
                     </Col>
                 </Row>
-                <SocialsAndSubscribe />
+                <SocialsAndSubscribe contact={contact} />
             </div>
         </section>
     );

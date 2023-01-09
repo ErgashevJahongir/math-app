@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import instance from "../../Api/Axios";
-import { Avatar, message } from "antd";
+import { message } from "antd";
 import CustomTable from "../../Module/Table/Table";
 import { useData } from "../../Hook/UseData";
 
@@ -124,8 +124,10 @@ const TeachersCompo = () => {
             search: false,
             render: (initial) => {
                 return (
-                    <Avatar
+                    <img
                         src={`${REACT_APP_BASE_URL}/api/file/downloadFile?fileName=${initial}`}
+                        alt={initial}
+                        width={100}
                     />
                 );
             },

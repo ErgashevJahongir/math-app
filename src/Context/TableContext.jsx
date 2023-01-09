@@ -390,6 +390,7 @@ export const TableProvider = ({ children }) => {
             ),
         },
     ];
+
     const editTeachersFormData = [
         {
             name: "name",
@@ -430,6 +431,50 @@ export const TableProvider = ({ children }) => {
         },
     ];
 
+    const contactsFormData = [
+        {
+            name: "address",
+            label: "Address",
+            required: true,
+            input: <Input placeholder="Addressni kiriting" />,
+        },
+        {
+            name: "email",
+            label: "Email",
+            required: true,
+            input: <Input placeholder="Emailni kiriting" />,
+        },
+        {
+            name: "phoneNumber",
+            label: "Telefon nomer",
+            required: true,
+            input: <Input placeholder="Telefon nomerni kiriting" />,
+        },
+        {
+            name: "telegramName",
+            label: "Telegram",
+            required: true,
+            input: <Input placeholder="Telegramni kiriting" />,
+        },
+        {
+            name: "instagramName",
+            label: "Instagram",
+            required: true,
+            input: <Input placeholder="Instagramni kiriting" />,
+        },
+        {
+            name: "isMain",
+            label: "Asosiyligi",
+            required: true,
+            input: (
+                <Radio.Group>
+                    <Radio value="false"> Yo'q </Radio>
+                    <Radio value="true"> Ha </Radio>
+                </Radio.Group>
+            ),
+        },
+    ];
+
     let formData = {};
 
     switch (location.pathname) {
@@ -460,6 +505,21 @@ export const TableProvider = ({ children }) => {
                 timelyInfo: false,
                 editModalTitle: "Fan nomini o'zgartirish",
                 modalTitle: "Fan qo'shish",
+            };
+            break;
+        }
+        case "/others/contacts": {
+            formData = {
+                formData: contactsFormData,
+                editFormData: contactsFormData,
+                branchData: false,
+                timeFilterInfo: false,
+                deleteInfo: true,
+                createInfo: true,
+                editInfo: true,
+                timelyInfo: false,
+                editModalTitle: "Kontakt ma'lumotlarini o'zgartirish",
+                modalTitle: "Kontakt qo'shish",
             };
             break;
         }

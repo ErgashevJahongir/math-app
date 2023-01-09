@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { FaInstagram, FaTelegram, FaTwitter, FaFacebook } from "react-icons/fa";
+import { FaInstagram, FaTelegram, FaFacebook } from "react-icons/fa";
 import "./userComp.css";
 import { Col, Row } from "antd";
 
-const SocialsAndSubscribe = () => {
+const SocialsAndSubscribe = ({ contact }) => {
     return (
         <div className="socials">
             <Row gutter={20} style={{ paddingTop: 20, paddingBottom: 40 }}>
@@ -11,15 +11,9 @@ const SocialsAndSubscribe = () => {
                     <ul className="location_icon">
                         <li>
                             {" "}
-                            <a href="https://t.me/super_matematika">
+                            <a href={`https://t.me/${contact?.telegramName}`}>
                                 <FaTelegram />
                             </a>
-                        </li>
-                        <li>
-                            {" "}
-                            <Link href="#">
-                                <FaTwitter />
-                            </Link>
                         </li>
                         <li>
                             {" "}
@@ -29,9 +23,11 @@ const SocialsAndSubscribe = () => {
                         </li>
                         <li>
                             {" "}
-                            <Link href="#">
+                            <a
+                                href={`https://www.instagram.com/${contact?.instagramName}`}
+                            >
                                 <FaInstagram />
-                            </Link>
+                            </a>
                         </li>
                     </ul>
                 </Col>

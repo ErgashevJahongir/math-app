@@ -15,7 +15,7 @@ const ExamsComp = () => {
         pageSize: 10,
         totalItems: 1,
     });
-    const { subjectsData, getExamsData, directionsData } = useData();
+    const { getExamsData } = useData();
     const { setExamtableData } = useTable();
     const navigate = useNavigate();
 
@@ -29,6 +29,8 @@ const ExamsComp = () => {
                     exams: data.data?.data.map((item) => ({
                         ...item,
                         directionId: item?.directionId?.id,
+                        directionName: item?.directionId?.name,
+                        subjectName: item?.subjectId?.name,
                         subjectId: item?.subjectId?.id,
                         startedDate: moment(item?.startedDate).format(
                             "YYYY-MM-DD hh:mm"
@@ -139,44 +141,34 @@ const ExamsComp = () => {
     const columns = [
         {
             title: "Fan nomi",
-            dataIndex: "subjectId",
-            key: "subjectId",
+            dataIndex: "subjectName",
+            key: "subjectName",
             width: "12%",
             search: false,
             sorter: (a, b) => {
-                if (a.subjectId < b.subjectId) {
+                if (a.subjectName < b.subjectName) {
                     return -1;
                 }
-                if (a.subjectId > b.subjectId) {
+                if (a.subjectName > b.subjectName) {
                     return 1;
                 }
                 return 0;
-            },
-            render: (record) => {
-                const data = subjectsData?.filter((item) => item.id === record);
-                return data[0]?.name;
             },
         },
         {
             title: "Yo'nalish nomi",
-            dataIndex: "directionId",
-            key: "directionId",
+            dataIndex: "directionName",
+            key: "directionName",
             width: "12%",
             search: false,
             sorter: (a, b) => {
-                if (a.directionId < b.directionId) {
+                if (a.directionName < b.directionName) {
                     return -1;
                 }
-                if (a.directionId > b.directionId) {
+                if (a.directionName > b.directionName) {
                     return 1;
                 }
                 return 0;
-            },
-            render: (record) => {
-                const data = directionsData?.filter(
-                    (item) => item.id === record
-                );
-                return data[0]?.name;
             },
         },
         {

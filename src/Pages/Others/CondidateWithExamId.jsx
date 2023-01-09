@@ -13,7 +13,7 @@ const CondidateWithExamId = () => {
         pageSize: 10,
         totalItems: 1,
     });
-    const { subjectsData, examsData, directionsData } = useData();
+    const { examsData } = useData();
     const { examIdWith } = useParams();
     const navigate = useNavigate();
     const exam = examsData?.filter((item) => item?.id == examIdWith);
@@ -30,8 +30,10 @@ const CondidateWithExamId = () => {
                     ...prev,
                     condidateWithExamId: data?.data?.data?.map((item) => ({
                         ...item,
+                        subjectName: item?.exam?.subjectId?.name,
                         subjectId: item?.exam?.subjectId?.id,
                         directionId: item?.exam?.directionId?.id,
+                        directionName: item?.exam?.directionId?.name,
                     })),
                 }));
                 setPageData((prev) => ({
@@ -150,44 +152,34 @@ const CondidateWithExamId = () => {
         },
         {
             title: "Imtihon fani",
-            dataIndex: "subjectId",
-            key: "subjectId",
+            dataIndex: "subjectName",
+            key: "subjectName",
             width: "12%",
             search: false,
             sorter: (a, b) => {
-                if (a.subjectId < b.subjectId) {
+                if (a.subjectName < b.subjectName) {
                     return -1;
                 }
-                if (a.subjectId > b.subjectId) {
+                if (a.subjectName > b.subjectName) {
                     return 1;
                 }
                 return 0;
-            },
-            render: (record) => {
-                const data = subjectsData?.filter((item) => item.id === record);
-                return data[0]?.name;
             },
         },
         {
             title: "Yo'naish",
-            dataIndex: "directionId",
-            key: "directionId",
+            dataIndex: "directionName",
+            key: "directionName",
             width: "12%",
             search: false,
             sorter: (a, b) => {
-                if (a.directionId < b.directionId) {
+                if (a.directionName < b.directionName) {
                     return -1;
                 }
-                if (a.directionId > b.directionId) {
+                if (a.directionName > b.directionName) {
                     return 1;
                 }
                 return 0;
-            },
-            render: (record) => {
-                const data = directionsData?.filter(
-                    (item) => item.id === record
-                );
-                return data[0]?.name;
             },
         },
         {
