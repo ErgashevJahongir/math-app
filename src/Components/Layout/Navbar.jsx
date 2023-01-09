@@ -1,4 +1,18 @@
-import { Avatar, Button, Dropdown, Layout, Menu, Space } from "antd";
+import {
+    Avatar,
+    Button,
+    Col,
+    Dropdown,
+    Form,
+    Input,
+    Layout,
+    Menu,
+    message,
+    Modal,
+    Row,
+    Space,
+    Tooltip,
+} from "antd";
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import useToken from "../../Hook/UseToken";
@@ -15,13 +29,17 @@ import {
     UnorderedListOutlined,
     ProfileOutlined,
     OrderedListOutlined,
+    UserAddOutlined,
 } from "@ant-design/icons";
 import logoSvg from "../../Assets/Images/logo-math.svg";
+import instance from "../../Api/Axios";
 
 const { Header } = Layout;
 
 function Navbar() {
     const [isVisible, setIsVisible] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const [form] = Form.useForm();
     const { user, signOut } = useAuth();
     const { token } = useToken();
     const { examIdWith } = useParams();
@@ -55,9 +73,44 @@ function Navbar() {
         setIsVisible(false);
     };
 
+    const formValidate = () => {
+        form.validateFields()
+            .then((values) => {
+                instance
+                    .post("/api/user", { ...values })
+                    .then(function (response) {
+                        response.data?.code === 211 &&
+                            message.error(response.data?.message);
+                        response.data?.code === 200 &&
+                            message.success(
+                                "Foydalanuvchi muvaffaqiyatli qo'shildi"
+                            );
+                        response.data?.code === 200 && setVisible(false);
+                        response.data?.code === 200 && form.resetFields();
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                        if (error.response?.status === 500)
+                            navigate("/server-error");
+                        message.error(
+                            "Foydalanuvchini qo'shishda muammo bo'ldi"
+                        );
+                    });
+            })
+            .catch((info) => {
+                console.error("Validate Failed:", info);
+            });
+    };
+
     const menu = (
         <Menu
+            onClick={onClickGoPage}
             items={[
+                {
+                    label: "Profil",
+                    key: "/profil",
+                    icon: <UserOutlined style={{ fontSize: "18px" }} />,
+                },
                 {
                     key: "2",
                     danger: true,
@@ -230,55 +283,167 @@ function Navbar() {
                             : null,
                     ]}
                 />
-                {user ? (
-                    <span className={"inline-navber"}>
-                        <Dropdown
-                            menu={menu}
-                            overlay={menu}
-                            placement="bottomRight"
-                            trigger={["click", "hover"]}
-                            arrow
-                        >
-                            <Avatar
-                                size="large"
-                                style={{
-                                    color: "#f56a00",
-                                    backgroundColor: "#fde3cf",
-                                    cursor: "pointer",
-                                }}
+                <div style={{ display: "flex" }}>
+                    {user ? (
+                        <span className={"inlineMenu"}>
+                            {user.roles[0] === "SUPER_ADMIN" ? (
+                                <div>
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                        }}
+                                        onClick={() => {
+                                            setVisible(true);
+                                        }}
+                                    >
+                                        <Tooltip title="Admin qo'shish">
+                                            <UserAddOutlined
+                                                style={{
+                                                    fontSize: 30,
+                                                    color: "#fff",
+                                                    marginRight: 20,
+                                                    cursor: "pointer",
+                                                }}
+                                            />
+                                        </Tooltip>
+                                    </div>
+                                    <Modal
+                                        open={visible}
+                                        title={"Foydalanuvchi qo'shish"}
+                                        okText="Qo'shish"
+                                        cancelText="Bekor qilish"
+                                        width={350}
+                                        onCancel={() => {
+                                            setVisible(false);
+                                        }}
+                                        onOk={formValidate}
+                                        forceRender
+                                    >
+                                        <Form
+                                            form={form}
+                                            layout="vertical"
+                                            name="table_adddata_modal"
+                                        >
+                                            <Row gutter={12}>
+                                                <Col span={24}>
+                                                    <Form.Item
+                                                        key={"firstName"}
+                                                        name={"firstName"}
+                                                        label="Foydalanuvchi nomi"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: `Foydalanuvchi nomini kiriting`,
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Input placeholder="Foydalanuvchi nomini kiriting" />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col span={24}>
+                                                    <Form.Item
+                                                        key={"lastName"}
+                                                        name={"lastName"}
+                                                        label="Foydalanuvchi familiyasi"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: `Foydalanuvchi familiyasini kiriting`,
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Input placeholder="Foydalanuvchi familiyasini kiriting" />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col span={24}>
+                                                    <Form.Item
+                                                        key={"number"}
+                                                        name={"number"}
+                                                        label="Foydalanuvchi nomeri"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: `Foydalanuvchi nomerini kiriting`,
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Input placeholder="Foydalanuvchi nomerini kiriting" />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col span={24}>
+                                                    <Form.Item
+                                                        key={"password"}
+                                                        name={"password"}
+                                                        label="Foydalanuvchi paroli"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: `Foydalanuvchi parolini kiriting`,
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Input placeholder="Foydalanuvchi parolini kiriting" />
+                                                    </Form.Item>
+                                                </Col>
+                                            </Row>
+                                        </Form>
+                                    </Modal>
+                                </div>
+                            ) : null}
+                            <Dropdown
+                                menu={menu}
+                                overlay={menu}
+                                placement="bottomRight"
+                                trigger={["click", "hover"]}
+                                arrow
+                                className="inline-navber"
                             >
-                                {user?.firstName?.charAt(0)}
-                            </Avatar>
-                        </Dropdown>
-                    </span>
-                ) : (
-                    <Space className="inline-navber">
-                        <Button
-                            type="primary"
-                            shape="round"
-                            ghost
-                            onClick={() => navigate("auth/signin")}
-                            icon={<LoginOutlined />}
+                                <Avatar
+                                    size="large"
+                                    style={{
+                                        color: "#f56a00",
+                                        backgroundColor: "#fde3cf",
+                                        cursor: "pointer",
+                                        display: "block",
+                                    }}
+                                >
+                                    {user?.firstName?.charAt(0)}
+                                </Avatar>
+                            </Dropdown>
+                        </span>
+                    ) : (
+                        <Space className="inline-navber">
+                            <Button
+                                type="primary"
+                                shape="round"
+                                ghost
+                                onClick={() => navigate("auth/signin")}
+                                icon={<LoginOutlined />}
+                            >
+                                Kirish
+                            </Button>
+                        </Space>
+                    )}
+                    <div className="burger-menu">
+                        <span
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
                         >
-                            Kirish
-                        </Button>
-                    </Space>
-                )}
-                <div className="burger-menu">
-                    <span
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
-                    >
-                        <MenuOutlined
-                            onClick={showDrawer}
-                            rotate={180}
-                            style={{ fontSize: "28px", color: "#fff" }}
-                        />
-                        <DrapdownMenu onClose={onClose} isVisible={isVisible} />
-                    </span>
+                            <MenuOutlined
+                                onClick={showDrawer}
+                                rotate={180}
+                                style={{ fontSize: "28px", color: "#fff" }}
+                            />
+                            <DrapdownMenu
+                                onClose={onClose}
+                                isVisible={isVisible}
+                            />
+                        </span>
+                    </div>
                 </div>
             </div>
         </Header>

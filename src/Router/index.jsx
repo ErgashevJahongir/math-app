@@ -17,6 +17,7 @@ import Direction from "../Pages/Others/Direction";
 import ContactsComp from "../Pages/Others/Contacts";
 import Questions from "../Pages/Others/Questions";
 import TeachersCompo from "../Pages/Others/TeacherSComp";
+import Profil from "../Pages/Profil";
 
 const RoutesPage = () => {
     const { userLoading } = useAuth();
@@ -101,6 +102,7 @@ const RoutesPage = () => {
                         </RequireAuth>
                     }
                 />
+                <Route path="profil" element={<Profil />} />
                 <Route path="exams" element={<Exams />} />
             </Route>
             <Route path="auth/signin" element={<SignIn />} />

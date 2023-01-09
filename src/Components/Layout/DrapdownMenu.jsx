@@ -166,6 +166,15 @@ function DrapdownMenu({ onClose, isVisible }) {
                         : null,
                     user
                         ? {
+                              label: "Profil",
+                              key: "/profil",
+                              icon: (
+                                  <UserOutlined style={{ fontSize: "18px" }} />
+                              ),
+                          }
+                        : null,
+                    user
+                        ? {
                               label: "Chiqish",
                               key: "/logout",
                               icon: (

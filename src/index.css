@@ -136,6 +136,12 @@ li {
     display: block !important;
 }
 
+.inlineMenu {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
 .example {
     display: flex;
     align-items: center;
@@ -281,6 +287,24 @@ li {
 
 .courses__card-title {
     padding: 10px 10px 20px;
+}
+
+.profilWrapper {
+    justify-content: space-between;
+}
+
+.profilCard {
+    box-shadow: 0 0 10px #0000005d;
+    padding: 20px 30px;
+    height: 270px;
+}
+
+.profilCard:first-child {
+    margin-bottom: 30px;
+}
+
+.profilCard .ant-input {
+    padding: 8px 15px;
 }
 
 @media screen and (max-width: 1440px) {

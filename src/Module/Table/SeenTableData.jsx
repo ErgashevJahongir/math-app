@@ -68,6 +68,20 @@ const SeenTableData = ({ selectedRowKeys, editModalTitle }) => {
                         </Col>
                     </List.Item>
                     <List.Item>
+                        <Col span={10}>To'lov vaqti: </Col>
+                        <Col span={14}>
+                            {moment(selectedRowKeys?.participatedTime).format(
+                                "YYYY-MM-DD hh:mm"
+                            ) || "null"}
+                        </Col>
+                    </List.Item>
+                    <List.Item>
+                        <Col span={10}>Qatnashganligi: </Col>
+                        <Col span={14}>
+                            {selectedRowKeys?.participated ? "Ha" : "Yo'q"}
+                        </Col>
+                    </List.Item>
+                    <List.Item>
                         <Col span={10}>Imtihon fani: </Col>
                         <Col span={14}>
                             {selectedRowKeys?.exam?.subjectId?.name}

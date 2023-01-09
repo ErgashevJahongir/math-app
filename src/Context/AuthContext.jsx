@@ -51,12 +51,11 @@ export const AuthProvider = ({ children }) => {
             ? getUser(token)
             : axios.get(`${REACT_APP_BASE_URL}/api/auth/token`).then((data) => {
                   setToken(data.data.data, true);
-                  //   getUser(data.data?.data);
                   window.location.reload();
               });
     }, [token]);
 
-    const value = { userLoading, user, siginIn, signOut };
+    const value = { userLoading, user, siginIn, signOut, getUser };
 
     return (
         <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

@@ -40,7 +40,6 @@ export const SignIn = () => {
     };
 
     useEffect(() => {
-        // sessionStorage.removeItem("math-test-app", token);
         if (user) {
             navigate("/");
         }

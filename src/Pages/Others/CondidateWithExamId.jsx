@@ -4,6 +4,7 @@ import { message } from "antd";
 import instance from "../../Api/Axios";
 import CustomTable from "../../Module/Table/Table";
 import { useData } from "../../Hook/UseData";
+import moment from "moment";
 
 const CondidateWithExamId = () => {
     const [pageData, setPageData] = useState({
@@ -34,6 +35,9 @@ const CondidateWithExamId = () => {
                         subjectId: item?.exam?.subjectId?.id,
                         directionId: item?.exam?.directionId?.id,
                         directionName: item?.exam?.directionId?.name,
+                        participatedTime: moment(item?.participatedTime).format(
+                            "YYYY-MM-DD hh:mm"
+                        ),
                     })),
                 }));
                 setPageData((prev) => ({
@@ -183,6 +187,16 @@ const CondidateWithExamId = () => {
             },
         },
         {
+            title: "To'lov vaqti",
+            dataIndex: "participatedTime",
+            key: "participatedTime",
+            width: "10%",
+            search: false,
+            render: (record) => {
+                return record ? record : "null";
+            },
+        },
+        {
             title: "To'lov ",
             dataIndex: "paid",
             key: "paid",
@@ -199,6 +213,25 @@ const CondidateWithExamId = () => {
             },
             render: (record) => {
                 return record ? "To'lov qilingan" : "To'lov qilinmagan";
+            },
+        },
+        {
+            title: "Qatnashganligi",
+            dataIndex: "participated",
+            key: "participated",
+            width: "10%",
+            search: false,
+            sorter: (a, b) => {
+                if (a.participated < b.participated) {
+                    return -1;
+                }
+                if (a.participated > b.participated) {
+                    return 1;
+                }
+                return 0;
+            },
+            render: (record) => {
+                return record ? "Ha" : "Yo'q";
             },
         },
     ];
