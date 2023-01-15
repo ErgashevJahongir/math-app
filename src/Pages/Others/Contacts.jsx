@@ -63,7 +63,7 @@ const ContactsComp = () => {
         const isMain = values.isMain === "true" ? true : false;
         console.log(values);
         instance
-            .post(`/api/contact/${initial.id}`, {
+            .post(`/api/contact/update/${initial.id}`, {
                 ...values,
                 id: initial.id,
                 isMain,

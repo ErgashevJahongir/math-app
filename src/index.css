@@ -163,6 +163,10 @@ li {
     margin: 20px 0;
 }
 
+.sectionCont.onlineTest {
+    padding-bottom: 30px;
+}
+
 .teachersCont {
     margin-bottom: 20px;
 }
@@ -305,6 +309,10 @@ li {
 
 .profilCard .ant-input {
     padding: 8px 15px;
+}
+
+.onlineTest .future-heading {
+    margin-bottom: 0;
 }
 
 @media screen and (max-width: 1440px) {
