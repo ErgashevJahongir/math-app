@@ -7,36 +7,63 @@ import logo from "./markaz-img.png";
 import "./signin.css";
 import { useAuth } from "../Hook/UseAuth";
 import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { loginRequest } from "../Api/api";
+import { useAuthStore } from "../store/auth";
 
 const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const SignIn = () => {
     const [loading, setLoading] = useState(false);
+    const {setToken: setAccessToken} = useAuthStore(state => state)
     const { setToken } = useToken();
     const { user } = useAuth();
     let navigate = useNavigate();
 
+    // get requestlar uchun esa useQuery ishlatasiz, const {data} = useQuery(["nomi"], request)
+
+    //react-query ni ishlatish bo'yicha qo'llanma
+    const loginMutation = useMutation((body) => loginRequest(body), {
+        // bu success bo'lgandagi holatni catch qilish uchun 
+        onSuccess: (data) => {
+            console.log(data, "data")
+            setAccessToken(data.data)
+            navigate("/")
+        },
+        onError: (error) => {
+            //  error catch qilish 
+        }
+    })
+    // yoki loginMutation.error
+
+    
     const handleSubmit = (event) => {
         event.preventDefault();
-        setLoading(true);
+        // setLoading(true);
 
         var { phone, password } = document.forms[0];
+        loginMutation.mutate({
+            number: phone.value,
+            password: password.value,
+        })
 
-        axios
-            .post(`${REACT_APP_BASE_URL}/api/auth/login`, {
-                number: phone.value,
-                password: password.value,
-            })
-            .then((data) => {
-                setToken(data.data.data, true);
-                window.location.href = "/";
-            })
-            .catch((err) => {
-                setLoading(false);
-                console.error(err);
-                navigate("/auth/signin");
-                alert(err.response?.data?.message);
-            });
+        // axios
+        //     .post(`${REACT_APP_BASE_URL}/api/auth/login`, {
+        //         number: phone.value,
+        //         password: password.value,
+        //     })
+        //     .then((data) => {
+        //         setToken(data.data.data, true);
+        //         window.location.href = "/"; //hard coding :)
+        //     })
+        //     .catch((err) => {
+        //         // react-query yana bitta yaxshi tarafi o'zini loadingi bor ichida
+        //         // loginMutation.isLoading
+        //         setLoading(false);
+        //         console.error(err);
+        //         navigate("/auth/signin"); //bu yerda qayta redirect qilishdan mano yo'q
+        //         alert(err.response?.data?.message);
+        //     });
     };
 
     useEffect(() => {
@@ -46,11 +73,17 @@ export const SignIn = () => {
         setLoading(false);
     }, [user]);
 
-    if (loading) {
-        return <Loading />;
-    }
+    //bunaqa render qilmang hech qachon sababi context yo'qolib qoladi bad practice
+    // if (loginMutation.isLoading) {
+    //     return <Loading />;
+    // }
 
     return (
+        <>
+        
+        {
+            loginMutation.isLoading ? <Loading /> : null
+        }
         <div className="login">
             <div className="login__img">
                 <img src={pic} alt="teacher" />
@@ -97,5 +130,6 @@ export const SignIn = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
