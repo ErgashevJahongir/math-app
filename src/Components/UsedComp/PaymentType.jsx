@@ -67,12 +67,24 @@ const PaymentType = () => {
                                             To'lov uchun faqat telefon yetarli
                                         </h2>
                                         <div className="text">
-                                            Jismoniy bank kartalari va naqd pul
-                                            mablag'laridan ko'ra qulay va
-                                            xavfsizroq, bundan tashqari Sizning
-                                            shaxsiy ma'lumotlaringizni
-                                            do'konlarda to'lov jarayonida
-                                            himoyalashga yordam beradi.
+                                            Onlayn to‘lov tizimi imtihon
+                                            topshiruvchilar uchun afzallik
+                                            ekanini isbotlamoqda, chunki ular
+                                            endi o‘z telefonlari orqali test
+                                            to‘lovini bemalol to‘lashlari
+                                            mumkin. Bu nafaqat imtihon
+                                            topshiruvchilarning vaqtini va
+                                            mehnatini qisqartiradi, balki to‘lov
+                                            jarayonini ham qulaylashtiradi.
+                                            Bundan tashqari, u hech qanday
+                                            muammosiz tez va samarali to'lovni
+                                            amalga oshirish imkonini berdi.
+                                            Ushbu tizim bo'lajak imtihonga
+                                            tayyorlanishni intiqlik bilan
+                                            kutayotgan barcha imtihon
+                                            topshiruvchilar uchun katta foyda va
+                                            bo'lajak imtihonga tayyorlanishni
+                                            boshlashlari mumkin.
                                             <br />
                                             <br />
                                         </div>

@@ -90,7 +90,7 @@ const Subjects = () => {
         setPageData((prev) => ({ ...prev, loading: true }));
         arr.map((item) => {
             instance
-                .delete(`/api/subject/${item}`)
+                .delete(`/api/subject/delete/${item}`)
                 .then((data) => {
                     getSubjects(pageData.current - 1, pageData.pageSize);
                     message.success("Fan muvaffaqiyatli o'chirildi");

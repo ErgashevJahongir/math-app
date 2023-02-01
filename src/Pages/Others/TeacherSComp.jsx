@@ -71,7 +71,7 @@ const TeachersCompo = () => {
         setPageData((prev) => ({ ...prev, loading: true }));
         const photoPath = values?.photoPath?.file?.name;
         instance
-            .post(`/api/teacher/update/${initial.id}`, {
+            .put(`/api/teacher/update/${initial.id}`, {
                 ...values,
                 id: initial.id,
                 photoPath,

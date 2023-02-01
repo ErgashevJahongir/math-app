@@ -166,11 +166,9 @@ const About = () => {
                                                                 className="number-son"
                                                                 start={0}
                                                                 end={2010}
-                                                                enableScrollSpy={
-                                                                    true
-                                                                }
                                                                 duration={3}
                                                                 delay={4}
+                                                                enableScrollSpy
                                                             />
                                                             +
                                                         </div>
@@ -200,11 +198,9 @@ const About = () => {
                                                                 className="number-son"
                                                                 start={0}
                                                                 end={12}
-                                                                enableScrollSpy={
-                                                                    true
-                                                                }
                                                                 duration={3}
                                                                 delay={4}
+                                                                enableScrollSpy
                                                             />
                                                         </div>
                                                         <h4 className="counter-title">
@@ -234,11 +230,9 @@ const About = () => {
                                                                 className="number-son"
                                                                 start={0}
                                                                 end={35}
-                                                                enableScrollSpy={
-                                                                    true
-                                                                }
                                                                 duration={3}
                                                                 delay={4}
+                                                                enableScrollSpy
                                                             />
                                                         </div>
                                                         <h4 className="counter-title">
@@ -266,12 +260,10 @@ const About = () => {
                                                             <CountUp
                                                                 className="number-son"
                                                                 start={0}
-                                                                end={95}
-                                                                enableScrollSpy={
-                                                                    true
-                                                                }
+                                                                end={90}
                                                                 duration={3}
                                                                 delay={4}
+                                                                enableScrollSpy
                                                             />
                                                             %
                                                         </div>
