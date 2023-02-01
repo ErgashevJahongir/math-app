@@ -1,9 +1,10 @@
+import {Suspense, lazy} from "react"
 import { Route, Routes } from "react-router-dom";
 import LayoutMenu from "../Components/Layout/Layout";
-import Dashboard from "../Pages/Dashboard";
+
 import { SignIn } from "../Auth/SignIn";
 import Error404 from "../Module/ErrorPages/Error404";
-import Error500 from "../Module/ErrorPages/Error500";
+import Error500 from "../Module/ErrorPages/Error500"; //keyin 500 Server Errorni bunaqa handle qilish xato
 import Loading from "../Components/Loading";
 import Districts from "../Pages/Others/Districts";
 import { RequireAuth } from "../Hook/RequireAuth";
@@ -18,6 +19,9 @@ import ContactsComp from "../Pages/Others/Contacts";
 import Questions from "../Pages/Others/Questions";
 import TeachersCompo from "../Pages/Others/TeacherSComp";
 import Profil from "../Pages/Profil";
+// pagelarni lazy load qilib import qiling shunda code splitting bo'ladi va kod hajmi bo'linadi tezroq render bo'lishga yordam beradi, bunda og'ir ochilayotgan va js ko'p hydrate bo'layotgan pagelarni bo'lib tashash zarur
+const Dashboard = lazy(() => import("../Pages/Dashboard")) //yangi holatda import bo'lishi
+// import Dashboard from "../Pages/Dashboard"; //eskisi
 
 const RoutesPage = () => {
     const { userLoading } = useAuth();
@@ -26,7 +30,10 @@ const RoutesPage = () => {
         return <Loading />;
     }
 
+    //keyin authorization bunaqa qilinmaydi authorization single object bo'lishi kerak va editable oson bo'lishi zarur, bu bo'yicha screenshot tashayman githubga shuni yaxshilab ko'rishingiz kerak
     return (
+        <Suspense fallback={<div>Mana bu yerda page loading qo'ying bu yerda loading bo'ladi</div>}>
+
         <Routes>
             <Route element={<LayoutMenu />}>
                 <Route index element={<Dashboard />} />
@@ -109,6 +116,8 @@ const RoutesPage = () => {
             <Route path="*" element={<Error404 />} />
             <Route path="server-error" element={<Error500 />} />
         </Routes>
+         </Suspense>
+
     );
 };
 

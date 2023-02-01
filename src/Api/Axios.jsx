@@ -16,6 +16,8 @@ const instance = axios.create({
 });
 
 const AxiosInterceptor = ({ children }) => {
+    //maslahatim axios ni bunaqa intercept use qilmang sababi baribir renderdan keyin handle qiladi client side, keyin sekinlashtirib bloklab qo'yishi mumkin saytni
+    //bu bo'yicha ham good practice create qilib beraman
     useEffect(() => {
         const reqInterceptor = (req) => {
             req.headers.Authorization = `Bearer ${token1 || token2}`;
