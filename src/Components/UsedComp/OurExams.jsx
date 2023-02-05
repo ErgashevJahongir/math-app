@@ -34,9 +34,9 @@ const OurExams = () => {
         <section className="textAlignCenter sectionCont">
             <div className="container">
                 <h2 className="future-heading">Imtihonlar</h2>
-                {examsData.length < 3 ? (
+                {examsData?.length < 3 ? (
                     <Row gutter={[20, 20]}>
-                        {examsData.map((item, key) => {
+                        {examsData?.map((item, key) => {
                             return (
                                 <Col
                                     xs={24}
@@ -134,7 +134,7 @@ const OurExams = () => {
                                 modules={[Autoplay, Keyboard, Pagination]}
                                 className="examsSwipwr"
                             >
-                                {examsData.map((item, key) => {
+                                {examsData?.map((item, key) => {
                                     return (
                                         <SwiperSlide key={key}>
                                             <Col>

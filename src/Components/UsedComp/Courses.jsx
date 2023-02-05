@@ -64,7 +64,7 @@ const Courses = () => {
                     modules={[Autoplay, Keyboard, Pagination]}
                     className="teachersSwipwr"
                 >
-                    {subjectsData.map((item) => {
+                    {subjectsData?.map((item) => {
                         return (
                             <SwiperSlide key={item.id}>
                                 <Col className="courses__card">

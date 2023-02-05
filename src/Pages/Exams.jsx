@@ -31,7 +31,7 @@ const Exams = () => {
             <div className="container">
                 <h2 className="future-heading">Imtihonlar</h2>
                 <Row gutter={[20, 20]}>
-                    {examsData.map((item, key) => {
+                    {examsData?.map((item, key) => {
                         return (
                             <Col
                                 xs={24}

@@ -15,7 +15,7 @@ const CondidateExams = () => {
     return (
         <div className="container" style={{ marginTop: 30, marginBottom: 30 }}>
             <Row gutter={[20, 20]}>
-                {examsData.map((item, key) => {
+                {examsData?.map((item, key) => {
                     return (
                         <Col
                             xs={24}
