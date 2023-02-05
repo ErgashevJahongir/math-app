@@ -144,7 +144,7 @@ export const TableProvider = ({ children }) => {
                     placeholder="Bo'lish vaqtini kiriting"
                     style={{ width: "100%" }}
                     showTime={{
-                        defaultValue: moment("00:00:00", "HH:mm"),
+                        defaultValue: moment(disabledDate, "HH:mm"),
                     }}
                 />
             ),
@@ -477,12 +477,9 @@ export const TableProvider = ({ children }) => {
             formData = {
                 formData: othersFormData,
                 editFormData: othersFormData,
-                branchData: false,
-                timeFilterInfo: false,
                 deleteInfo: true,
                 createInfo: true,
                 editInfo: true,
-                timelyInfo: false,
                 editModalTitle: "Tuman nomini o'zgartirish",
                 modalTitle: "Tuman qo'shish",
             };
@@ -492,12 +489,9 @@ export const TableProvider = ({ children }) => {
             formData = {
                 formData: subjectsFormData,
                 editFormData: subjectsFormData,
-                branchData: false,
-                timeFilterInfo: false,
                 deleteInfo: true,
                 createInfo: true,
                 editInfo: true,
-                timelyInfo: false,
                 editModalTitle: "Fan nomini o'zgartirish",
                 modalTitle: "Fan qo'shish",
             };
@@ -507,12 +501,9 @@ export const TableProvider = ({ children }) => {
             formData = {
                 formData: contactsFormData,
                 editFormData: contactsFormData,
-                branchData: false,
-                timeFilterInfo: false,
                 deleteInfo: true,
                 createInfo: true,
                 editInfo: true,
-                timelyInfo: false,
                 editModalTitle: "Kontakt ma'lumotlarini o'zgartirish",
                 modalTitle: "Kontakt qo'shish",
             };
@@ -522,12 +513,9 @@ export const TableProvider = ({ children }) => {
             formData = {
                 formData: examsFormData,
                 editFormData: editExamsFormData,
-                branchData: false,
-                timeFilterInfo: false,
                 deleteInfo: true,
                 createInfo: true,
                 editInfo: true,
-                timelyInfo: false,
                 editModalTitle: "Imtixon ma'lumotlarini o'zgartirish",
                 modalTitle: "Imtixon qo'shish",
             };
@@ -537,12 +525,9 @@ export const TableProvider = ({ children }) => {
             formData = {
                 formData: teachersFormData,
                 editFormData: editTeachersFormData,
-                branchData: false,
-                timeFilterInfo: false,
                 deleteInfo: true,
                 createInfo: true,
                 editInfo: true,
-                timelyInfo: false,
                 editModalTitle: "O'qituvchi ma'lumotlarini o'zgartirish",
                 modalTitle: "O'qituvchi qo'shish",
             };
@@ -552,12 +537,9 @@ export const TableProvider = ({ children }) => {
             formData = {
                 formData: directionFormData,
                 editFormData: editDirectionFormData,
-                branchData: false,
-                timeFilterInfo: false,
                 deleteInfo: true,
                 createInfo: true,
                 editInfo: true,
-                timelyInfo: false,
                 editModalTitle: "Yo'nalish ma'lumotlarini o'zgartirish",
                 modalTitle: "Yo'nalish qo'shish",
             };
@@ -567,13 +549,10 @@ export const TableProvider = ({ children }) => {
             formData = {
                 formData: condidatesCreateFormData,
                 editFormData: condidatesCreateFormData,
-                branchData: false,
-                timeFilterInfo: false,
                 deleteInfo: false,
                 seenInfo: true,
                 createInfo: true,
                 editInfo: false,
-                timelyInfo: false,
                 editModalTitle: "Imtixon ma'lumotlarini o'zgartirish",
                 modalTitle: "Imtixon qo'shish",
             };

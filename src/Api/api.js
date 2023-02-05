@@ -138,7 +138,7 @@ export const createTeachers = async (values) => {
 };
 
 export const editTeachers = async (values) => {
-    const res = await axiosInstance.post(
+    const res = await axiosInstance.put(
         `/api/teacher/update/${values.id}`,
         values
     );

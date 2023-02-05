@@ -44,6 +44,7 @@ const ExamsComp = () => {
     });
 
     const onCreate = (values) => {
+        console.log(values);
         const active = values.active === "true" ? true : false;
         createMutation.mutate({ ...values, active: active });
     };
