@@ -6,7 +6,7 @@ import "./error404.css";
 const Error404 = () => {
     return (
         <section className="page-not-found">
-            <img src={rasm} alt="404 page" />
+            <img loading="lazy" decoding="async" src={rasm} alt="404 page" />
             <h1>Bu Sahifa Topilmadi</h1>
             <p>
                 Kechirasiz siz qidirgan sahifa topilmadi!

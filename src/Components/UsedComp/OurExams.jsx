@@ -67,6 +67,8 @@ const OurExams = () => {
                                         >
                                             <div className="examCard">
                                                 <img
+                                                    loading="lazy"
+                                                    decoding="async"
                                                     src="https://validthemes.tech/templatebucket/lasson/lasson/assets/img/course/course-2.jpg"
                                                     alt="sratistic"
                                                     style={{
@@ -157,6 +159,8 @@ const OurExams = () => {
                                                     >
                                                         <div className="examCard">
                                                             <img
+                                                                loading="lazy"
+                                                                decoding="async"
                                                                 src="https://validthemes.tech/templatebucket/lasson/lasson/assets/img/course/course-2.jpg"
                                                                 alt="sratistic"
                                                                 style={{

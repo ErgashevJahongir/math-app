@@ -65,7 +65,7 @@ const OurTeachers = () => {
                                         className="card-container"
                                         initial="offscreen"
                                         whileInView="onscreen"
-                                        viewport={{ once: false, amount: 0.8 }}
+                                        viewport={{ once: true, amount: 0.8 }}
                                     >
                                         <motion.div
                                             className="card"
@@ -73,6 +73,8 @@ const OurTeachers = () => {
                                             transition={{ duration: 0.2 }}
                                         >
                                             <img
+                                                loading="lazy"
+                                                decoding="async"
                                                 src={`${REACT_APP_BASE_URL}/api/file/downloadFile?fileName=${item?.photoPath}`}
                                                 alt={item?.name}
                                                 style={{

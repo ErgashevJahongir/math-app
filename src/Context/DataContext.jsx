@@ -1,79 +1,48 @@
-import { createContext, useEffect, useState } from "react";
-import instance from "../Api/Axios";
+import { useQuery } from "@tanstack/react-query";
+import { createContext } from "react";
+import {
+    getDirection,
+    getDistricts,
+    getExams,
+    getSubjects,
+    getTeachers,
+} from "../Api/api";
 
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
-    const [subjectsData, setSubjectsData] = useState([]);
-    const [teachersData, setTeachersData] = useState([]);
-    const [districtsData, setDistrictsData] = useState([]);
-    const [examsData, setExamsData] = useState([]);
-    const [directionsData, setDirectionsData] = useState([]);
-
-    const getSubjectsData = () => {
-        instance
-            .get("/api/subject/list")
-            .then((data) => {
-                setSubjectsData(data.data.data);
-            })
-            .catch((err) => console.error(err));
-    };
-
-    const getDistrictsData = () => {
-        instance
-            .get("/api/district/list")
-            .then((data) => {
-                setDistrictsData(data.data.data);
-            })
-            .catch((err) => console.error(err));
-    };
-
-    const getExamsData = () => {
-        instance
-            .get("/api/exam/list?page=0&size=100")
-            .then((data) => {
-                setExamsData(data.data.data);
-            })
-            .catch((err) => console.error(err));
-    };
-
-    const getDirectionData = () => {
-        instance
-            .get("/api/direction/list?page=0&size=100")
-            .then((data) => {
-                setDirectionsData(data.data.data);
-            })
-            .catch((err) => console.error(err));
-    };
-
-    const getTeachersData = () => {
-        instance
-            .get("/api/teacher/list?page=0&size=100")
-            .then((data) => {
-                setTeachersData(data.data.data);
-            })
-            .catch((err) => console.error(err));
-    };
-
-    useEffect(() => {
-        getSubjectsData();
-        getDistrictsData();
-        getExamsData();
-        getDirectionData();
-        getTeachersData();
-    }, []);
+    const { data: examsData, refetch: getExamsData } = useQuery(
+        ["examsData"],
+        () => getExams(0, 100)
+    );
+    const { data: subjectsData, refetch: getSubjectsData } = useQuery(
+        ["subjectsData"],
+        () => getSubjects()
+    );
+    const { data: teachersData, refetch: getTeachersData } = useQuery(
+        ["teachersData"],
+        () => getTeachers(0, 100)
+    );
+    const { data: districtsData, refetch: getDistrictsData } = useQuery(
+        ["districtsData"],
+        () => getDistricts()
+    );
+    const { data: directionsData, refetch: getDirectionData } = useQuery(
+        ["directionsData"],
+        () => getDirection(0, 100)
+    );
 
     const value = {
         getSubjectsData,
-        subjectsData,
+        subjectsData: subjectsData?.data,
         getDistrictsData,
-        districtsData,
+        districtsData: districtsData?.data,
         getExamsData,
-        examsData,
+        examsData: examsData?.data,
         getDirectionData,
-        directionsData,
+        directionsData: directionsData?.data,
         getTeachersData,
-        teachersData,
+        teachersData: teachersData?.data,
     };
 
     return (

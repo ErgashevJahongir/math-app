@@ -1,139 +1,103 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 import moment from "moment";
-import instance from "../../Api/Axios";
+import { createOrEditExams, deleteExams, getExams } from "../../Api/api";
 import CustomTable from "../../Module/Table/Table";
 import { useData } from "../../Hook/UseData";
 import { useTable } from "../../Hook/UseTable";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const ExamsComp = () => {
     const [pageData, setPageData] = useState({
-        exams: [],
-        loading: true,
         current: 1,
         pageSize: 10,
-        totalItems: 1,
     });
     const { getExamsData } = useData();
     const { setExamtableData } = useTable();
-    const navigate = useNavigate();
+    const { data, isLoading, refetch, isError } = useQuery(
+        ["exams", pageData],
+        () => getExams(pageData.current - 1, pageData.pageSize)
+    );
 
-    const getExams = (current, pageSize) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
-        instance
-            .get(`/api/exam/list?page=${current}&size=${pageSize}`)
-            .then((data) => {
-                setPageData((prev) => ({
-                    ...prev,
-                    exams: data.data?.data.map((item) => ({
-                        ...item,
-                        directionId: item?.directionId?.id,
-                        directionName: item?.directionId?.name,
-                        subjectName: item?.subjectId?.name,
-                        subjectId: item?.subjectId?.id,
-                        startedDate: moment(item?.startedDate).format(
-                            "YYYY-MM-DD hh:mm"
-                        ),
-                        createdAt: moment(item?.createdAt).format(
-                            "YYYY-MM-DD hh:mm"
-                        ),
-                    })),
-                }));
-                getExamsData();
-                setPageData((prev) => ({
-                    ...prev,
-                    totalItems: data.data?.pageable?.count,
-                }));
-            })
-            .catch((error) => {
-                console.error(error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Imtixonlarni yuklashda muammo bo'ldi");
-            })
-            .finally(() =>
-                setPageData((prev) => ({ ...prev, loading: false }))
-            );
-    };
+    if (isError) {
+        message.error("Imtixonlarni yuklashda muammo bo'ldi");
+    }
+
+    const createMutation = useMutation((body) => createOrEditExams(body), {
+        onSuccess: (data) => {
+            data.code === 211 && message.error(data.message);
+            data.code === 200 &&
+                message.success("Imtixon muvaffaqiyatli qo'shildi");
+            refetch();
+            getExamsData();
+        },
+        onError: (error) => {
+            message.error("Imtixonni qo'shishda muammo bo'ldi");
+            console.error(error);
+        },
+        onSettled: () => {
+            setExamtableData({
+                directionId: false,
+                subjectId: false,
+            });
+        },
+    });
 
     const onCreate = (values) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
         const active = values.active === "true" ? true : false;
-        instance
-            .post("/api/exam/createOrUpdate", { ...values, active: active })
-            .then(function (response) {
-                response.data.code === 211 &&
-                    message.error(response.data.message);
-                response.data.code === 200 &&
-                    message.success("Imtixon muvaffaqiyatli qo'shildi");
-                getExams(pageData.current - 1, pageData.pageSize);
-            })
-            .catch(function (error) {
-                console.error(error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Imtixonni qo'shishda muammo bo'ldi");
-            })
-            .finally(() => {
-                setPageData((prev) => ({ ...prev, loading: false }));
-                setExamtableData({
-                    directionId: false,
-                    subjectId: false,
-                });
-            });
+        createMutation.mutate({ ...values, active: active });
     };
 
+    const editMutation = useMutation((body) => createOrEditExams(body), {
+        onSuccess: (data) => {
+            data.code === 211 && message.error(data.message);
+            data.code === 200 &&
+                message.success("Imtixon muvaffaqiyatli taxrirlandi");
+            refetch();
+            getExamsData();
+        },
+        onError: (error) => {
+            message.error("Imtixonni taxrirlashda muammo bo'ldi");
+            console.error(error);
+        },
+        onSettled: () => {
+            setExamtableData({
+                directionId: false,
+                subjectId: false,
+            });
+        },
+    });
+
     const onEdit = (values, initial) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
         const active = values?.active?.target.value === "true" ? true : false;
         const startedDate = moment(
             values.startedDate,
             "YYYY-MM-DD hh:mm"
         ).toISOString();
-        instance
-            .post("/api/exam/createOrUpdate", {
-                ...values,
-                active: active,
-                startedDate: startedDate,
-                id: initial.id,
-            })
-            .then((res) => {
-                res.data.code === 211 && message.error(res.data.message);
-                res.data.code === 200 &&
-                    message.success("Imtixon muvaffaqiyatli taxrirlandi");
-                getExams(pageData.current - 1, pageData.pageSize);
-            })
-            .catch(function (error) {
-                console.error("Error in edit: ", error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Imtixonni taxrirlashda muammo bo'ldi");
-            })
-            .finally(() => {
-                setPageData((prev) => ({ ...prev, loading: false }));
-                setExamtableData({
-                    directionId: false,
-                    subjectId: false,
-                });
-            });
+        editMutation.mutate({
+            ...values,
+            active: active,
+            startedDate: startedDate,
+            id: initial.id,
+        });
     };
 
+    const deleteMutation = useMutation((body) => deleteExams(body), {
+        onSuccess: (data) => {
+            data.code === 200 &&
+                message.success("Imtixon muvaffaqiyatli o'chirildi");
+            refetch();
+            getExamsData();
+        },
+        onError: (error) => {
+            message.error("Imtixonni o'chirishda muammo bo'ldi");
+            console.error(error);
+        },
+    });
+
     const handleDelete = (arr) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
         arr.map((item) => {
-            instance
-                .delete(`/api/exam/delete/${item}`)
-                .then((data) => {
-                    getExams(pageData.current - 1, pageData.pageSize);
-                    message.success("Imtixon muvaffaqiyatli o'chirildi");
-                })
-                .catch((error) => {
-                    console.error(error);
-                    if (error.response?.status === 500)
-                        navigate("/server-error");
-                    message.error("Imtixonni o'chirishda muammo bo'ldi");
-                })
-                .finally(() =>
-                    setPageData((prev) => ({ ...prev, loading: false }))
-                );
+            deleteMutation.mutate(item);
             return null;
         });
     };
@@ -253,12 +217,24 @@ const ExamsComp = () => {
             <CustomTable
                 columns={columns}
                 pageSizeOptions={[10, 20]}
-                getData={getExams}
+                getData={refetch}
                 onDelete={handleDelete}
                 onCreate={onCreate}
                 onEdit={onEdit}
-                totalItems={pageData.totalItems}
-                tableData={pageData.exams}
+                totalItems={data?.pageable?.count}
+                tableData={data?.data?.map((item) => ({
+                    ...item,
+                    directionId: item?.directionId?.id,
+                    directionName: item?.directionId?.name,
+                    subjectName: item?.subjectId?.name,
+                    subjectId: item?.subjectId?.id,
+                    startedDate: moment(item?.startedDate).format(
+                        "YYYY-MM-DD hh:mm"
+                    ),
+                    createdAt: moment(item?.createdAt).format(
+                        "YYYY-MM-DD hh:mm"
+                    ),
+                }))}
                 current={pageData.current}
                 pageSize={pageData.pageSize}
                 setCurrent={(newProp) =>
@@ -267,10 +243,7 @@ const ExamsComp = () => {
                 setPageSize={(newProp) =>
                     setPageData((prev) => ({ ...prev, pageSize: newProp }))
                 }
-                loading={pageData.loading}
-                setLoading={(newProp) =>
-                    setPageData((prev) => ({ ...prev, loading: newProp }))
-                }
+                loading={isLoading}
             />
         </div>
     );

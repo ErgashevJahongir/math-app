@@ -149,6 +149,7 @@ li {
     flex-direction: column;
     height: 100vh;
     margin-top: -50px;
+    margin-bottom: 50px;
 }
 
 .ant-modal.seenCont .ant-modal-content {
@@ -269,7 +270,8 @@ li {
 }
 
 .courses .swiper-wrapper {
-    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 50px;
 }
 
 .courses__card {

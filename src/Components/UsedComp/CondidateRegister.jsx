@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import {
     Button,
     Col,
@@ -10,8 +11,11 @@ import {
     Steps,
 } from "antd";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import instance from "../../Api/Axios";
+import {
+    createCondedate,
+    createPayment,
+    createPaymentCodeVerify,
+} from "../../Api/api";
 import { useData } from "../../Hook/UseData";
 import CustomSelect from "../../Module/Select/Select";
 
@@ -36,16 +40,12 @@ const CondidateRegister = ({ examId, amaunt }) => {
             phoneNumberMessage: "",
         });
         const { examsData, districtsData } = useData();
-        const navigate = useNavigate();
         const [form] = Form.useForm();
 
-        const onFinish = (values) => {
-            instance
-                .post(`${REACT_APP_BASE_URL}/api/candidate/create`, {
-                    ...values,
-                    phoneNumber: "+998" + values.phoneNumber,
-                })
-                .then(function (data) {
+        const createMutationCondidate = useMutation(
+            (body) => createCondedate(body),
+            {
+                onSuccess: (data) => {
                     console.log(data);
                     const getError = (error) => {
                         message.error(error?.message);
@@ -55,20 +55,25 @@ const CondidateRegister = ({ examId, amaunt }) => {
                             phoneNumberMessage: error.message,
                         }));
                     };
-                    data?.data?.code === 211 && getError(data.data);
-                    data?.data?.code === 200 &&
+                    data?.code === 211 && getError(data);
+                    data?.code === 200 &&
                         setUser({
-                            ...data.data?.data,
-                            districtId: values.districtId,
+                            ...data?.data,
                         });
-                    data?.data?.code === 200 && setCurrent(1);
-                })
-                .catch(function (error) {
-                    console.error(error);
-                    if (error.response?.status === 500)
-                        navigate("/server-error");
+                    data?.code === 200 && setCurrent(1);
+                },
+                onError: (error) => {
                     message.error("Kandidateni qo'shishda muammo bo'ldi");
-                });
+                    console.error(error);
+                },
+            }
+        );
+
+        const onFinish = (values) => {
+            createMutationCondidate.mutate({
+                ...values,
+                phoneNumber: "+998" + values.phoneNumber,
+            });
         };
 
         const onFinishFailed = (errorInfo) => {
@@ -78,8 +83,6 @@ const CondidateRegister = ({ examId, amaunt }) => {
         const onReset = () => {
             form.resetFields();
         };
-
-        console.log(user);
 
         return (
             <Form
@@ -253,27 +256,25 @@ const CondidateRegister = ({ examId, amaunt }) => {
 
     const PaymentInfo = ({ user, examId, amaunt }) => {
         const [form] = Form.useForm();
-        const navigate = useNavigate();
 
+        const createMutation = useMutation((body) => createPayment(body), {
+            onSuccess: (data) => {
+                data?.code === 500 && message.error(data.message);
+                data?.code === 200 && setCurrent(2);
+            },
+            onError: (error) => {
+                message.error("To'lov ma'lumotda muammo bo'ldi");
+                console.error(error);
+            },
+        });
         const onFinish = (values) => {
-            instance
-                .post(`${REACT_APP_BASE_URL}/api/payment/create`, {
-                    amount: amaunt,
-                    candidateId: user.id,
-                    examId: examId,
-                    expire: values.expire,
-                    number: values.number,
-                })
-                .then(function (data) {
-                    data.data.code === 500 && message.error(data.data.message);
-                    data?.data?.code === 200 && setCurrent(2);
-                })
-                .catch(function (error) {
-                    console.error(error);
-                    if (error.response?.status === 500)
-                        navigate("/server-error");
-                    message.error("Imtixonni qo'shishda muammo bo'ldi");
-                });
+            createMutation.mutate({
+                amount: amaunt,
+                candidateId: user.id,
+                examId: examId,
+                expire: values.expire,
+                number: values.number,
+            });
         };
 
         const onFinishFailed = (errorInfo) => {
@@ -400,7 +401,6 @@ const CondidateRegister = ({ examId, amaunt }) => {
 
     const CodeVerifyInfo = ({ user, onClose }) => {
         const [form] = Form.useForm();
-        const navigate = useNavigate();
         const downloadFunc = (id) => {
             const link = document.createElement("a");
             link.href = `${REACT_APP_BASE_URL}/api/candidate/ticket-file/${id}`;
@@ -410,28 +410,31 @@ const CondidateRegister = ({ examId, amaunt }) => {
             link.parentNode.removeChild(link);
         };
 
-        const onFinish = (values) => {
-            instance
-                .post(`${REACT_APP_BASE_URL}/api/payment/verifyCode`, {
-                    candidateId: user.id,
-                    examId: user.exam.id,
-                    code: values.code,
-                })
-                .then(function (data) {
-                    data.data.code === 230 && message.error(data.data.message);
-                    data?.data?.code === 200 &&
+        const createMutationVerify = useMutation(
+            (body) => createPaymentCodeVerify(body),
+            {
+                onSuccess: (data) => {
+                    data.code === 230 && message.error(data.data.message);
+                    data?.code === 200 &&
                         message.success("Abuturient muvaffaqiyatli qo'shildi");
-                    data?.data?.code === 200 && downloadFunc(user.id);
-                    data?.data?.code === 200 && onClose();
-                    data?.data?.code === 200 && setUser({});
-                    data?.data?.code === 200 && setCurrent(0);
-                })
-                .catch(function (error) {
+                    data?.code === 200 && downloadFunc(user.id);
+                    data?.code === 200 && onClose();
+                    data?.code === 200 && setUser({});
+                    data?.code === 200 && setCurrent(0);
+                },
+                onError: (error) => {
+                    message.error("To'lov qilishda xatolik bo'ldi ");
                     console.error(error);
-                    if (error.response?.status === 500)
-                        navigate("/server-error");
-                    message.error("Abuturient qo'shishda xatolik bo'ldi ");
-                });
+                },
+            }
+        );
+
+        const onFinish = (values) => {
+            createMutationVerify.mutate({
+                candidateId: user.id,
+                examId: user.exam.id,
+                code: values.code,
+            });
         };
 
         const onFinishFailed = (errorInfo) => {

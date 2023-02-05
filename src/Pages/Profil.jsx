@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import {
     Avatar,
     Button,
@@ -9,43 +10,36 @@ import {
     Typography,
 } from "antd";
 import { useNavigate } from "react-router-dom";
-import instance from "../Api/Axios";
-import { useAuth } from "../Hook/UseAuth";
+import { editUser } from "../Api/api";
+import { useAuthStore } from "../store/auth";
 const { Title } = Typography;
 
 const Profil = () => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
-    const { user } = useAuth();
+    const { user } = useAuthStore((state) => state);
+
+    const editUserMutation = useMutation((id, body) => editUser(id, body), {
+        onSuccess: (data) => {
+            data?.code === 211 && message.error(data?.message);
+            data?.code === 200 &&
+                message.success("Foydalanuvchi muvaffaqiyatli taxrirlandi");
+            data?.code === 200 && navigate("/profil");
+            data?.code === 200 && form.resetFields();
+        },
+        onError: (error) => {
+            message.error("Foydalanuvchini taxrirlashda muammo bo'ldi");
+            console.error(error);
+        },
+    });
 
     const formValidate = () => {
         form.validateFields()
             .then((values) => {
-                console.log(values);
-                instance
-                    .put(`/api/user/update/${user.id}`, {
-                        ...values,
-                        id: user.id,
-                    })
-                    .then(function (response) {
-                        response.data?.code === 211 &&
-                            message.error(response.data?.message);
-                        response.data?.code === 200 &&
-                            message.success(
-                                "Foydalanuvchi muvaffaqiyatli taxrirlandi"
-                            );
-                        response.data?.code === 200 &&
-                            (window.location.href = "/profil");
-                        response.data?.code === 200 && form.resetFields();
-                    })
-                    .catch(function (error) {
-                        console.error(error);
-                        if (error.response?.status === 500)
-                            navigate("/server-error");
-                        message.error(
-                            "Foydalanuvchini qo'shishda muammo bo'ldi"
-                        );
-                    });
+                editUserMutation.mutate(user.id, {
+                    ...values,
+                    id: user.id,
+                });
             })
             .catch((info) => {
                 console.error("Validate Failed:", info);

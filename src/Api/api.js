@@ -1,8 +1,10 @@
 import axios from "axios";
 import httpStatusCodes from "http-status-codes";
 import { useAuthStore } from "../store/auth";
-//keyin env fileni har doim gitignore tiqing security jihatdan maqullanadi
+
 const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
+const defaultToken =
+    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTk3Nzc2NjU1IiwidXNlcl9hdXRob3JpdGllcyI6IlVTRVIiLCJ1c2VyX2lkIjoyLCJ1c2VyX25hbWUiOiIrOTk4OTk3Nzc2NjU1IiwiaWF0IjoxNjc1NTM0NjUzLCJleHAiOjE2NzU1NzA2NTN9.FKvq3tOAQ6xMBsW0RYJveCBROwt65-jpQXxMMENUo-VgkNhra6UsizsytGHstqoGvCeXuVn16NGdd2wkBExbMA";
 
 const axiosInstance = axios.create({
     baseURL: REACT_APP_BASE_URL,
@@ -14,6 +16,8 @@ axiosInstance.interceptors.request.use((config) => {
 
     if (accessToken) {
         config.headers["Authorization"] = `Bearer ${accessToken}`;
+    } else {
+        config.headers["Authorization"] = `Bearer ${defaultToken}`;
     }
 
     return config;
@@ -31,19 +35,9 @@ axiosInstance.interceptors.response.use(
         ) {
             originalRequest.isRetry = true;
 
-            //global state managerdan ovolasiz shu yerda bu qism render bo'lishidan oldin ham shu yerda tuadi, bu yerda refresh token token yangilab olish keltirganman
-            const tokens = useAuthStore.getState().refreshToken;
-
-            //   const {
-            //     data: { accessToken, refreshToken },
-            //   } = await axios.ge(refresh, {
-            //     baseURL: BASE_URL,
-            //     headers: {
-            //       [HEADERS_NAMES.AUTHORIZATION]: `Bearer ${tokens.refreshToken}`,
-            //     },
-            //   })
-
-            //   saveTokens({ accessToken, refreshToken })
+            const tokens = useAuthStore.getState().token;
+            sessionStorage.removeItem("math-test-app", tokens);
+            useAuthStore.setState({ token: null, user: null });
 
             return await axiosInstance.request(originalRequest);
         }
@@ -59,3 +53,174 @@ export const loginRequest = async (body) => {
     return res.data;
 };
 
+export const getUser = async (token) => {
+    const res = await axios({
+        method: "post",
+        baseURL: `${REACT_APP_BASE_URL}`,
+        url: `/api/auth/whoAmI?token=${token}`,
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return res.data;
+};
+
+export const createUser = async (values) => {
+    const res = await axiosInstance.post("/api/user", values);
+    return res.data;
+};
+
+export const editUser = async (id, values) => {
+    const res = await axiosInstance.put(`/api/user/update/${id}`, values);
+    return res.data;
+};
+
+export const getExams = async (current, pageSize) => {
+    const res = await axiosInstance.get(
+        `/api/exam/list?page=${current}&size=${pageSize}`
+    );
+    return res.data;
+};
+
+export const createOrEditExams = async (values) => {
+    const res = await axiosInstance.post("/api/exam/createOrUpdate", values);
+    return res.data;
+};
+
+export const deleteExams = async (item) => {
+    const res = await axiosInstance.delete(`/api/exam/delete/${item}`);
+    return res.data;
+};
+
+export const getDistricts = async () => {
+    const res = await axiosInstance.get("/api/district/list");
+    return res.data;
+};
+
+export const createOrEditDistricts = async (values) => {
+    const res = await axiosInstance.post(
+        "/api/district/createOrUpdate",
+        values
+    );
+    return res.data;
+};
+
+export const deleteDistricts = async (item) => {
+    const res = await axiosInstance.delete(`/api/district/delete/${item}`);
+    return res.data;
+};
+
+export const getSubjects = async () => {
+    const res = await axiosInstance.get("/api/subject/list");
+    return res.data;
+};
+
+export const createOrEditSubjects = async (values) => {
+    const res = await axiosInstance.post("/api/subject/createOrUpdate", values);
+    return res.data;
+};
+
+export const deleteSubjects = async (item) => {
+    const res = await axiosInstance.delete(`/api/subject/delete/${item}`);
+    return res.data;
+};
+
+export const getTeachers = async (current, pageSize) => {
+    const res = await axiosInstance.get(
+        `/api/teacher/list?page=${current}&size=${pageSize}`
+    );
+    return res.data;
+};
+
+export const createTeachers = async (values) => {
+    const res = await axiosInstance.post("/api/teacher/create", values);
+    return res.data;
+};
+
+export const editTeachers = async (values) => {
+    const res = await axiosInstance.post(
+        `/api/teacher/update/${values.id}`,
+        values
+    );
+    return res.data;
+};
+
+export const deleteTeachers = async (item) => {
+    const res = await axiosInstance.delete(`/api/teacher/delete/${item}`);
+    return res.data;
+};
+
+export const getDirection = async (current, pageSize) => {
+    const res = await axiosInstance.get(
+        `/api/direction/list?page=${current}&size=${pageSize}`
+    );
+    return res.data;
+};
+
+export const createDirection = async (values) => {
+    const res = await axiosInstance.post("/api/direction/create", values);
+    return res.data;
+};
+
+export const editDirection = async (values) => {
+    const res = await axiosInstance.post(
+        `/api/direction/update/${values.id}`,
+        values
+    );
+    return res.data;
+};
+
+export const deleteDirection = async (item) => {
+    const res = await axiosInstance.delete(`/api/direction/delete/${item}`);
+    return res.data;
+};
+
+export const getContacts = async () => {
+    const res = await axiosInstance.get("/api/contact/list");
+    return res.data;
+};
+
+export const getContactMain = async () => {
+    const res = await axiosInstance.get("/api/contact/main-contact");
+    return res.data;
+};
+
+export const createContact = async (values) => {
+    const res = await axiosInstance.post("/api/contact/create", values);
+    return res.data;
+};
+
+export const editContact = async (values) => {
+    const res = await axiosInstance.post(
+        `/api/contact/update/${values.id}`,
+        values
+    );
+    return res.data;
+};
+
+export const deleteContact = async (item) => {
+    const res = await axiosInstance.delete(`/api/contact/${item}`);
+    return res.data;
+};
+
+export const getCondedate = async (examIdWith, current, pageSize) => {
+    const res = await axiosInstance.get(
+        `/api/candidate/list/${examIdWith}?page=${current}&size=${pageSize}`
+    );
+    return res.data;
+};
+
+export const createCondedate = async (values) => {
+    const res = await axiosInstance.post("/api/candidate/create", values);
+    return res.data;
+};
+
+export const createPayment = async (values) => {
+    const res = await axiosInstance.post("/api/payment/create", values);
+    return res.data;
+};
+
+export const createPaymentCodeVerify = async (values) => {
+    const res = await axiosInstance.post("/api/payment/verifyCode", values);
+    return res.data;
+};

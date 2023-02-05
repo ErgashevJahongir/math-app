@@ -120,6 +120,8 @@ const ShowContent = () => {
                                 variants={cardVariants}
                             >
                                 <img
+                                    loading="lazy"
+                                    decoding="async"
                                     src={rasm}
                                     alt="show content img, test exam"
                                 />

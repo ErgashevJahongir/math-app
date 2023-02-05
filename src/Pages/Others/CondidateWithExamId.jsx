@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { message } from "antd";
-import instance from "../../Api/Axios";
+import { createCondedate, getCondedate } from "../../Api/api";
 import CustomTable from "../../Module/Table/Table";
 import { useData } from "../../Hook/UseData";
 import moment from "moment";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const CondidateWithExamId = () => {
     const [pageData, setPageData] = useState({
@@ -16,61 +17,31 @@ const CondidateWithExamId = () => {
     });
     const { examsData } = useData();
     const { examIdWith } = useParams();
-    const navigate = useNavigate();
     const exam = examsData?.filter((item) => item?.id == examIdWith);
+    const { data, isLoading, refetch, isError } = useQuery(
+        ["exams", pageData],
+        () => getCondedate(examIdWith, pageData.current - 1, pageData.pageSize)
+    );
 
-    const getCondifateWithId = (current, pageSize) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
-        instance
-            .get(
-                `/api/candidate/list/${examIdWith}?page=${current}&size=${pageSize}`
-            )
-            .then((data) => {
-                console.log(data);
-                setPageData((prev) => ({
-                    ...prev,
-                    condidateWithExamId: data?.data?.data?.map((item) => ({
-                        ...item,
-                        subjectName: item?.exam?.subjectId?.name,
-                        subjectId: item?.exam?.subjectId?.id,
-                        directionId: item?.exam?.directionId?.id,
-                        directionName: item?.exam?.directionId?.name,
-                        participatedTime: moment(item?.participatedTime).format(
-                            "YYYY-MM-DD hh:mm"
-                        ),
-                    })),
-                }));
-                setPageData((prev) => ({
-                    ...prev,
-                    totalItems: data.data?.pageable?.count,
-                }));
-            })
-            .catch((error) => {
-                console.error(error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Abuturientlarni yuklashda muammo bo'ldi");
-            })
-            .finally(() =>
-                setPageData((prev) => ({ ...prev, loading: false }))
-            );
-    };
+    if (isError) {
+        message.error("Abuturientlarni yuklashda muammo bo'ldi");
+    }
+
+    const createMutation = useMutation((body) => createCondedate(body), {
+        onSuccess: (data) => {
+            data.code === 211 && message.error(data.message);
+            data.code === 200 &&
+                message.success("Abuturient muvaffaqiyatli qo'shildi");
+            refetch();
+        },
+        onError: (error) => {
+            message.error("Abuturientni qo'shishda muammo bo'ldi");
+            console.error(error);
+        },
+    });
 
     const onCreate = (values) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
-        instance
-            .post("/api/candidate/create", { ...values })
-            .then(function (response) {
-                message.success("Abuturient muvaffaqiyatli qo'shildi");
-                getCondifateWithId(pageData.current - 1, pageData.pageSize);
-            })
-            .catch(function (error) {
-                console.error(error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Abuturientni qo'shishda muammo bo'ldi");
-            })
-            .finally(() => {
-                setPageData((prev) => ({ ...prev, loading: false }));
-            });
+        createMutation.mutate({ ...values });
     };
 
     const columns = [
@@ -244,9 +215,9 @@ const CondidateWithExamId = () => {
             <CustomTable
                 columns={columns}
                 pageSizeOptions={[10, 20]}
-                getData={getCondifateWithId}
+                getData={refetch}
                 onCreate={onCreate}
-                totalItems={pageData.totalItems}
+                totalItems={data?.pageable?.count}
                 current={pageData.current}
                 pageSize={pageData.pageSize}
                 setCurrent={(newProp) =>
@@ -255,11 +226,17 @@ const CondidateWithExamId = () => {
                 setPageSize={(newProp) =>
                     setPageData((prev) => ({ ...prev, pageSize: newProp }))
                 }
-                tableData={pageData.condidateWithExamId}
-                loading={pageData.loading}
-                setLoading={(newProp) =>
-                    setPageData((prev) => ({ ...prev, loading: newProp }))
-                }
+                tableData={data?.data?.map((item) => ({
+                    ...item,
+                    subjectName: item?.exam?.subjectId?.name,
+                    subjectId: item?.exam?.subjectId?.id,
+                    directionId: item?.exam?.directionId?.id,
+                    directionName: item?.exam?.directionId?.name,
+                    participatedTime: moment(item?.participatedTime).format(
+                        "YYYY-MM-DD hh:mm"
+                    ),
+                }))}
+                loading={isLoading}
             />
         </div>
     );

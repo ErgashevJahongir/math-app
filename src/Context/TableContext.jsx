@@ -1,13 +1,13 @@
 import { Button, DatePicker, Input, InputNumber, Radio, Upload } from "antd";
-import { useToken } from "antd/es/theme";
 import moment from "moment";
 import { createContext, useState } from "react";
 import { useLocation } from "react-router-dom";
-import instance from "../Api/Axios";
+import axiosInstance from "../Api/api";
 import { useData } from "../Hook/UseData";
 import CustomMultiplateSelect from "../Module/Select/MultiplateSelect";
 import CustomSelect from "../Module/Select/Select";
 import { UploadOutlined } from "@ant-design/icons";
+import { useAuthStore } from "../store/auth";
 
 const disabledDate = (current) => {
     return current && current < moment().endOf("day");
@@ -24,7 +24,7 @@ export const TableProvider = ({ children }) => {
     const { subjectsData, districtsData, examsData, directionsData } =
         useData();
     let location = useLocation();
-    const { token } = useToken();
+    const { token } = useAuthStore((state) => state);
 
     const uploadImage = async (options) => {
         const { onSuccess, onError, file } = options;
@@ -38,11 +38,15 @@ export const TableProvider = ({ children }) => {
         };
         fmData.append("file", file);
         try {
-            const res = await instance.post("/api/file/upload", fmData, config);
+            const res = await axiosInstance.post(
+                "/api/file/upload",
+                fmData,
+                config
+            );
             console.log(res, file);
             res.data.code === 200 && onSuccess(res.data.data);
         } catch (err) {
-            console.log("Eroor: ", err);
+            console.error("Eroor: ", err);
             onError({ err });
         }
     };
@@ -53,15 +57,6 @@ export const TableProvider = ({ children }) => {
             label: "Tuman nomi",
             required: true,
             input: <Input placeholder="Tuman nomini kiriting" />,
-        },
-    ];
-
-    const questionsFormData = [
-        {
-            name: "text",
-            label: "Savolni kiriting",
-            required: true,
-            input: <Input.TextArea placeholder="Savolni kiriting" />,
         },
     ];
 
@@ -565,21 +560,6 @@ export const TableProvider = ({ children }) => {
                 timelyInfo: false,
                 editModalTitle: "Yo'nalish ma'lumotlarini o'zgartirish",
                 modalTitle: "Yo'nalish qo'shish",
-            };
-            break;
-        }
-        case "/others/questions": {
-            formData = {
-                formData: questionsFormData,
-                editFormData: questionsFormData,
-                branchData: false,
-                timeFilterInfo: false,
-                deleteInfo: true,
-                createInfo: true,
-                editInfo: true,
-                timelyInfo: false,
-                editModalTitle: "Savol ma'lumotlarini o'zgartirish",
-                modalTitle: "Savol qo'shish",
             };
             break;
         }

@@ -1,18 +1,17 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-//zustandda bu store yaratish example, bunda hech qanaqa provider qilib o'rab shart emas shunchaki atomik ishliydi hozirgi appga juda mos
 export const useAuthStore = create(
-    //persist faqat authda ishlating sababi bu yerda faqat shu holatda localstorage kerak
     persist(
         (set, get) => ({
             token: null,
-            refreshToken: null,
-            setToken: (token) => set({ token: token }),
+            user: null,
+            setUser: (user) => set((state) => ({ ...state, user: user })),
+            setToken: (token) => set((state) => ({ ...state, token: token })),
         }),
         {
-            name: "auth", //bu yerda localstorageda saqlanadigan keyi bu json qilib saqlaydi
+            name: "math-test-app",
+            storage: createJSONStorage(() => sessionStorage),
         }
     )
 );
-

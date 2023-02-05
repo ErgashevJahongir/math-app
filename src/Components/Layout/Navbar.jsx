@@ -15,9 +15,7 @@ import {
 } from "antd";
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import useToken from "../../Hook/UseToken";
 import DrapdownMenu from "./DrapdownMenu";
-import { useAuth } from "../../Hook/UseAuth";
 import { useTable } from "../../Hook/UseTable";
 import {
     DashboardOutlined,
@@ -32,7 +30,9 @@ import {
     UserAddOutlined,
 } from "@ant-design/icons";
 import logoSvg from "../../Assets/Images/logo-math.svg";
-import instance from "../../Api/Axios";
+import { createUser } from "../../Api/api";
+import { useAuthStore } from "../../store/auth";
+import { useMutation } from "@tanstack/react-query";
 
 const { Header } = Layout;
 
@@ -40,8 +40,7 @@ function Navbar() {
     const [isVisible, setIsVisible] = useState(false);
     const [visible, setVisible] = useState(false);
     const [form] = Form.useForm();
-    const { user, signOut } = useAuth();
-    const { token } = useToken();
+    const { user } = useAuthStore((state) => state);
     const { examIdWith } = useParams();
     const { setExamIdWithUrl } = useTable();
     const navigate = useNavigate();
@@ -50,11 +49,9 @@ function Navbar() {
     const handleLogOut = (e) => {
         e.preventDefault();
         if (sessionStorage.getItem("math-test-app"))
-            sessionStorage.removeItem("math-test-app", token);
-        if (sessionStorage.getItem("math-test-app")) {
-            sessionStorage.removeItem("math-test-app", token);
-        }
-        signOut(() => signOut(() => navigate("/", { replace: true })));
+            sessionStorage.removeItem("math-test-app");
+        useAuthStore.setState({ token: null, user: null });
+        navigate("/");
     };
 
     const onClickGoPage = (e) => {
@@ -73,29 +70,24 @@ function Navbar() {
         setIsVisible(false);
     };
 
+    const createUserMutation = useMutation((body) => createUser(body), {
+        onSuccess: (data) => {
+            data?.code === 211 && message.error(data?.message);
+            data?.code === 200 &&
+                message.success("Foydalanuvchi muvaffaqiyatli qo'shildi");
+            data?.code === 200 && setVisible(false);
+            data?.code === 200 && form.resetFields();
+        },
+        onError: (error) => {
+            message.error("Foydalanuvchini qo'shishda muammo bo'ldi");
+            console.error(error);
+        },
+    });
+
     const formValidate = () => {
         form.validateFields()
             .then((values) => {
-                instance
-                    .post("/api/user", { ...values })
-                    .then(function (response) {
-                        response.data?.code === 211 &&
-                            message.error(response.data?.message);
-                        response.data?.code === 200 &&
-                            message.success(
-                                "Foydalanuvchi muvaffaqiyatli qo'shildi"
-                            );
-                        response.data?.code === 200 && setVisible(false);
-                        response.data?.code === 200 && form.resetFields();
-                    })
-                    .catch(function (error) {
-                        console.error(error);
-                        if (error.response?.status === 500)
-                            navigate("/server-error");
-                        message.error(
-                            "Foydalanuvchini qo'shishda muammo bo'ldi"
-                        );
-                    });
+                createUserMutation.mutate({ ...values });
             })
             .catch((info) => {
                 console.error("Validate Failed:", info);
@@ -112,7 +104,7 @@ function Navbar() {
                     icon: <UserOutlined style={{ fontSize: "18px" }} />,
                 },
                 {
-                    key: "2",
+                    key: "/",
                     danger: true,
                     icon: <LogoutOutlined />,
                     label: (
@@ -156,7 +148,13 @@ function Navbar() {
                                 color: "#ff5722",
                             }}
                         >
-                            <img src={logoSvg} alt="logo" width={80} />
+                            <img
+                                loading="lazy"
+                                decoding="async"
+                                src={logoSvg}
+                                alt="logo"
+                                width={80}
+                            />
                         </h1>
                     </Link>
                 </div>
@@ -260,15 +258,6 @@ function Navbar() {
                                               />
                                           ),
                                       },
-                                      //   {
-                                      //       label: "Savollar",
-                                      //       key: "/others/questions",
-                                      //       icon: (
-                                      //           <UserOutlined
-                                      //               style={{ fontSize: "18px" }}
-                                      //           />
-                                      //       ),
-                                      //   },
                                       {
                                           label: "Kontakt ma'lumotlari",
                                           key: "/others/contacts",

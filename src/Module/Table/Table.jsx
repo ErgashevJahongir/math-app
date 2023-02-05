@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import moment from "moment";
 import { DatePicker, Table, Button, Input, Space, Select } from "antd";
 import Highlighter from "react-highlight-words";
@@ -80,10 +80,6 @@ const CustomTable = (props) => {
         setItemValue(value);
         getDataBranch(value, 0, pageSize);
     };
-
-    useEffect(() => {
-        getData(current - 1, pageSize);
-    }, []);
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();

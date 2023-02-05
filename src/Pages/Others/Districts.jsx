@@ -1,103 +1,84 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import instance from "../../Api/Axios";
+import {
+    createOrEditDistricts,
+    deleteDistricts,
+    getDistricts,
+} from "../../Api/api";
 import { message } from "antd";
 import CustomTable from "../../Module/Table/Table";
 import { useData } from "../../Hook/UseData";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const Districts = () => {
     const [pageData, setPageData] = useState({
-        districts: [],
-        loading: true,
         current: 1,
         pageSize: 10,
     });
     const { getDistrictsData } = useData();
-    const navigate = useNavigate();
+    const { data, isLoading, refetch, isError } = useQuery(
+        ["districts", pageData],
+        () => getDistricts()
+    );
 
-    const getDistricts = () => {
-        setPageData((prev) => ({ ...prev, loading: true }));
-        instance
-            .get("/api/district/list")
-            .then((data) => {
-                setPageData((prev) => ({
-                    ...prev,
-                    districts: data.data?.data,
-                }));
-                getDistrictsData();
-            })
-            .catch((error) => {
-                console.error(error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Tumanlarni yuklashda muammo bo'ldi");
-            })
-            .finally(() =>
-                setPageData((prev) => ({ ...prev, loading: false }))
-            );
-    };
+    if (isError) {
+        message.error("Tumanlarni yuklashda muammo bo'ldi");
+    }
+
+    const createMutation = useMutation((body) => createOrEditDistricts(body), {
+        onSuccess: (data) => {
+            data?.code === 211 && message.error(data?.message);
+            data?.code === 200 &&
+                message.success("Tuman muvaffaqiyatli qo'shildi");
+            refetch();
+            getDistrictsData();
+        },
+        onError: (error) => {
+            message.error("Tumanni qo'shishda muammo bo'ldi");
+            console.error(error);
+        },
+    });
 
     const onCreate = (values) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
-        instance
-            .post("/api/district/createOrUpdate", { ...values })
-            .then(function (response) {
-                response.data?.code === 211 &&
-                    message.error(response.data?.message);
-                response.data?.code === 200 &&
-                    message.success("Tuman muvaffaqiyatli qo'shildi");
-                getDistricts(pageData.current - 1, pageData.pageSize);
-            })
-            .catch(function (error) {
-                console.error(error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Tumanni qo'shishda muammo bo'ldi");
-            })
-            .finally(() => {
-                setPageData((prev) => ({ ...prev, loading: false }));
-            });
+        createMutation.mutate({ ...values });
     };
+
+    const editMutation = useMutation((body) => createOrEditDistricts(body), {
+        onSuccess: (data) => {
+            data.code === 211 && message.error(data?.message);
+            data.code === 200 &&
+                message.success("Tuman muvaffaqiyatli taxrirlandi");
+            refetch();
+            getDistrictsData();
+        },
+        onError: (error) => {
+            message.error("Tumanni taxrirlashda muammo bo'ldi");
+            console.error(error);
+        },
+    });
 
     const onEdit = (values, initial) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
-        instance
-            .post(`/api/district/createOrUpdate`, {
-                ...values,
-                id: initial.id,
-            })
-            .then((res) => {
-                res.data.code === 211 && message.error(res.data?.message);
-                res.data.code === 200 &&
-                    message.success("Tuman muvaffaqiyatli taxrirlandi");
-                getDistricts(pageData.current - 1, pageData.pageSize);
-            })
-            .catch(function (error) {
-                console.error("Error in edit: ", error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Tumanni taxrirlashda muammo bo'ldi");
-            })
-            .finally(() => {
-                setPageData((prev) => ({ ...prev, loading: false }));
-            });
+        editMutation.mutate({
+            ...values,
+            id: initial.id,
+        });
     };
 
+    const deleteMutation = useMutation((body) => deleteDistricts(body), {
+        onSuccess: (data) => {
+            data.code === 200 &&
+                message.success("Tuman muvaffaqiyatli o'chirildi");
+            refetch();
+            getDistrictsData();
+        },
+        onError: (error) => {
+            message.error("Tumanni o'chirishda muammo bo'ldi");
+            console.error(error);
+        },
+    });
+
     const handleDelete = (arr) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
         arr.map((item) => {
-            instance
-                .delete(`/api/district/delete/${item}`)
-                .then((data) => {
-                    getDistricts(pageData.current - 1, pageData.pageSize);
-                    message.success("Tuman muvaffaqiyatli o'chirildi");
-                })
-                .catch((error) => {
-                    console.error(error);
-                    if (error.response?.status === 500)
-                        navigate("/server-error");
-                    message.error("Tumanni o'chirishda muammo bo'ldi");
-                })
-                .finally(() =>
-                    setPageData((prev) => ({ ...prev, loading: false }))
-                );
+            deleteMutation.mutate(item);
             return null;
         });
     };
@@ -127,7 +108,7 @@ const Districts = () => {
             <CustomTable
                 columns={columns}
                 pageSizeOptions={[10, 20]}
-                getData={getDistricts}
+                getData={refetch}
                 onDelete={handleDelete}
                 onCreate={onCreate}
                 onEdit={onEdit}
@@ -139,11 +120,8 @@ const Districts = () => {
                 setPageSize={(newProp) =>
                     setPageData((prev) => ({ ...prev, pageSize: newProp }))
                 }
-                tableData={pageData.districts}
-                loading={pageData.loading}
-                setLoading={(newProp) =>
-                    setPageData((prev) => ({ ...prev, loading: newProp }))
-                }
+                tableData={data?.data}
+                loading={isLoading}
             />
         </div>
     );

@@ -89,6 +89,8 @@ const PaymentType = () => {
                                             <br />
                                         </div>
                                         <img
+                                            loading="lazy"
+                                            decoding="async"
                                             src={payme}
                                             alt="payme icon"
                                             width={130}
@@ -126,6 +128,8 @@ const PaymentType = () => {
                             >
                                 <div>
                                     <img
+                                        loading="lazy"
+                                        decoding="async"
                                         src={center}
                                         alt="payment yo'lov usuli haqida"
                                     />

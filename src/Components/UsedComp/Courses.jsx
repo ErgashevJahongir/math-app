@@ -80,6 +80,8 @@ const Courses = () => {
                                             transition={{ duration: 0.2 }}
                                         >
                                             <img
+                                                loading="lazy"
+                                                decoding="async"
                                                 src={`${REACT_APP_BASE_URL}/api/file/downloadFile?fileName=${item?.photoPath}`}
                                                 alt={item.name}
                                                 style={{

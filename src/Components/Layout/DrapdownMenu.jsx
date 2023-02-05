@@ -10,23 +10,19 @@ import {
     ProfileOutlined,
     OrderedListOutlined,
 } from "@ant-design/icons";
-import useToken from "../../Hook/UseToken";
-import { useAuth } from "../../Hook/UseAuth";
+import { useAuthStore } from "../../store/auth";
 
 function DrapdownMenu({ onClose, isVisible }) {
-    const { token } = useToken();
     const navigate = useNavigate();
-    const { user, signOut } = useAuth();
+    const { user } = useAuthStore((state) => state);
     const location = useLocation();
 
     const handleLogOut = (e) => {
         e.preventDefault();
         if (sessionStorage.getItem("math-test-app"))
-            sessionStorage.removeItem("math-test-app", token);
-        if (sessionStorage.getItem("math-test-app")) {
-            sessionStorage.removeItem("math-test-app", token);
-        }
-        signOut(() => signOut(() => navigate("/", { replace: true })));
+            sessionStorage.removeItem("math-test-app");
+        useAuthStore.setState({ token: null, user: null });
+        navigate("/");
     };
 
     const onClickGoPage = (e) => {
@@ -137,15 +133,6 @@ function DrapdownMenu({ onClose, isVisible }) {
                                   {
                                       label: "Qatnashchilar",
                                       key: "/others/candidate",
-                                      icon: (
-                                          <UserOutlined
-                                              style={{ fontSize: "18px" }}
-                                          />
-                                      ),
-                                  },
-                                  {
-                                      label: "Savollar",
-                                      key: "/others/questions",
                                       icon: (
                                           <UserOutlined
                                               style={{ fontSize: "18px" }}

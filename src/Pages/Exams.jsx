@@ -63,6 +63,8 @@ const Exams = () => {
                                     >
                                         <div className="examCard">
                                             <img
+                                                loading="lazy"
+                                                decoding="async"
                                                 src={
                                                     key % 2 === 1 ? rfiki : pana
                                                 }

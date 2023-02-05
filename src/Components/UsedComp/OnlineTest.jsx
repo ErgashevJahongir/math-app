@@ -1,27 +1,7 @@
 import { Button, Col, Row } from "antd";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import exam1 from "../../Assets/Images/Exams-1.svg";
-import exam2 from "../../Assets/Images/Exams-2.svg";
 import exam3 from "../../Assets/Images/Exams-3.svg";
-
-const cardVariants = {
-    offscreen: {
-        opacity: 0,
-        scale: 0.8,
-        x: -200,
-    },
-    onscreen: {
-        opacity: 1,
-        scale: 1,
-        x: 0,
-        transition: {
-            type: "spring",
-            bounce: 0.4,
-            duration: 2,
-        },
-    },
-};
 
 const cardVariants2 = {
     offscreen: {
@@ -166,6 +146,8 @@ const OnlineTest = () => {
                             >
                                 <div>
                                     <img
+                                        loading="lazy"
+                                        decoding="async"
                                         src={exam3}
                                         alt="payment yo'lov usuli haqida"
                                     />
@@ -174,161 +156,6 @@ const OnlineTest = () => {
                         </motion.div>
                     </Col>
                 </Row>
-                {/* <Row gutter={30}>
-                    <Col xs={24} sm={12} md={12} lg={8} xl={8}>
-                        <motion.div
-                            className="card-container"
-                            initial="offscreen"
-                            whileInView="onscreen"
-                            viewport={{ once: true, amount: 0.8 }}
-                        >
-                            <motion.div
-                                className="card"
-                                variants={cardVariants}
-                                transition={{ duration: 0.2 }}
-                            >
-                                <img
-                                    src={exam1}
-                                    alt="Fanlar bo‘yicha testlar"
-                                    style={{
-                                        display: "inline-block",
-                                        width: 300,
-                                        height: 300,
-                                        marginBottom: 5,
-                                    }}
-                                />
-                                <h3 className="itemTitleH3">
-                                    Fanlar bo‘yicha testlar
-                                </h3>
-                                <p
-                                    style={{
-                                        lineHeight: 1.5,
-                                        fontSize: 16,
-                                        color: "rgb(49, 70, 89)",
-                                        marginBottom: 15,
-                                    }}
-                                >
-                                    “Fanlar bo‘yicha testlar” opsiyasida
-                                    tanlangan fan bo‘yicha 30ta test savoli
-                                    taqdim etiladi
-                                </p>
-                                <Button
-                                    style={{
-                                        backgroundColor: "rgb(43,83,144)",
-                                        color: "#fff",
-                                        padding: "6px 40px",
-                                        height: 40,
-                                    }}
-                                    onClick={() => navigate("/exams")}
-                                >
-                                    Ro'yxatdan o'tish
-                                </Button>
-                            </motion.div>
-                        </motion.div>
-                    </Col>
-                    <Col xs={24} sm={12} md={12} lg={8} xl={8}>
-                        <motion.div
-                            className="card-container"
-                            initial="offscreen"
-                            whileInView="onscreen"
-                            viewport={{ once: true, amount: 0.8 }}
-                        >
-                            <motion.div
-                                className="card"
-                                variants={cardVariants}
-                                transition={{ duration: 0.2 }}
-                            >
-                                <img
-                                    src={exam2}
-                                    alt="Mavzulashtirilgan testlar"
-                                    style={{
-                                        display: "inline-block",
-                                        width: 300,
-                                        height: 300,
-                                        marginBottom: 5,
-                                    }}
-                                />
-                                <h3 className="itemTitleH3">
-                                    Mavzulashtirilgan testlar
-                                </h3>
-                                <p
-                                    style={{
-                                        lineHeight: 1.5,
-                                        fontSize: 16,
-                                        color: "rgb(49, 70, 89)",
-                                        marginBottom: 15,
-                                    }}
-                                >
-                                    “Mavzulashtirilgan testlar” opsiyasida
-                                    tegishlida fandagi tanlangan mavzu bo‘yicha
-                                    test savollari taqdim etiladi
-                                </p>
-                                <Button
-                                    style={{
-                                        backgroundColor: "rgb(43,83,144)",
-                                        color: "#fff",
-                                        padding: "6px 40px",
-                                        height: 40,
-                                    }}
-                                    onClick={() => navigate("/exams")}
-                                >
-                                    Ro'yxatdan o'tish
-                                </Button>
-                            </motion.div>
-                        </motion.div>
-                    </Col>
-                    <Col xs={24} sm={12} md={12} lg={8} xl={8}>
-                        <motion.div
-                            className="card-container"
-                            initial="offscreen"
-                            whileInView="onscreen"
-                            viewport={{ once: true, amount: 0.8 }}
-                        >
-                            <motion.div
-                                className="card"
-                                variants={cardVariants}
-                                transition={{ duration: 0.2 }}
-                            >
-                                <img
-                                    src={exam3}
-                                    alt="Sinov imtihonini topshirish"
-                                    style={{
-                                        display: "inline-block",
-                                        width: 300,
-                                        height: 300,
-                                        marginBottom: 5,
-                                    }}
-                                />
-                                <h3 className="itemTitleH3">
-                                    Sinov imtihonini topshirish
-                                </h3>
-                                <p
-                                    style={{
-                                        lineHeight: 1.5,
-                                        fontSize: 16,
-                                        color: "rgb(49, 70, 89)",
-                                        marginBottom: 15,
-                                    }}
-                                >
-                                    “Sinov imtihoni” opsiyasida 5ta fan bo‘yicha
-                                    DTM standartiga mos 105ta test savollari
-                                    taqdim etiladi
-                                </p>
-                                <Button
-                                    style={{
-                                        backgroundColor: "rgb(43,83,144)",
-                                        color: "#fff",
-                                        padding: "6px 40px",
-                                        height: 40,
-                                    }}
-                                    onClick={() => navigate("/exams")}
-                                >
-                                    Ro'yxatdan o'tish
-                                </Button>
-                            </motion.div>
-                        </motion.div>
-                    </Col>
-                </Row> */}
             </div>
         </div>
     );

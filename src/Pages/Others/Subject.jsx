@@ -1,109 +1,89 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import instance from "../../Api/Axios";
+import {
+    createOrEditSubjects,
+    deleteSubjects,
+    getSubjects,
+} from "../../Api/api";
 import { message } from "antd";
 import CustomTable from "../../Module/Table/Table";
 import { useData } from "../../Hook/UseData";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Subjects = () => {
     const [pageData, setPageData] = useState({
-        subjects: [],
-        loading: true,
         current: 1,
         pageSize: 10,
-        totalItems: 1,
     });
     const { getSubjectsData } = useData();
-    const navigate = useNavigate();
+    const { data, isLoading, refetch, isError } = useQuery(
+        ["subjects", pageData],
+        () => getSubjects()
+    );
 
-    const getSubjects = () => {
-        setPageData((prev) => ({ ...prev, loading: true }));
-        instance
-            .get("/api/subject/list")
-            .then((data) => {
-                setPageData((prev) => ({
-                    ...prev,
-                    subjects: data.data?.data,
-                }));
-                getSubjectsData();
-            })
-            .catch((error) => {
-                console.error(error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Fanlarni yuklashda muammo bo'ldi");
-            })
-            .finally(() =>
-                setPageData((prev) => ({ ...prev, loading: false }))
-            );
-    };
+    if (isError) {
+        message.error("Fanlarni yuklashda muammo bo'ldi");
+    }
+
+    const createMutation = useMutation((body) => createOrEditSubjects(body), {
+        onSuccess: (data) => {
+            data?.code === 211 && message.error(data?.message);
+            data?.code === 200 &&
+                message.success("Fan muvaffaqiyatli qo'shildi");
+            refetch();
+            getSubjectsData();
+        },
+        onError: (error) => {
+            message.error("Fanni qo'shishda muammo bo'ldi");
+            console.error(error);
+        },
+    });
 
     const onCreate = (values) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
         const photoPath = values?.photoPath?.file?.name;
-        instance
-            .post("/api/subject/createOrUpdate", { ...values, photoPath })
-            .then(function (response) {
-                response.data?.code === 211 &&
-                    message.error(response.data?.message);
-                response.data?.code === 200 &&
-                    message.success("Fan muvaffaqiyatli qo'shildi");
-                getSubjects(pageData.current - 1, pageData.pageSize);
-            })
-            .catch(function (error) {
-                console.error(error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Fanni qo'shishda muammo bo'ldi");
-            })
-            .finally(() => {
-                setPageData((prev) => ({ ...prev, loading: false }));
-            });
+        createMutation.mutate({ ...values, photoPath });
     };
+
+    const editMutation = useMutation((body) => createOrEditSubjects(body), {
+        onSuccess: (data) => {
+            data?.code === 211 && message.error(data?.message);
+            data?.code === 200 &&
+                message.success("Fan muvaffaqiyatli taxrirlandi");
+            refetch();
+            getSubjectsData();
+        },
+        onError: (error) => {
+            message.error("Fanni taxrirlashda muammo bo'ldi");
+            console.error(error);
+        },
+    });
 
     const onEdit = (values, initial) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
         const photoPath = values?.photoPath?.file?.name;
-        instance
-            .post("/api/subject/createOrUpdate", {
-                ...values,
-                id: initial.id,
-                photoPath,
-            })
-            .then((res) => {
-                res.data?.code === 211 && message.error(res.data?.message);
-                res.data?.code === 200 &&
-                    message.success("Fan muvaffaqiyatli taxrirlandi");
-                getSubjects(pageData.current - 1, pageData.pageSize);
-            })
-            .catch(function (error) {
-                console.error("Error in edit: ", error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Fanni taxrirlashda muammo bo'ldi");
-            })
-            .finally(() => {
-                setPageData((prev) => ({ ...prev, loading: false }));
-            });
+        editMutation.mutate({
+            ...values,
+            id: initial.id,
+            photoPath,
+        });
     };
 
+    const deleteMutation = useMutation((body) => deleteSubjects(body), {
+        onSuccess: (data) => {
+            data.code === 200 &&
+                message.success("Fan muvaffaqiyatli o'chirildi");
+            refetch();
+            getSubjectsData();
+        },
+        onError: (error) => {
+            message.error("Fanni o'chirishda muammo bo'ldi");
+            console.error(error);
+        },
+    });
+
     const handleDelete = (arr) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
         arr.map((item) => {
-            instance
-                .delete(`/api/subject/delete/${item}`)
-                .then((data) => {
-                    getSubjects(pageData.current - 1, pageData.pageSize);
-                    message.success("Fan muvaffaqiyatli o'chirildi");
-                })
-                .catch((error) => {
-                    console.error(error);
-                    if (error.response?.status === 500)
-                        navigate("/server-error");
-                    message.error("Fanni o'chirishda muammo bo'ldi");
-                })
-                .finally(() =>
-                    setPageData((prev) => ({ ...prev, loading: false }))
-                );
+            deleteMutation.mutate(item);
             return null;
         });
     };
@@ -118,6 +98,8 @@ const Subjects = () => {
             render: (initial) => {
                 return (
                     <img
+                        loading="lazy"
+                        decoding="async"
                         src={`${REACT_APP_BASE_URL}/api/file/downloadFile?fileName=${initial}`}
                         alt={initial}
                         width={100}
@@ -149,7 +131,7 @@ const Subjects = () => {
             <CustomTable
                 columns={columns}
                 pageSizeOptions={[10, 20]}
-                getData={getSubjects}
+                getData={refetch}
                 onDelete={handleDelete}
                 onCreate={onCreate}
                 onEdit={onEdit}
@@ -161,11 +143,8 @@ const Subjects = () => {
                 setPageSize={(newProp) =>
                     setPageData((prev) => ({ ...prev, pageSize: newProp }))
                 }
-                tableData={pageData.subjects}
-                loading={pageData.loading}
-                setLoading={(newProp) =>
-                    setPageData((prev) => ({ ...prev, loading: newProp }))
-                }
+                tableData={data?.data}
+                loading={isLoading}
             />
         </div>
     );

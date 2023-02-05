@@ -1,27 +1,22 @@
 import { Col, Row } from "antd";
 import SocialsAndSubscribe from "./SocialsAndSubscribe";
 import logoSvg from "../../Assets/Images/logo-math.svg";
-import "./Contact.css";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import Particles from "react-particles";
 import { loadFull } from "tsparticles";
-import instance from "../../Api/Axios";
+import { getContactMain } from "../../Api/api";
+import { useQuery } from "@tanstack/react-query";
+import "./Contact.css";
 
 const AppDir = () => {
     const particlesInit = useCallback(async (engine) => {
-        console.log(engine);
         await loadFull(engine);
-    }, []);
-
-    const particlesLoaded = useCallback(async (container) => {
-        await console.log(container);
     }, []);
 
     return (
         <Particles
             id="tsparticles"
             init={particlesInit}
-            loaded={particlesLoaded}
             height="100px"
             options={{
                 fullScreen: {
@@ -98,20 +93,8 @@ const AppDir = () => {
 };
 
 const Contacts = () => {
-    const [contact, setContact] = useState();
-    const getContacts = () => {
-        instance
-            .get("/api/contact/main-contact")
-            .then((data) => {
-                setContact(data.data.data);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    };
-    useEffect(() => {
-        getContacts();
-    }, []);
+    const { data } = useQuery(["mainContact"], () => getContactMain());
+    const contact = data?.data;
 
     return (
         <section className="contact" id="contact">
@@ -119,6 +102,8 @@ const Contacts = () => {
             <div className="container">
                 <h2>Biz bilan bog'lanish</h2>
                 <img
+                    loading="lazy"
+                    decoding="async"
                     src={logoSvg}
                     alt="logo Qorako'l Navoiy o'quv markazi"
                     width={250}

@@ -6,7 +6,13 @@ import "./error404.css";
 const Error500 = () => {
     return (
         <section className="page-not-found">
-            <img className="error500" src={rasm} alt="404 page" />
+            <img
+                loading="lazy"
+                decoding="async"
+                className="error500"
+                src={rasm}
+                alt="404 page"
+            />
             <h1>Serverda muammo bo'ldi</h1>
             <p>
                 Kechirasiz serverda muammo topildi!{" "}

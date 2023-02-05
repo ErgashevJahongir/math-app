@@ -1,81 +1,63 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import instance from "../../Api/Axios";
+import {
+    createDirection,
+    deleteDirection,
+    editDirection,
+    getDirection,
+} from "../../Api/api";
 import { message } from "antd";
 import CustomTable from "../../Module/Table/Table";
 import { useData } from "../../Hook/UseData";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const Direction = () => {
     const [pageData, setPageData] = useState({
-        direction: [],
-        loading: true,
         current: 1,
         pageSize: 10,
-        totalItems: 1,
     });
     const { getDirectionData } = useData();
-    const navigate = useNavigate();
+    const { data, isLoading, refetch, isError } = useQuery(
+        ["directions", pageData],
+        () => getDirection(pageData.current - 1, pageData.pageSize)
+    );
 
-    const getDirection = (current, pageSize) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
-        instance
-            .get(`/api/direction/list?page=${current}&size=${pageSize}`)
-            .then((data) => {
-                setPageData((prev) => ({
-                    ...prev,
-                    direction: data.data?.data.map((item) => {
-                        const subject = item.subjectList.map(
-                            (qism) => `${qism.name}, `
-                        );
-                        return {
-                            ...item,
-                            subject: subject,
-                            addSubjectList: item.subjectList.map(
-                                (qism) => qism.id
-                            ),
-                        };
-                    }),
-                }));
-                getDirectionData();
-                setPageData((prev) => ({
-                    ...prev,
-                    totalItems: data.data?.pageable?.count,
-                }));
-            })
-            .catch((error) => {
-                console.error(error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Yo'nalishlarni yuklashda muammo bo'ldi");
-            })
-            .finally(() =>
-                setPageData((prev) => ({ ...prev, loading: false }))
-            );
-    };
+    if (isError) {
+        message.error("Yo'nalishlarni yuklashda muammo bo'ldi");
+    }
+
+    const createMutation = useMutation((body) => createDirection(body), {
+        onSuccess: (data) => {
+            data?.code === 211 && message.error(data?.message);
+            data?.code === 200 &&
+                message.success("Yo'nalish muvaffaqiyatli qo'shildi");
+            refetch();
+            getDirectionData();
+        },
+        onError: (error) => {
+            message.error("Yo'nalishni qo'shishda muammo bo'ldi");
+            console.error(error);
+        },
+    });
 
     const onCreate = (values) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
-        instance
-            .post("/api/direction/create", { ...values })
-            .then(function (response) {
-                response.data?.code === 211 &&
-                    message.error(response.data?.message);
-                response.data?.code === 200 &&
-                    message.success("Yo'nalish muvaffaqiyatli qo'shildi");
-                getDirection(pageData.current - 1, pageData.pageSize);
-            })
-            .catch(function (error) {
-                console.error(error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Yo'nalishni qo'shishda muammo bo'ldi");
-            })
-            .finally(() => {
-                setPageData((prev) => ({ ...prev, loading: false }));
-            });
+        createMutation.mutate({ ...values });
     };
 
+    const editMutation = useMutation((body) => editDirection(body), {
+        onSuccess: (data) => {
+            data.code === 211 && message.error(data?.message);
+            data.code === 200 &&
+                message.success("Yo'nalish muvaffaqiyatli taxrirlandi");
+            refetch();
+            getDirectionData();
+        },
+        onError: (error) => {
+            message.error("Yo'nalishni taxrirlashda muammo bo'ldi");
+            console.error(error);
+        },
+    });
+
     const onEdit = (values, initial) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
-        console.log(values, initial);
         const addSubjectList = values?.addSubjectList?.filter(
             (item) => !initial?.addSubjectList?.includes(item)
         );
@@ -85,48 +67,30 @@ const Direction = () => {
         const removeSubjectList = initial?.addSubjectList?.filter(
             (item) => !removeSubjectList1?.includes(item)
         );
-
-        console.log(addSubjectList, removeSubjectList);
-        instance
-            .post(`/api/direction/update/${initial.id}`, {
-                ...values,
-                addSubjectList: addSubjectList,
-                removeSubjectList: removeSubjectList,
-            })
-            .then((res) => {
-                res.data.code === 211 && message.error(res.data?.message);
-                res.data.code === 200 &&
-                    message.success("Yo'nalish muvaffaqiyatli taxrirlandi");
-                getDirection(pageData.current - 1, pageData.pageSize);
-            })
-            .catch(function (error) {
-                console.error("Error in edit: ", error);
-                if (error.response?.status === 500) navigate("/server-error");
-                message.error("Yo'nalishni taxrirlashda muammo bo'ldi");
-            })
-            .finally(() => {
-                setPageData((prev) => ({ ...prev, loading: false }));
-            });
+        editMutation.mutate({
+            ...values,
+            id: initial.id,
+            addSubjectList: addSubjectList,
+            removeSubjectList: removeSubjectList,
+        });
     };
 
+    const deleteMutation = useMutation((body) => deleteDirection(body), {
+        onSuccess: (data) => {
+            data.code === 200 &&
+                message.success("Yo'nalish muvaffaqiyatli o'chirildi");
+            refetch();
+            getDirectionData();
+        },
+        onError: (error) => {
+            message.error("Yo'nalishni o'chirishda muammo bo'ldi");
+            console.error(error);
+        },
+    });
+
     const handleDelete = (arr) => {
-        setPageData((prev) => ({ ...prev, loading: true }));
         arr.map((item) => {
-            instance
-                .delete(`/api/direction/delete/${item}`)
-                .then((data) => {
-                    getDirection(pageData.current - 1, pageData.pageSize);
-                    message.success("Yo'nalish muvaffaqiyatli o'chirildi");
-                })
-                .catch((error) => {
-                    console.error(error);
-                    if (error.response?.status === 500)
-                        navigate("/server-error");
-                    message.error("Yo'nalishni o'chirishda muammo bo'ldi");
-                })
-                .finally(() =>
-                    setPageData((prev) => ({ ...prev, loading: false }))
-                );
+            deleteMutation.mutate(item);
             return null;
         });
     };
@@ -163,11 +127,11 @@ const Direction = () => {
             <CustomTable
                 columns={columns}
                 pageSizeOptions={[10, 20]}
-                getData={getDirection}
+                getData={refetch}
                 onDelete={handleDelete}
                 onCreate={onCreate}
                 onEdit={onEdit}
-                totalItems={pageData.totalItems}
+                totalItems={data?.pageable?.count}
                 current={pageData.current}
                 pageSize={pageData.pageSize}
                 setCurrent={(newProp) =>
@@ -176,11 +140,17 @@ const Direction = () => {
                 setPageSize={(newProp) =>
                     setPageData((prev) => ({ ...prev, pageSize: newProp }))
                 }
-                tableData={pageData.direction}
-                loading={pageData.loading}
-                setLoading={(newProp) =>
-                    setPageData((prev) => ({ ...prev, loading: newProp }))
-                }
+                tableData={data?.data.map((item) => {
+                    const subject = item.subjectList.map(
+                        (qism) => `${qism.name}, `
+                    );
+                    return {
+                        ...item,
+                        subject: subject,
+                        addSubjectList: item.subjectList.map((qism) => qism.id),
+                    };
+                })}
+                loading={isLoading}
             />
         </div>
     );

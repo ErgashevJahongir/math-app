@@ -96,6 +96,8 @@ const About = () => {
                             >
                                 <div>
                                     <img
+                                        loading="lazy"
+                                        decoding="async"
                                         src={center}
                                         alt="education center img"
                                     />
