@@ -67,7 +67,9 @@ picture,
 video,
 canvas,
 svg {
-    max-width: 100%;
+    max-inline-size: 100%;
+    block-size: auto;
+    inline-size: 100%;
 }
 
 p,
@@ -152,6 +154,14 @@ li {
     margin-bottom: 50px;
 }
 
+.example img {
+    width: 120px;
+}
+
+.logo img {
+    width: 80px;
+}
+
 .ant-modal.seenCont .ant-modal-content {
     padding: 10px 16px;
 }
@@ -226,24 +236,6 @@ li {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.Typewriter__wrapper {
-    font-size: 32px;
-    font-weight: 600;
-    color: #0c0d24;
-    line-height: 1.5;
-    margin-bottom: 30px;
-}
-
-.taklif-heading {
-    margin-bottom: 50px;
-}
-
-.Typewriter__cursor {
-    font-size: 32px;
-    line-height: 1.2;
-    vertical-align: text-bottom;
 }
 
 .examCard {

@@ -551,7 +551,7 @@ const CondidateRegister = ({ examId, amaunt }) => {
         },
     ];
 
-    const items = stepsCont.map((item) => ({
+    const items = stepsCont?.map((item) => ({
         key: item.title,
         title: item.title,
         description: item.description,

@@ -85,7 +85,7 @@ const TeachersCompo = () => {
     });
 
     const handleDelete = (arr) => {
-        arr.map((item) => {
+        arr?.map((item) => {
             deleteMutation.mutate(item);
             return null;
         });
@@ -148,7 +148,7 @@ const TeachersCompo = () => {
                 setPageSize={(newProp) =>
                     setPageData((prev) => ({ ...prev, pageSize: newProp }))
                 }
-                tableData={data?.data.map((item) => {
+                tableData={data?.data?.map((item) => {
                     return {
                         ...item,
                         subjectId: item?.subjectId?.id,

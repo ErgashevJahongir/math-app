@@ -76,7 +76,7 @@ const ContactsComp = () => {
     });
 
     const handleDelete = (arr) => {
-        arr.map((item) => {
+        arr?.map((item) => {
             deleteMutation.mutate(item);
             return null;
         });

@@ -153,7 +153,8 @@ function Navbar() {
                                 decoding="async"
                                 src={logoSvg}
                                 alt="logo"
-                                width={80}
+                                width="80px"
+                                height="60px"
                             />
                         </h1>
                     </Link>

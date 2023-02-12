@@ -9,6 +9,7 @@ const Loading = () => (
             src={logoSvg}
             alt="logo Qorako'l Navoiy o'quv markazi"
             width={120}
+            height={90}
             style={{ marginBottom: 15 }}
         />
         <Spin size="large" />

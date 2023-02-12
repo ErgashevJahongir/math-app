@@ -89,7 +89,7 @@ const Direction = () => {
     });
 
     const handleDelete = (arr) => {
-        arr.map((item) => {
+        arr?.map((item) => {
             deleteMutation.mutate(item);
             return null;
         });
@@ -140,14 +140,16 @@ const Direction = () => {
                 setPageSize={(newProp) =>
                     setPageData((prev) => ({ ...prev, pageSize: newProp }))
                 }
-                tableData={data?.data.map((item) => {
-                    const subject = item.subjectList.map(
+                tableData={data?.data?.map((item) => {
+                    const subject = item.subjectList?.map(
                         (qism) => `${qism.name}, `
                     );
                     return {
                         ...item,
                         subject: subject,
-                        addSubjectList: item.subjectList.map((qism) => qism.id),
+                        addSubjectList: item.subjectList?.map(
+                            (qism) => qism.id
+                        ),
                     };
                 })}
                 loading={isLoading}

@@ -94,10 +94,12 @@ const PaymentType = () => {
                                             src={payme}
                                             alt="payme icon"
                                             width={130}
+                                            height={80}
                                             style={{
                                                 padding: "6px 10px 5px",
                                                 borderRadius: 5,
                                                 backgroundColor: "#eee",
+                                                width: 130,
                                             }}
                                         />
                                     </div>

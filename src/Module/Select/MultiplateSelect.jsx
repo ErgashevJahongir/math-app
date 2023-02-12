@@ -9,7 +9,7 @@ const CustomMultiplateSelect = ({
     placeholder = "Tanlang",
     disabled = false,
 }) => {
-    const options = selectData.map((item) => (
+    const options = selectData?.map((item) => (
         <Option value={backValue === "id" ? item.id : item.name} key={item.id}>
             {item.name}
         </Option>

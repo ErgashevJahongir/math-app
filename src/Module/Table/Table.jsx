@@ -171,12 +171,12 @@ const CustomTable = (props) => {
         onChange: onSelectChange,
     };
 
-    const arr = columns.map((item) =>
+    const arr = columns?.map((item) =>
         item.search === true
             ? { ...item, ...getColumnSearchProps(item.dataIndex, item.title) }
             : { ...item }
     );
-    arr.map((item) => delete item.search);
+    arr?.map((item) => delete item.search);
 
     const dataTableColumns = [...arr];
 

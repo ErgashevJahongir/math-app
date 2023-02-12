@@ -107,6 +107,7 @@ const Contacts = () => {
                     src={logoSvg}
                     alt="logo Qorako'l Navoiy o'quv markazi"
                     width={250}
+                    height={250}
                 />
                 <Row gutter={[20, 15]} className="contact-Cont">
                     <Col span={24}>
