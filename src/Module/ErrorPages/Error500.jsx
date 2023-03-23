@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { Link } from "react-router-dom";
-import rasm from "./500Image.webp";
+import rasm from "../../Assets/Images/500Image.webp";
 import "./error404.css";
 
 const Error500 = () => {

@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { Link } from "react-router-dom";
-import rasm from "./404Image.svg";
+import rasm from "../../Assets/Images/404Image.svg";
 import "./error404.css";
 
 const Error404 = () => {

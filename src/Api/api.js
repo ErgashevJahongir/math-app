@@ -4,7 +4,7 @@ import { useAuthStore } from "../store/auth";
 
 const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
 const defaultToken =
-    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTk3Nzc2NjU1IiwidXNlcl9hdXRob3JpdGllcyI6IlVTRVIiLCJ1c2VyX2lkIjoyLCJ1c2VyX25hbWUiOiIrOTk4OTk3Nzc2NjU1IiwiaWF0IjoxNjc2MTcwNDcxLCJleHAiOjE2NzYyMDY0NzF9.ZpTb2nzJbvqQmCkH1dzxGOOIkVh1ci362lXI5_Yf6sKsti1GNwNWn7gkSX3pAJ4HAd1zJTabYSeOlwmmmq2BlQ";
+    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTk3Nzc2NjU1IiwidXNlcl9hdXRob3JpdGllcyI6IlVTRVIiLCJ1c2VyX2lkIjoyLCJ1c2VyX25hbWUiOiIrOTk4OTk3Nzc2NjU1IiwiaWF0IjoxNjc2Mjc2NTUzLCJleHAiOjE2NzYzMTI1NTN9.5ba4ETHyVU_2ty-_T7pVNIgjhcvbBik_xJUlZV8rL12tEBgJjLXSONnbWxm7gL0ejPrZcKps_4MAApiIPg7Slw";
 
 const axiosInstance = axios.create({
     baseURL: REACT_APP_BASE_URL,

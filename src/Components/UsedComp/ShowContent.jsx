@@ -1,7 +1,7 @@
 import { Button, Col, Row } from "antd";
 import { motion } from "framer-motion";
 import { PhoneOutlined } from "@ant-design/icons";
-import rasm from "./Formula-amico.svg";
+import rasm from "../../Assets/Images/Formula-amico.svg";
 import "./showContent.css";
 
 const cardVariants = {

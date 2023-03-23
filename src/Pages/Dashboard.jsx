@@ -1,14 +1,15 @@
-import About from "../Components/UsedComp/About";
-import Contacts from "../Components/UsedComp/Contacts";
-import Courses from "../Components/UsedComp/Courses";
-import OnlineTest from "../Components/UsedComp/OnlineTest";
-import OurTeachers from "../Components/UsedComp/OurTeachers";
-import PaymentType from "../Components/UsedComp/PaymentType";
-import ShowContent from "../Components/UsedComp/ShowContent";
+import { lazy } from "react";
+const Contacts = lazy(() => import("../Components/UsedComp/Contacts"));
+const Courses = lazy(() => import("../Components/UsedComp/Courses"));
+const OnlineTest = lazy(() => import("../Components/UsedComp/OnlineTest"));
+const OurTeachers = lazy(() => import("../Components/UsedComp/OurTeachers"));
+const ShowContent = lazy(() => import("../Components/UsedComp/ShowContent"));
+const PaymentType = lazy(() => import("../Components/UsedComp/PaymentType"));
+const About = lazy(() => import("../Components/UsedComp/About"));
 
 const Dashboard = () => {
     return (
-        <div>
+        <>
             <ShowContent />
             <About />
             <Courses />
@@ -16,7 +17,7 @@ const Dashboard = () => {
             <OurTeachers />
             <OnlineTest />
             <Contacts />
-        </div>
+        </>
     );
 };
 

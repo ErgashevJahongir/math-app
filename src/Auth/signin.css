@@ -33,6 +33,10 @@
     margin-top: -100px;
 }
 
+.login__item-content img {
+    width: 90px;
+}
+
 .login__title {
     margin-bottom: 40px;
     margin-top: 7px;

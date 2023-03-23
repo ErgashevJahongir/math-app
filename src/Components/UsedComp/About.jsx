@@ -1,8 +1,8 @@
 import { Col, Row } from "antd";
 import { motion } from "framer-motion";
-import center from "./Mathematics-amico.svg";
-import "./about.css";
 import CountUp from "react-countup";
+import center from "../../Assets/Images/Mathematics-amico.svg";
+import "./about.css";
 
 const cardVariants = {
     offscreen: {

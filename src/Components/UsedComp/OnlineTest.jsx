@@ -40,7 +40,6 @@ const OnlineTest = () => {
     return (
         <div className="textAlignCenter sectionCont onlineTest">
             <div className="container">
-                {/* <h2 className="future-heading">Testlar</h2> */}
                 <Row gutter={[16, 16]} justify="space-between">
                     <Col
                         xs={24}
@@ -68,8 +67,6 @@ const OnlineTest = () => {
                                         <h2>Testlar uchun ro'yxatdan o'tish</h2>
                                         <p
                                             style={{
-                                                // lineHeight: 1.5,
-                                                // fontSize: 16,
                                                 color: "rgb(49, 70, 89)",
                                                 marginBottom: 15,
                                             }}
@@ -81,8 +78,6 @@ const OnlineTest = () => {
                                         </p>
                                         <p
                                             style={{
-                                                // lineHeight: 1.5,
-                                                // fontSize: 16,
                                                 color: "rgb(49, 70, 89)",
                                                 marginBottom: 15,
                                             }}
@@ -95,8 +90,6 @@ const OnlineTest = () => {
                                         </p>
                                         <p
                                             style={{
-                                                // lineHeight: 1.5,
-                                                // fontSize: 16,
                                                 color: "rgb(49, 70, 89)",
                                                 marginBottom: 15,
                                             }}
