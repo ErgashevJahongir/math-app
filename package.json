@@ -4,7 +4,7 @@
     "private": true,
     "dependencies": {
         "@tanstack/react-query": "^4.24.4",
-        "axios": "^1.8.3",
+        "axios": "^1.13.5",
         "antd": "^5.12.7",
         "framer-motion": "^7.6.18",
         "http-status-codes": "^2.2.0",
